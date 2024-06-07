@@ -1,0 +1,452 @@
+﻿Gruppo patologie: Dati di prevalenza Ipertensione
+Genere: Femmine
+Classi età: 80-84
+Indicatore: Numero assoluto
+Anni¹: 2022
+
+
+AREA;2022
+LAZIO;99372
+ROMA;52863
+ASL Roma 1;19800
+ASL Roma 2;23705
+ASL Roma 3;10197
+ASL Roma 4;4460
+ASL Roma 5;7047
+ASL Roma 6;7811
+ASL Frosinone;9003
+ASL Latina;8785
+ASL Rieti;3118
+ASL Viterbo;5446
+
+DISTRETTO;2022
+
+ASL Roma 1, Distretto 01;3295
+ASL Roma 1, Distretto 02;3589
+ASL Roma 1, Distretto 03;4005
+ASL Roma 1, Distretto 13;2793
+ASL Roma 1, Distretto 14;3620
+ASL Roma 1, Distretto 15;2498
+ASL Roma 2, Distretto 04;3028
+ASL Roma 2, Distretto 05;5363
+ASL Roma 2, Distretto 06;3084
+ASL Roma 2, Distretto 07;6297
+ASL Roma 2, Distretto 08;3155
+ASL Roma 2, Distretto 09;2778
+ASL Roma 3, Municipio X;3230
+ASL Roma 3, Municipio XI;2961
+ASL Roma 3, Municipio XII;3167
+ASL Roma 3, Fiumicino;839
+ASL Roma 4, Distretto F1;1330
+ASL Roma 4, Distretto F2;977
+ASL Roma 4, Distretto F3;868
+ASL Roma 4, Distretto F4;1285
+ASL Roma 5, Distretto G1-Mentana-Monterotondo;1204
+ASL Roma 5, Distretto G2-Guidonia;1533
+ASL Roma 5, Distretto G3-Tivoli;1378
+ASL Roma 5, Distretto G4-Subiaco;626
+ASL Roma 5, Distretto G5-Palestrina;1033
+ASL Roma 5, Distretto G6-Colleferro;1273
+ASL Roma 6, Distretto H1;1410
+ASL Roma 6, Distretto H2;1658
+ASL Roma 6, Distretto H3;1195
+ASL Roma 6, Distretto H4;1111
+ASL Roma 6, Distretto H5;976
+ASL Roma 6, Distretto H6;1461
+ASL Viterbo, Distretto A;2008
+ASL Viterbo, Distretto B;1537
+ASL Viterbo, Distretto C;1901
+ASL Rieti, Distretto 1-Rieti-Antrodoco-SElpidio;2045
+ASL Rieti, Distretto 2 - Salario-Mirtense;1073
+ASL Latina, Distretto 1 - Aprilia-Cisterna;1642
+ASL Latina, Distretto 2 - Latina;2505
+ASL Latina, Distretto 3 - Monti Lepini;945
+ASL Latina, Distretto 4 - Fondi-Terracina;1733
+ASL Latina, Distretto 5 - Formia-Gaeta;1960
+ASL Frosinone, Distretto A - Alatri-Anagni;1494
+ASL Frosinone, Distretto B - Frosinone;3344
+ASL Frosinone, Distretto C - Sora;2040
+ASL Frosinone, Distretto D - Cassino - Pontecorvo;2125
+
+COMUNE;2022
+Accumoli;14
+Acquafondata;12
+Acquapendente;158
+Acuto;42
+Affile;27
+Agosta;40
+Alatri;413
+Albano Laziale;683
+Allumiere;70
+Alvito;61
+Amaseno;76
+Amatrice;63
+Anagni;355
+Anguillara Sabazia;241
+Anticoli Corrado;13
+Antrodoco;55
+Anzio;712
+Aprilia;894
+Aquino;86
+Arce;110
+Arcinazzo Romano;25
+Ardea;417
+Ariccia;286
+Arlena Di Castro;17
+Arnara;53
+Arpino;189
+Arsoli;32
+Artena;173
+Ascrea;8
+Atina;81
+Ausonia;49
+Bagnoregio;91
+Barbarano Romano;30
+Bassano In Teverina;21
+Bassano Romano;73
+Bassiano;35
+Bellegra;48
+Belmonte Castello;12
+Belmonte In Sabina;6
+Blera;49
+Bolsena;84
+Bomarzo;36
+Borbona;24
+Borgo Velino;28
+Borgorose;71
+Boville Ernica;140
+Bracciano;322
+Broccostella;47
+Calcata;13
+Camerata Nuova;6
+Campagnano Di Roma;149
+Campodimele;20
+Campoli Appennino;26
+Canale Monterano;70
+Canepina;56
+Canino;105
+Cantalice;63
+Cantalupo In Sabina;33
+Canterano;6
+Capena;102
+Capodimonte;48
+Capranica;99
+Capranica Prenestina;10
+Caprarola;100
+Carbognano;31
+Carpineto Romano;109
+Casalattico;13
+Casalvieri;58
+Casape;19
+Casaprota;25
+Casperia;5
+Cassino;558
+Castel Di Tora;6
+Castel Gandolfo;153
+Castel Madama;119
+Castel San Pietro Romano;14
+Castel Sant'Angelo;38
+Castel Sant'Elia;32
+Castelforte;123
+Castelliri;67
+Castelnuovo Di Farfa;24
+Castelnuovo Di Porto;106
+Castelnuovo Parano;14
+Castiglione In Teverina;47
+Castro Dei Volsci;120
+Castrocielo;73
+Cave;124
+Ceccano;422
+Celleno;27
+Cellere;31
+Ceprano;170
+Cerreto Laziale;19
+Cervara Di Roma;11
+Cervaro;137
+Cerveteri;447
+Ciampino;614
+Ciciliano;34
+Cineto Romano;19
+Cisterna Di Latina;506
+Cittaducale;107
+Cittareale;23
+Civita Castellana;290
+Civitavecchia;870
+Civitella D'Agliano;45
+Civitella San Paolo;27
+Colfelice;50
+Collalto Sabino;15
+Colle Di Tora;9
+Colle San Magno;17
+Colleferro;409
+Collegiove;(*)
+Collepardo;17
+Collevecchio;37
+Colli Sul Velino;13
+Colonna;59
+Concerviano;6
+Configni;(*)
+Contigliano;83
+Corchiano;44
+Coreno Ausonio;46
+Cori;215
+Cottanello;9
+Esperia;92
+Fabrica Di Roma;93
+Faleria;41
+Falvaterra;18
+Fara In Sabina;183
+Farnese;56
+Ferentino;322
+Fiamignano;43
+Fiano Romano;157
+Filacciano;13
+Filettino;10
+Fiuggi;177
+Fiumicino;839
+Fondi;507
+Fontana Liri;63
+Fonte Nuova;358
+Fontechiari;18
+Forano;55
+Formello;133
+Formia;660
+Frascati;402
+Frasso Sabino;8
+Frosinone;838
+Fumone;39
+Gaeta;418
+Gallese;40
+Gallicano Nel Lazio;54
+Gallinaro;20
+Gavignano;33
+Genazzano;95
+Genzano Di Roma;365
+Gerano;39
+Giuliano Di Roma;43
+Gorga;19
+Gradoli;31
+Graffignano;35
+Greccio;50
+Grottaferrata;353
+Grotte Di Castro;70
+Guarcino;28
+Guidonia Montecelio;1031
+Ischia Di Castro;48
+Isola Del Liri;252
+Itri;183
+Jenne;11
+Labico;55
+Labro;6
+Ladispoli;530
+Lanuvio;151
+Lariano;154
+Latera;25
+Latina;1873
+Lenola;89
+Leonessa;58
+Licenza;26
+Longone Sabino;14
+Lubriano;18
+Maenza;62
+Magliano Romano;23
+Magliano Sabina;74
+Mandela;13
+Manziana;142
+Marano Equo;23
+Marcellina;81
+Marcetelli;10
+Marino;581
+Marta;77
+Mazzano Romano;43
+Mentana;282
+Micigliano;8
+Minturno;341
+Mompeo;20
+Montalto Di Castro;142
+Montasola;(*)
+Monte Porzio Catone;132
+Monte Romano;35
+Monte San Biagio;118
+Monte San Giovanni Campano;202
+Monte San Giovanni In Sabina;18
+Montebuono;22
+Montecompatri;150
+Montefiascone;254
+Monteflavio;25
+Montelanico;38
+Monteleone Sabino;30
+Montelibretti;88
+Montenero Sabino;7
+Monterosi;51
+Monterotondo;564
+Montopoli Di Sabina;79
+Montorio Romano;26
+Moricone;43
+Morlupo;107
+Morolo;59
+Morro Reatino;5
+Nazzano;36
+Nemi;20
+Nepi;101
+Nerola;28
+Nespolo;8
+Nettuno;749
+Norma;80
+Olevano Romano;114
+Onano;40
+Oriolo Romano;53
+Orte;139
+Orvinio;7
+Paganico;10
+Palestrina;302
+Paliano;129
+Palombara Sabina;156
+Pastena;44
+Patrica;49
+Percile;4
+Pescorocchiano;75
+Pescosolido;28
+Petrella Salto;28
+Piansano;37
+Picinisco;29
+Pico;77
+Piedimonte San Germano;84
+Piglio;95
+Pignataro Interamna;51
+Pisoniano;15
+Pofi;86
+Poggio Bustone;48
+Poggio Catino;18
+Poggio Mirteto;108
+Poggio Moiano;48
+Poggio Nativo;28
+Poggio San Lorenzo;14
+Poli;35
+Pomezia;694
+Pontecorvo;231
+Pontinia;200
+Ponza;57
+Ponzano Romano;26
+Posta;25
+Posta Fibreno;30
+Pozzaglia Sabino;17
+Priverno;245
+Proceno;13
+Prossedi;32
+Riano;115
+Rieti;904
+Rignano Flaminio;105
+Riofreddo;16
+Ripi;111
+Rivodutri;25
+Rocca Canterano;5
+Rocca D'Arce;33
+Rocca Di Cave;6
+Rocca Di Papa;174
+Rocca Massima;27
+Rocca Priora;140
+Rocca Santo Stefano;17
+Rocca Sinibalda;26
+Roccagiovine;10
+Roccagorga;69
+Roccantica;11
+Roccasecca;129
+Roccasecca Dei Volsci;18
+Roiate;17
+Roma;52863
+Ronciglione;126
+Roviano;35
+Sabaudia;248
+Sacrofano;67
+Salisano;11
+Sambuci;24
+San Biagio Saracinisco;9
+San Cesareo;145
+San Donato Val Di Comino;55
+San Felice Circeo;153
+San Giorgio A Liri;62
+San Giovanni Incarico;101
+San Gregorio Da Sassola;40
+San Lorenzo Nuovo;42
+San Polo Dei Cavalieri;28
+San Vito Romano;69
+San Vittore Del Lazio;50
+Sant'Ambrogio Sul Garigliano;19
+Sant'Andrea Del Garigliano;41
+Sant'Angelo Romano;55
+Sant'Apollinare;32
+Sant'Elia Fiumerapido;107
+Sant'Oreste;60
+Santa Marinella;306
+Santi Cosma E Damiano;122
+Santopadre;38
+Saracinesco;(*)
+Scandriglia;63
+Segni;207
+Selci;28
+Sermoneta;104
+Serrone;56
+Settefrati;17
+Sezze;362
+Sgurgola;45
+Sonnino;122
+Sora;507
+Soriano Nel Cimino;133
+Sperlonga;76
+Spigno Saturnia;45
+Stimigliano;35
+Strangolagalli;41
+Subiaco;163
+Supino;87
+Sutri;100
+Tarano;31
+Tarquinia;287
+Terelle;15
+Terracina;770
+Tessennano;6
+Tivoli;872
+Toffia;18
+Tolfa;84
+Torre Cajetani;23
+Torri In Sabina;26
+Torrice;70
+Torricella In Sabina;30
+Torrita Tiberina;16
+Trevi Nel Lazio;48
+Trevignano Romano;93
+Trivigliano;27
+Turania;4
+Tuscania;105
+Vacone;4
+Valentano;61
+Vallecorsa;90
+Vallemaio;30
+Vallepietra;6
+Vallerano;42
+Vallerotonda;40
+Vallinfreda;7
+Valmontone;230
+Varco Sabino;8
+Vasanello;61
+Vejano;57
+Velletri;822
+Ventotene;11
+Veroli;320
+Vetralla;258
+Vicalvi;15
+Vico Nel Lazio;29
+Vicovaro;61
+Vignanello;91
+Villa Latina;22
+Villa San Giovanni In Tuscia;26
+Villa Santa Lucia;47
+Villa Santo Stefano;45
+Viterbo;1074
+Viticuso;14
+Vitorchiano;51
+Vivaro Romano;4
+Zagarolo;214
+(*)  n casi ≤ 3 Dato omesso per normativa sulla riservatezza
+
+Fonte www.opensalutelazio.it
