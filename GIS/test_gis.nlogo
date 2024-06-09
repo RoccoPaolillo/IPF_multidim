@@ -4,7 +4,7 @@ globals [laziomap df]
 to setup
   clear-all
   ask patches [set pcolor white]
-  set df csv:from-file "output_verificati/pop_lazio_pivot.csv"
+;  set df csv:from-file "data/output_verificati/pop_lazio_pivot.csv"
   set laziomap gis:load-dataset "output_verificati/lazio_ASL.shp"
   gis:set-world-envelope (gis:envelope-union-of (gis:envelope-of laziomap))
   displaymap
