@@ -56,5 +56,6 @@ dftotnohpt <- df %>% group_by(DENOMINAZI) %>% summarize(nohptASL = sum(nohpt))
 df <- merge(df,dftotnohpt,by="DENOMINAZI")
 df$sumhptASL <- df$hptASL + df$nohptASL
 
-save(df,file="df_socdemhpt.csv")
+write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
+save(df,file="df_socdemhpt.Rdata")
 
