@@ -1,0 +1,452 @@
+﻿Gruppo patologie: Dati di prevalenza Ipertensione;;;;;;
+Genere: Maschi;;;;;;
+Classi età: 10-14;;;;;;
+Indicatore: Numero assoluto;;;;;;
+Anni¹: Ultimo anno disponibile ;e tab tutti gli anni;;;;;
+genere;man;;;;;
+classi_eta;"""10-14""";;;;;
+AREA;2017;2018;2019;2020;2021;2022
+LAZIO;307;282;265;278;267;253
+ROMA;147;123;111;122;118;124
+ASL Roma 1;50;41;39;42;37;46
+ASL Roma 2;62;55;55;59;61;56
+ASL Roma 3;43;35;21;26;24;25
+ASL Roma 4;20;19;14;15;10;7
+ASL Roma 5;35;31;30;28;26;19
+ASL Roma 6;39;37;32;28;26;26
+ASL Frosinone;21;16;18;18;24;24
+ASL Latina;25;32;34;38;38;31
+ASL Rieti;7;7;13;13;7;6
+ASL Viterbo;5;9;9;11;14;13
+;;;;;;
+DISTRETTO;2017;2018;2019;2020;2021;2022
+;;;;;;
+ASL Roma 1, Distretto 01;4;(*);6;(*);4;6
+ASL Roma 1, Distretto 02;9;7;7;6;5;6
+ASL Roma 1, Distretto 03;8;8;7;5;6;8
+ASL Roma 1, Distretto 13;4;6;9;11;9;13
+ASL Roma 1, Distretto 14;18;11;8;13;9;5
+ASL Roma 1, Distretto 15;7;6;(*);4;4;8
+ASL Roma 2, Distretto 04;9;9;6;4;9;5
+ASL Roma 2, Distretto 05;15;13;9;13;14;19
+ASL Roma 2, Distretto 06;11;9;17;19;14;12
+ASL Roma 2, Distretto 07;13;10;13;8;10;7
+ASL Roma 2, Distretto 08;6;6;4;9;6;5
+ASL Roma 2, Distretto 09;8;8;6;6;8;8
+ASL Roma 3, Municipio X;17;12;9;14;15;16
+ASL Roma 3, Municipio XI;8;7;4;4;(*);(*)
+ASL Roma 3, Municipio XII;10;8;4;(*);(*);(*)
+ASL Roma 3, Fiumicino;8;8;4;5;4;(*)
+ASL Roma 4, Distretto F1;9;7;(*);(*);(*);(*)
+ASL Roma 4, Distretto F2;4;6;4;7;4;(*)
+ASL Roma 4, Distretto F3;0;0;(*);(*);(*);0
+ASL Roma 4, Distretto F4;7;6;6;(*);(*);(*)
+ASL Roma 5, Distretto G1-Mentana-Monterotondo;9;5;6;5;4;4
+ASL Roma 5, Distretto G2-Guidonia;8;9;8;7;5;(*)
+ASL Roma 5, Distretto G3-Tivoli;(*);(*);(*);4;6;(*)
+ASL Roma 5, Distretto G4-Subiaco;(*);(*);(*);0;(*);(*)
+ASL Roma 5, Distretto G5-Palestrina;8;6;6;6;5;5
+ASL Roma 5, Distretto G6-Colleferro;7;6;6;6;5;4
+ASL Roma 6, Distretto H1;6;(*);4;(*);(*);0
+ASL Roma 6, Distretto H2;8;9;7;7;5;(*)
+ASL Roma 6, Distretto H3;5;4;5;4;5;8
+ASL Roma 6, Distretto H4;9;8;8;6;6;5
+ASL Roma 6, Distretto H5;(*);(*);0;0;(*);(*)
+ASL Roma 6, Distretto H6;10;12;8;8;8;8
+ASL Viterbo, Distretto A;(*);(*);(*);4;4;4
+ASL Viterbo, Distretto B;(*);4;(*);(*);(*);4
+ASL Viterbo, Distretto C;(*);4;(*);4;7;5
+ASL Rieti, Distretto 1-Rieti-Antrodoco-SElpidio;(*);(*);5;6;(*);(*)
+ASL Rieti, Distretto 2 - Salario-Mirtense;5;5;8;7;5;5
+ASL Latina, Distretto 1 - Aprilia-Cisterna;6;9;9;6;7;8
+ASL Latina, Distretto 2 - Latina;4;7;8;14;13;14
+ASL Latina, Distretto 3 - Monti Lepini;5;(*);(*);(*);(*);(*)
+ASL Latina, Distretto 4 - Fondi-Terracina;6;6;7;5;7;4
+ASL Latina, Distretto 5 - Formia-Gaeta;4;7;9;11;8;4
+ASL Frosinone, Distretto A - Alatri-Anagni;5;4;(*);(*);(*);0
+ASL Frosinone, Distretto B - Frosinone;9;5;9;8;7;9
+ASL Frosinone, Distretto C - Sora;(*);(*);(*);(*);6;5
+ASL Frosinone, Distretto D - Cassino - Pontecorvo;5;4;4;5;10;10
+;;;;;;
+COMUNE;2017;2018;2019;2020;2021;2022
+Accumoli;0;0;0;0;0;0
+Acquafondata;0;0;0;0;0;0
+Acquapendente;0;0;0;0;0;0
+Acuto;0;0;0;0;0;0
+Affile;(*);(*);0;0;0;0
+Agosta;0;0;0;0;0;0
+Alatri;0;0;0;0;0;0
+Albano Laziale;(*);(*);(*);(*);(*);(*)
+Allumiere;(*);(*);0;0;0;0
+Alvito;0;0;0;0;0;0
+Amaseno;0;0;0;(*);(*);(*)
+Amatrice;0;0;0;0;0;0
+Anagni;(*);(*);(*);(*);0;0
+Anguillara Sabazia;0;0;0;(*);0;0
+Anticoli Corrado;0;0;0;0;0;0
+Antrodoco;0;0;0;0;0;0
+Anzio;7;4;(*);(*);(*);(*)
+Aprilia;(*);5;5;(*);5;7
+Aquino;0;0;0;0;0;0
+Arce;0;0;0;0;0;0
+Arcinazzo Romano;0;0;0;0;0;0
+Ardea;(*);(*);4;(*);(*);(*)
+Ariccia;0;(*);0;(*);(*);(*)
+Arlena Di Castro;0;0;0;0;0;0
+Arnara;0;0;0;0;0;0
+Arpino;0;0;0;0;(*);(*)
+Arsoli;0;0;0;0;0;0
+Artena;(*);(*);(*);0;0;0
+Ascrea;0;0;0;0;0;0
+Atina;0;0;0;0;0;0
+Ausonia;0;0;0;0;(*);(*)
+Bagnoregio;0;0;0;0;0;0
+Barbarano Romano;0;0;0;0;0;0
+Bassano In Teverina;0;0;0;0;0;0
+Bassano Romano;0;(*);(*);(*);(*);(*)
+Bassiano;0;0;0;0;0;0
+Bellegra;0;0;0;0;0;0
+Belmonte Castello;0;0;(*);(*);(*);0
+Belmonte In Sabina;0;0;0;0;0;0
+Blera;0;0;0;0;(*);(*)
+Bolsena;(*);(*);(*);0;0;0
+Bomarzo;0;0;0;0;0;0
+Borbona;0;0;0;0;0;0
+Borgo Velino;0;0;0;0;0;0
+Borgorose;(*);(*);(*);(*);(*);0
+Boville Ernica;(*);(*);(*);(*);(*);0
+Bracciano;0;0;(*);(*);(*);0
+Broccostella;0;0;0;(*);(*);0
+Calcata;0;0;0;0;0;0
+Camerata Nuova;0;0;0;0;0;0
+Campagnano Di Roma;(*);0;0;0;(*);(*)
+Campodimele;0;0;0;0;0;0
+Campoli Appennino;0;0;0;0;0;0
+Canale Monterano;0;0;0;0;0;0
+Canepina;0;0;0;0;0;0
+Canino;0;0;(*);(*);(*);(*)
+Cantalice;0;0;0;0;0;0
+Cantalupo In Sabina;0;0;0;0;0;0
+Canterano;0;0;0;0;0;0
+Capena;0;0;0;0;0;0
+Capodimonte;0;0;0;0;0;(*)
+Capranica;(*);0;0;0;0;0
+Capranica Prenestina;0;0;0;0;0;0
+Caprarola;0;0;0;0;0;0
+Carbognano;0;0;0;0;0;0
+Carpineto Romano;0;0;0;0;0;0
+Casalattico;0;0;0;0;0;0
+Casalvieri;0;0;0;0;0;0
+Casape;0;0;0;0;0;0
+Casaprota;0;0;0;0;0;0
+Casperia;0;0;(*);(*);0;(*)
+Cassino;(*);(*);(*);(*);5;5
+Castel Di Tora;0;0;0;0;0;0
+Castel Gandolfo;0;0;0;0;0;0
+Castel Madama;(*);0;0;(*);0;0
+Castel San Pietro Romano;0;0;0;0;0;0
+Castel Sant'Angelo;0;0;0;0;0;0
+Castel Sant'Elia;0;0;0;0;0;0
+Castelforte;0;0;0;0;0;0
+Castelliri;0;0;0;0;0;0
+Castelnuovo Di Farfa;0;0;0;0;0;(*)
+Castelnuovo Di Porto;0;0;0;0;0;0
+Castelnuovo Parano;0;0;0;0;0;0
+Castiglione In Teverina;0;0;0;0;0;0
+Castro Dei Volsci;0;0;0;0;0;0
+Castrocielo;(*);0;0;0;0;0
+Cave;0;0;0;0;0;0
+Ceccano;(*);(*);(*);(*);(*);(*)
+Celleno;0;0;0;0;0;0
+Cellere;0;0;0;0;0;0
+Ceprano;0;0;0;(*);(*);(*)
+Cerreto Laziale;0;0;0;0;0;0
+Cervara Di Roma;0;0;0;0;0;0
+Cervaro;0;0;0;0;0;0
+Cerveteri;(*);(*);(*);(*);(*);(*)
+Ciampino;(*);(*);(*);(*);(*);4
+Ciciliano;0;0;0;0;0;0
+Cineto Romano;0;0;0;0;0;0
+Cisterna Di Latina;(*);4;4;4;(*);(*)
+Cittaducale;0;0;(*);0;0;0
+Cittareale;0;0;0;0;0;0
+Civita Castellana;0;0;(*);(*);0;0
+Civitavecchia;6;5;(*);(*);(*);(*)
+Civitella D'Agliano;0;0;0;0;0;0
+Civitella San Paolo;0;0;0;0;0;0
+Colfelice;0;(*);(*);(*);(*);0
+Collalto Sabino;0;0;0;0;0;0
+Colle Di Tora;0;0;0;0;0;0
+Colle San Magno;0;0;0;0;0;0
+Colleferro;(*);(*);(*);(*);(*);(*)
+Collegiove;0;0;0;0;0;0
+Collepardo;0;0;0;0;0;0
+Collevecchio;0;(*);(*);(*);(*);0
+Colli Sul Velino;0;0;0;0;0;0
+Colonna;0;0;0;0;0;0
+Concerviano;0;0;0;0;0;0
+Configni;0;0;0;0;0;0
+Contigliano;0;0;0;(*);0;0
+Corchiano;0;0;0;0;0;0
+Coreno Ausonio;0;0;0;0;0;0
+Cori;(*);0;0;0;(*);0
+Cottanello;0;0;0;0;0;0
+Esperia;0;0;0;0;0;0
+Fabrica Di Roma;0;(*);0;0;0;0
+Faleria;(*);0;0;0;(*);0
+Falvaterra;0;0;0;0;0;0
+Fara In Sabina;(*);(*);(*);0;0;0
+Farnese;0;0;0;0;0;0
+Ferentino;0;0;(*);(*);0;0
+Fiamignano;0;0;0;0;0;0
+Fiano Romano;(*);(*);0;0;0;0
+Filacciano;0;0;0;0;0;0
+Filettino;0;0;0;0;0;0
+Fiuggi;(*);0;0;0;0;0
+Fiumicino;8;8;4;5;4;(*)
+Fondi;4;4;(*);(*);(*);(*)
+Fontana Liri;0;0;0;0;0;0
+Fonte Nuova;(*);(*);(*);(*);0;(*)
+Fontechiari;0;0;0;0;0;0
+Forano;0;0;0;0;0;0
+Formello;(*);(*);(*);(*);0;0
+Formia;(*);(*);(*);(*);(*);(*)
+Frascati;(*);(*);(*);(*);0;0
+Frasso Sabino;0;0;0;0;0;0
+Frosinone;(*);(*);(*);0;(*);(*)
+Fumone;0;0;0;0;0;0
+Gaeta;(*);(*);(*);(*);(*);0
+Gallese;0;0;0;0;0;0
+Gallicano Nel Lazio;(*);(*);(*);(*);(*);(*)
+Gallinaro;0;0;0;0;0;0
+Gavignano;0;0;0;0;0;0
+Genazzano;0;0;0;0;0;0
+Genzano Di Roma;(*);(*);0;(*);(*);(*)
+Gerano;0;0;0;0;0;0
+Giuliano Di Roma;0;0;0;0;0;0
+Gorga;0;0;0;0;0;0
+Gradoli;0;0;0;0;0;0
+Graffignano;0;0;0;0;0;0
+Greccio;0;0;0;0;0;0
+Grottaferrata;0;0;0;0;0;0
+Grotte Di Castro;0;0;0;0;0;0
+Guarcino;0;0;0;0;0;0
+Guidonia Montecelio;5;6;7;7;5;(*)
+Ischia Di Castro;0;0;0;0;0;0
+Isola Del Liri;0;0;(*);(*);(*);(*)
+Itri;(*);(*);0;0;0;0
+Jenne;0;0;0;0;0;0
+Labico;(*);0;0;0;0;0
+Labro;0;0;0;0;0;0
+Ladispoli;(*);4;(*);5;(*);(*)
+Lanuvio;(*);5;5;4;(*);0
+Lariano;0;0;0;0;0;0
+Latera;0;0;0;0;0;0
+Latina;4;6;4;5;6;9
+Lenola;(*);(*);(*);(*);(*);0
+Leonessa;0;0;0;0;0;0
+Licenza;0;0;0;0;(*);0
+Longone Sabino;0;0;0;0;0;0
+Lubriano;0;0;0;0;0;0
+Maenza;(*);0;0;0;0;0
+Magliano Romano;0;0;0;0;0;0
+Magliano Sabina;0;0;0;(*);(*);(*)
+Mandela;0;0;0;0;0;0
+Manziana;0;0;0;0;0;0
+Marano Equo;0;0;0;0;0;0
+Marcellina;0;0;0;0;0;0
+Marcetelli;0;0;0;0;0;0
+Marino;4;(*);(*);(*);(*);4
+Marta;0;0;0;0;0;0
+Mazzano Romano;0;0;0;0;0;0
+Mentana;(*);(*);(*);(*);0;0
+Micigliano;0;0;0;0;0;0
+Minturno;0;(*);(*);4;5;(*)
+Mompeo;0;0;0;0;0;0
+Montalto Di Castro;0;0;0;(*);0;0
+Montasola;0;0;0;0;0;0
+Monte Porzio Catone;0;0;0;0;0;0
+Monte Romano;0;0;0;0;0;0
+Monte San Biagio;0;0;0;0;(*);0
+Monte San Giovanni Campano;0;(*);0;0;0;0
+Monte San Giovanni In Sabina;0;0;(*);(*);(*);(*)
+Montebuono;0;0;0;0;0;0
+Montecompatri;0;0;0;0;0;0
+Montefiascone;0;0;0;0;(*);(*)
+Monteflavio;0;0;0;0;0;0
+Montelanico;0;0;0;0;0;0
+Monteleone Sabino;0;0;0;0;0;0
+Montelibretti;(*);(*);(*);0;0;0
+Montenero Sabino;0;0;0;0;0;0
+Monterosi;0;0;0;0;(*);(*)
+Monterotondo;5;(*);4;(*);4;(*)
+Montopoli Di Sabina;(*);(*);0;0;0;0
+Montorio Romano;0;0;0;0;0;0
+Moricone;0;0;0;0;0;0
+Morlupo;0;0;(*);0;0;0
+Morolo;0;0;0;0;0;0
+Morro Reatino;0;0;0;0;0;0
+Nazzano;0;0;0;0;0;0
+Nemi;0;0;0;0;0;0
+Nepi;0;0;0;0;0;0
+Nerola;0;0;0;0;0;0
+Nespolo;0;0;0;0;0;0
+Nettuno;(*);8;5;5;5;5
+Norma;0;0;0;0;0;0
+Olevano Romano;0;(*);(*);0;0;0
+Onano;0;0;0;0;0;0
+Oriolo Romano;0;0;0;0;0;0
+Orte;0;0;0;0;0;(*)
+Orvinio;0;0;0;0;0;0
+Paganico;0;0;0;0;0;0
+Palestrina;4;(*);(*);(*);0;(*)
+Paliano;0;0;0;0;0;0
+Palombara Sabina;(*);(*);0;0;0;0
+Pastena;0;0;0;0;0;0
+Patrica;(*);0;0;0;0;0
+Percile;0;0;0;0;0;0
+Pescorocchiano;0;0;0;0;0;0
+Pescosolido;0;0;0;0;0;0
+Petrella Salto;0;0;0;0;0;0
+Piansano;0;0;0;0;0;0
+Picinisco;0;0;0;0;0;0
+Pico;0;0;0;0;0;0
+Piedimonte San Germano;(*);0;0;0;0;(*)
+Piglio;(*);(*);(*);(*);(*);0
+Pignataro Interamna;0;0;0;0;0;0
+Pisoniano;0;0;0;0;0;0
+Pofi;(*);0;0;0;(*);(*)
+Poggio Bustone;0;0;0;0;0;0
+Poggio Catino;0;0;0;0;0;0
+Poggio Mirteto;0;(*);(*);(*);(*);(*)
+Poggio Moiano;0;0;0;0;0;0
+Poggio Nativo;(*);0;(*);(*);(*);(*)
+Poggio San Lorenzo;0;0;0;0;0;0
+Poli;0;0;(*);0;(*);(*)
+Pomezia;6;7;4;4;(*);(*)
+Pontecorvo;0;0;0;0;(*);(*)
+Pontinia;0;(*);4;5;4;(*)
+Ponza;0;0;0;0;0;0
+Ponzano Romano;0;0;0;0;0;0
+Posta;(*);(*);(*);0;0;0
+Posta Fibreno;0;0;0;0;0;0
+Pozzaglia Sabino;0;0;0;0;0;0
+Priverno;(*);(*);0;0;0;0
+Proceno;0;0;0;0;0;0
+Prossedi;0;0;0;0;0;0
+Riano;0;(*);(*);0;0;0
+Rieti;0;0;(*);(*);0;0
+Rignano Flaminio;0;(*);(*);(*);(*);(*)
+Riofreddo;0;0;0;0;0;0
+Ripi;(*);0;(*);(*);(*);(*)
+Rivodutri;0;0;0;0;0;0
+Rocca Canterano;0;0;0;0;0;0
+Rocca D'Arce;0;0;0;0;(*);(*)
+Rocca Di Cave;0;0;0;0;0;0
+Rocca Di Papa;(*);(*);(*);(*);(*);0
+Rocca Massima;0;0;0;0;0;0
+Rocca Priora;0;(*);(*);0;0;0
+Rocca Santo Stefano;0;0;0;0;0;0
+Rocca Sinibalda;0;0;0;0;0;0
+Roccagiovine;0;0;0;0;0;0
+Roccagorga;0;0;0;0;(*);0
+Roccantica;0;0;0;0;0;0
+Roccasecca;0;0;0;0;0;0
+Roccasecca Dei Volsci;0;0;0;0;0;0
+Roiate;0;0;0;0;0;0
+Roma;147;123;111;122;118;124
+Ronciglione;0;0;0;0;(*);(*)
+Roviano;0;0;0;0;0;0
+Sabaudia;0;0;0;(*);(*);(*)
+Sacrofano;0;0;0;0;0;0
+Salisano;0;0;0;0;0;0
+Sambuci;0;0;0;0;0;0
+San Biagio Saracinisco;0;0;0;0;0;0
+San Cesareo;(*);(*);(*);(*);(*);0
+San Donato Val Di Comino;0;0;0;0;0;0
+San Felice Circeo;0;0;0;0;0;0
+San Giorgio A Liri;0;0;0;0;0;0
+San Giovanni Incarico;0;0;0;0;0;0
+San Gregorio Da Sassola;0;0;0;0;0;0
+San Lorenzo Nuovo;0;0;0;0;0;0
+San Polo Dei Cavalieri;0;0;0;0;0;0
+San Vito Romano;0;0;0;0;0;0
+San Vittore Del Lazio;0;0;0;0;0;0
+Sant'Ambrogio Sul Garigliano;0;0;0;0;0;0
+Sant'Andrea Del Garigliano;0;(*);(*);(*);(*);(*)
+Sant'Angelo Romano;0;0;0;0;0;0
+Sant'Apollinare;0;0;0;0;0;0
+Sant'Elia Fiumerapido;0;0;0;(*);(*);(*)
+Sant'Oreste;0;0;0;0;0;0
+Santa Marinella;(*);0;(*);(*);(*);(*)
+Santi Cosma E Damiano;0;(*);(*);(*);0;0
+Santopadre;0;0;0;0;0;0
+Saracinesco;0;0;0;0;0;0
+Scandriglia;0;0;0;0;0;0
+Segni;0;(*);(*);(*);0;0
+Selci;0;0;0;0;0;0
+Sermoneta;0;0;0;(*);(*);(*)
+Serrone;0;0;0;0;0;0
+Settefrati;0;0;0;0;0;0
+Sezze;(*);(*);(*);(*);(*);(*)
+Sgurgola;0;0;0;0;0;0
+Sonnino;0;0;0;0;0;0
+Sora;(*);(*);(*);0;0;(*)
+Soriano Nel Cimino;0;0;0;0;(*);(*)
+Sperlonga;0;0;0;0;0;0
+Spigno Saturnia;0;0;0;0;0;0
+Stimigliano;0;0;0;0;(*);0
+Strangolagalli;0;0;0;0;0;0
+Subiaco;0;0;0;0;(*);(*)
+Supino;0;0;0;0;0;0
+Sutri;(*);(*);(*);(*);(*);(*)
+Tarano;0;0;0;0;0;0
+Tarquinia;0;0;(*);(*);(*);(*)
+Terelle;0;0;0;0;0;0
+Terracina;(*);(*);(*);(*);(*);(*)
+Tessennano;0;0;0;0;0;0
+Tivoli;(*);(*);(*);(*);4;(*)
+Toffia;(*);(*);(*);0;0;0
+Tolfa;(*);(*);0;0;0;0
+Torre Cajetani;0;0;0;0;0;0
+Torri In Sabina;0;0;0;0;0;0
+Torrice;0;0;0;0;0;0
+Torricella In Sabina;0;0;0;0;0;0
+Torrita Tiberina;0;0;0;0;0;0
+Trevi Nel Lazio;0;0;0;0;0;0
+Trevignano Romano;0;0;0;0;0;0
+Trivigliano;0;0;0;0;0;0
+Turania;0;0;0;0;0;0
+Tuscania;0;0;0;(*);(*);0
+Vacone;0;0;0;0;0;0
+Valentano;0;0;0;0;0;0
+Vallecorsa;(*);(*);(*);0;0;(*)
+Vallemaio;0;0;0;0;0;0
+Vallepietra;0;0;0;0;0;0
+Vallerano;0;0;0;0;0;0
+Vallerotonda;0;0;0;0;0;0
+Vallinfreda;0;0;0;0;0;0
+Valmontone;(*);(*);(*);(*);(*);(*)
+Varco Sabino;0;0;0;0;0;0
+Vasanello;0;0;0;0;0;0
+Vejano;0;0;0;0;0;0
+Velletri;(*);(*);0;0;(*);(*)
+Ventotene;0;0;0;0;0;0
+Veroli;(*);(*);0;(*);0;0
+Vetralla;0;0;0;0;0;0
+Vicalvi;0;0;0;0;0;0
+Vico Nel Lazio;0;0;0;0;0;0
+Vicovaro;0;0;0;0;0;0
+Vignanello;0;0;0;0;0;0
+Villa Latina;0;0;0;0;0;0
+Villa San Giovanni In Tuscia;0;0;0;0;0;0
+Villa Santa Lucia;(*);(*);0;0;0;0
+Villa Santo Stefano;0;0;0;0;0;0
+Viterbo;0;(*);(*);(*);(*);(*)
+Viticuso;0;0;0;0;0;0
+Vitorchiano;(*);(*);0;0;0;0
+Vivaro Romano;0;0;0;0;0;0
+Zagarolo;0;(*);(*);(*);(*);(*)
+(*)  n casi ≤ 3 Dato omesso per normativa sulla riservatezza;;;;;;
+;;;;;;
+Fonte www.opensalutelazio.it;;;;;;
