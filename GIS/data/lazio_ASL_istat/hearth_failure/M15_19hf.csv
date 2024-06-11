@@ -1,10 +1,10 @@
-﻿Gruppo patologie: Dati di prevalenza Scompenso cardiaco
-Genere: Maschi
-Classi età: 15-19
-Indicatore: Numero assoluto
-Anni¹: 2022
-
-
+﻿Gruppo patologie: Dati di prevalenza Scompenso cardiaco;
+Genere: Maschi;
+Classi età: 15-19;
+Indicatore: Numero assoluto;
+Anni¹: 2022;
+genere;man
+classi_eta;"""15-19"""
 AREA;2022
 LAZIO;47
 ROMA;25
@@ -18,9 +18,9 @@ ASL Frosinone;(*)
 ASL Latina;4
 ASL Rieti;(*)
 ASL Viterbo;(*)
-
+;
 DISTRETTO;2022
-
+;
 ASL Roma 1, Distretto 01;(*)
 ASL Roma 1, Distretto 02;(*)
 ASL Roma 1, Distretto 03;(*)
@@ -49,7 +49,7 @@ ASL Latina, Distretto 2 - Latina;(*)
 ASL Latina, Distretto 4 - Fondi-Terracina;(*)
 ASL Latina, Distretto 5 - Formia-Gaeta;(*)
 ASL Frosinone, Distretto B - Frosinone;(*)
-
+;
 COMUNE;2022
 Accumoli;0
 Acquafondata;0
@@ -429,6 +429,6 @@ Viticuso;0
 Vitorchiano;0
 Vivaro Romano;0
 Zagarolo;0
-(*)  n casi ≤ 3 Dato omesso per normativa sulla riservatezza
-
-Fonte www.opensalutelazio.it
+(*)  n casi ≤ 3 Dato omesso per normativa sulla riservatezza;
+;
+Fonte www.opensalutelazio.it;
