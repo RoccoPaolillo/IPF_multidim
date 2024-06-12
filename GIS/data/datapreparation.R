@@ -1,6 +1,7 @@
 library(tidyr)
 library(purrr)
 library(dplyr)
+library(stringr)
 
 # sociodemographics
 
@@ -56,6 +57,35 @@ dftotnohpt <- df %>% group_by(DENOMINAZI) %>% summarize(nohptASL = sum(nohpt))
 df <- merge(df,dftotnohpt,by="DENOMINAZI")
 df$sumhptASL <- df$hptASL + df$nohptASL
 
-write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
-save(df,file="df_socdemhpt.Rdata")
+# write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
+# save(df,file="df_socdemhpt.Rdata")
+
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/hearth_failure/")
+file.list = list.files( pattern = "*.csv")
+disease = "hf"
+results = list()
+
+for (i in file.list) {
+ dfhf <- read.csv(i,sep=";",skip = 9)[1:10,]
+ dfhf$gender <- paste0(disease,"_",unlist(strsplit(i,"-"))[1])
+ dfhf$classi_eta <- unlist(strsplit(i,"-"))[2]
+ names(dfhf)[1] = "DENOMINAZI"
+names(dfhf)[2] = disease
+ results[[i]] = dfhf
+}
+d <- bind_rows(results)
+d[d$hf == "(*)",]$hf <- 0
+d <- tidyr::spread(d, key = gender, value = disease)
+d[d$DENOMINAZI == "ASL Roma 1",]$DENOMINAZI <- "ROMA 1"
+d[d$DENOMINAZI == "ASL Roma 2",]$DENOMINAZI <- "ROMA 2"
+d[d$DENOMINAZI == "ASL Roma 3",]$DENOMINAZI <- "ROMA 3"
+d[d$DENOMINAZI == "ASL Roma 4",]$DENOMINAZI <- "ROMA 4"
+d[d$DENOMINAZI == "ASL Roma 5",]$DENOMINAZI <- "ROMA 5"
+d[d$DENOMINAZI == "ASL Roma 6",]$DENOMINAZI <- "ROMA 6"
+d[d$DENOMINAZI == "ASL Frosinone",]$DENOMINAZI <- "FROSINONE"
+d[d$DENOMINAZI == "ASL Latina",]$DENOMINAZI <- "LATINA"
+d[d$DENOMINAZI == "ASL Rieti",]$DENOMINAZI <- "RIETI"
+d[d$DENOMINAZI == "ASL Viterbo",]$DENOMINAZI <- "VITERBO"
+
+
 
