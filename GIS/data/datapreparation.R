@@ -60,7 +60,15 @@ df$sumhptASL <- df$hptASL + df$nohptASL
 # write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
 # save(df,file="df_socdemhpt.Rdata")
 
+
+
+
+
+
+
+
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
+
 
 disease_df <- function(folder,disease){
 
@@ -98,4 +106,27 @@ write.csv(df,file=paste0(disease,".csv"),row.names = F)
 }
 
 disease_df("hearth_failure","hf")
+
+# merging health failure
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
+
+df <- read.csv("df_socdemhpt.csv",sep=",")
+df$classi_eta <- str_replace_all(df$classi_eta,"-","_")
+hf <- read.csv("hf.csv",sep=",")
+hf$classi_eta <- paste0("\"",hf$classi_eta,"\"")
+
+df <- merge(df,hf,by =c("DENOMINAZI","classi_eta"))
+
+df$hf <- df$hf_fem + df$hf_male
+df$nohf <- df$totage - df$hf
+
+dftothf <- df %>% group_by(DENOMINAZI) %>% summarize(hfASL = sum(hf))
+df <- merge(df,dftothf,by="DENOMINAZI")
+dftotnohf <- df %>% group_by(DENOMINAZI) %>% summarize(nohfASL = sum(nohf))
+df <- merge(df,dftotnohf,by="DENOMINAZI")
+df$sumhfASL <- df$hfASL + df$nohfASL
+
+write.csv(df, file ="ASL_hpt_hf.csv",row.names = F)
+
+
 
