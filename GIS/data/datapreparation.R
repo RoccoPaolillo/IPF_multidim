@@ -60,32 +60,42 @@ df$sumhptASL <- df$hptASL + df$nohptASL
 # write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
 # save(df,file="df_socdemhpt.Rdata")
 
-setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/hearth_failure/")
-file.list = list.files( pattern = "*.csv")
-disease = "hf"
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
+
+disease_df <- function(folder,disease){
+
+file.list = list.files(paste0(folder,"/"),  pattern = "*.csv")
+
 results = list()
-
 for (i in file.list) {
- dfhf <- read.csv(i,sep=";",skip = 9)[1:10,]
- dfhf$gender <- paste0(disease,"_",unlist(strsplit(i,"-"))[1])
- dfhf$classi_eta <- unlist(strsplit(i,"-"))[2]
- names(dfhf)[1] = "DENOMINAZI"
-names(dfhf)[2] = disease
- results[[i]] = dfhf
+ df <- read.csv(paste0(folder,"/",i),sep=";",skip = 9)[1:10,]
+ df[df == "(*)"] <- 0
+ df$gender <- paste0(disease,"_",unlist(strsplit(i,"-"))[1])
+ df$classi_eta <- unlist(strsplit(i,"-"))[2]
+ names(df)[1] = "DENOMINAZI"
+names(df)[2] = disease
+ results[[i]] = df
 }
-d <- bind_rows(results)
-d[d$hf == "(*)",]$hf <- 0
-d <- tidyr::spread(d, key = gender, value = disease)
-d[d$DENOMINAZI == "ASL Roma 1",]$DENOMINAZI <- "ROMA 1"
-d[d$DENOMINAZI == "ASL Roma 2",]$DENOMINAZI <- "ROMA 2"
-d[d$DENOMINAZI == "ASL Roma 3",]$DENOMINAZI <- "ROMA 3"
-d[d$DENOMINAZI == "ASL Roma 4",]$DENOMINAZI <- "ROMA 4"
-d[d$DENOMINAZI == "ASL Roma 5",]$DENOMINAZI <- "ROMA 5"
-d[d$DENOMINAZI == "ASL Roma 6",]$DENOMINAZI <- "ROMA 6"
-d[d$DENOMINAZI == "ASL Frosinone",]$DENOMINAZI <- "FROSINONE"
-d[d$DENOMINAZI == "ASL Latina",]$DENOMINAZI <- "LATINA"
-d[d$DENOMINAZI == "ASL Rieti",]$DENOMINAZI <- "RIETI"
-d[d$DENOMINAZI == "ASL Viterbo",]$DENOMINAZI <- "VITERBO"
+df <- bind_rows(results)
 
 
+#d[d$disease == "(*)",]$disease <- 0
+# df[df == "(*)"] <- 0
+df <- tidyr::spread(df, key = gender, value = disease)
+df[,3] <- as.numeric(df[,3])
+df[,4] <- as.numeric(df[,4])
+df[df$DENOMINAZI == "ASL Roma 1",]$DENOMINAZI <- "ROMA 1"
+df[df$DENOMINAZI == "ASL Roma 2",]$DENOMINAZI <- "ROMA 2"
+df[df$DENOMINAZI == "ASL Roma 3",]$DENOMINAZI <- "ROMA 3"
+df[df$DENOMINAZI == "ASL Roma 4",]$DENOMINAZI <- "ROMA 4"
+df[df$DENOMINAZI == "ASL Roma 5",]$DENOMINAZI <- "ROMA 5"
+df[df$DENOMINAZI == "ASL Roma 6",]$DENOMINAZI <- "ROMA 6"
+df[df$DENOMINAZI == "ASL Frosinone",]$DENOMINAZI <- "FROSINONE"
+df[df$DENOMINAZI == "ASL Latina",]$DENOMINAZI <- "LATINA"
+df[df$DENOMINAZI == "ASL Rieti",]$DENOMINAZI <- "RIETI"
+df[df$DENOMINAZI == "ASL Viterbo",]$DENOMINAZI <- "VITERBO"
+write.csv(df,file=paste0(disease,".csv"),row.names = F)
+}
+
+disease_df("hearth_failure","hf")
 
