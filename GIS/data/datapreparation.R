@@ -20,46 +20,10 @@ dftotgentomerge <- merge(mar_femASL,mar_manASL, by = c("DENOMINAZI"))
 df <- merge(df,dftotgentomerge,by = c("DENOMINAZI"))
 df$tot_genASL <- df$mar_femASL + df$mar_manASL
 
-dftot_eta <- df %>% group_by(DENOMINAZI) %>% summarize(tot_ageASL = sum(mar_ageASL))
-df <- merge(df,dftot_eta,by = c("DENOMINAZI"))
+dftot_age <- df %>% group_by(DENOMINAZI) %>% summarize(tot_ageASL = sum(mar_ageASL))
+df <- merge(df,dftot_age,by = c("DENOMINAZI"))
 
-# hypertension
-
-# sociodemographics
-
-setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/hypertension/")
-dfhp <- read.csv("df_hypertension.csv",sep=";")
-dfhp[dfhp$DENOMINAZI == "ASL Roma 1",]$DENOMINAZI <- "ROMA 1"
-dfhp[dfhp$DENOMINAZI == "ASL Roma 2",]$DENOMINAZI <- "ROMA 2"
-dfhp[dfhp$DENOMINAZI == "ASL Roma 3",]$DENOMINAZI <- "ROMA 3"
-dfhp[dfhp$DENOMINAZI == "ASL Roma 4",]$DENOMINAZI <- "ROMA 4"
-dfhp[dfhp$DENOMINAZI == "ASL Roma 5",]$DENOMINAZI <- "ROMA 5"
-dfhp[dfhp$DENOMINAZI == "ASL Roma 6",]$DENOMINAZI <- "ROMA 6"
-dfhp[dfhp$DENOMINAZI == "ASL Frosinone",]$DENOMINAZI <- "FROSINONE"
-dfhp[dfhp$DENOMINAZI == "ASL Latina",]$DENOMINAZI <- "LATINA"
-dfhp[dfhp$DENOMINAZI == "ASL Rieti",]$DENOMINAZI <- "RIETI"
-dfhp[dfhp$DENOMINAZI == "ASL Viterbo",]$DENOMINAZI <- "VITERBO"
-dfhp[dfhp$fem_cases == "(*)",]$fem_cases <- 0
-dfhp[dfhp$male_cases == "(*)",]$male_cases <- 0
-names(dfhp)[2] <- "hpt_fem"
-names(dfhp)[3] <- "hpt_male"
-
-# merge datasets
-df <- merge(df,dfhp,by=c("DENOMINAZI","classi_eta"))
-df$hpt_fem <- as.numeric(df$hpt_fem)
-df$hpt_male <- as.numeric(df$hpt_male) 
-df$hpt <- df$hpt_fem + df$hpt_male
-df$nohpt <- df$mar_ageASL - df$hpt
-
-dftot_hpt <- df %>% group_by(DENOMINAZI) %>% summarize(mar_hptASL = sum(hpt))
-df <- merge(df,dftot_hpt,by="DENOMINAZI")
-dftot_nohpt <- df %>% group_by(DENOMINAZI) %>% summarize(mar_nohptASL = sum(nohpt))
-df <- merge(df,dftot_nohpt,by="DENOMINAZI")
-df$tot_hptASL <- df$mar_hptASL + df$mar_nohptASL
-
-setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
-write.csv(df,file="df_socdemhpt.csv",row.names = FALSE)
-save(df,file="df_socdemhpt.Rdata")
+write.csv(df,file="C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_socdem.csv",row.names = FALSE)
 
 
 
@@ -107,12 +71,53 @@ df <- disease_df("hearth_failure","hf")
 # merging health failure
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 
-df <- read.csv("df_socdemhpt.csv",sep=",")
+df <- read.csv("df_socdem.csv",sep=",")
 df$classi_eta <- str_replace_all(df$classi_eta,"-","_")
+df$classi_eta <- str_replace_all(df$classi_eta,"\"","")
 hf <- read.csv("hf.csv",sep=",")
-hf$classi_eta <- paste0("\"",hf$classi_eta,"\"")
+hpt <- read.csv("hpt.csv",sep=",")
+# hf$classi_eta <- paste0("\"",hf$classi_eta,"\"")
 
-df <- merge(df,hf,by =c("DENOMINAZI","classi_eta"))
+df <- reduce(list(df,hf,hpt), full_join, by= c('DENOMINAZI',"classi_eta"))
+
+df$tot_hpt <- df$hpt_fem + df$hpt_male
+df$tot_nohpt <- df$mar_ageASL - df$tot_hpt
+df$male_nohpt <- df$man - df$hpt_male
+df$fem_nohpt <- df$fem - df$hpt_fem
+
+df$tot_hf <- df$hf_fem + df$hf_male
+df$tot_nohf <- df$mar_ageASL - df$tot_hf
+df$male_nohf <- df$man - df$hf_male
+df$fem_nohf <-  df$fem - df$hf_fem
+
+df_marg <- df %>% group_by(DENOMINAZI) %>% summarize(mar_hptASL = sum(tot_hpt),
+                                                     mar_nohptASL = sum(tot_nohpt),
+                                                     mar_hfASL = sum(tot_hf),
+                                                     mar_nohfASL = sum(tot_nohf),
+                                                     mar_hptmanASL = sum(hpt_male),
+                                                     mar_nohptmanASL = sum(male_nohpt),
+                                                     mar_hptfemASL = sum(hpt_fem),
+                                                     mar_nohptfemASL = sum(fem_nohpt),
+                                                     
+                                                     mar_hfmanASL = sum(hf_male),
+                                                     mar_nohfmanASL = sum(male_nohf),
+                                                     mar_hffemASL = sum(hf_fem),
+                                                     mar_nohffemASL = sum(fem_nohf),
+                                                     )
+
+df <- merge(df,df_marg, by= c('DENOMINAZI'))
+
+write.csv(df,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/soc_hpt_hf.csv",row.names = F)
+
+# Age ranges
+
+
+
+df <- read.csv("soc_hpt_hf.csv",sep =",")
+
+
+
+#####
 
 df$hf <- df$hf_fem + df$hf_male
 df$nohf <- df$mar_ageASL - df$hf
