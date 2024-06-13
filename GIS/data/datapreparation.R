@@ -126,7 +126,12 @@ dftotnohf <- df %>% group_by(DENOMINAZI) %>% summarize(nohfASL = sum(nohf))
 df <- merge(df,dftotnohf,by="DENOMINAZI")
 df$sumhfASL <- df$hfASL + df$nohfASL
 
+df$classi_eta <- str_replace_all(df$classi_eta,"\"","")
 write.csv(df, file ="ASL_hpt_hf.csv",row.names = F)
 
 
 
+
+
+  
+  
