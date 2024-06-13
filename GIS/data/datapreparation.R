@@ -129,9 +129,45 @@ df$sumhfASL <- df$hfASL + df$nohfASL
 df$classi_eta <- str_replace_all(df$classi_eta,"\"","")
 write.csv(df, file ="ASL_hpt_hf.csv",row.names = F)
 
+### algorithm
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
+df <- read.csv( file ="ASL_hpt_hf.csv", sep = ",")
+
+df$eta_range <- "00_00"
+df[df$classi_eta %in% c("00_04","05_09","10_14","15_19","20_24","25_29"),]$eta_range <- "00_29"
+df[df$classi_eta %in% c("30_34","35_39","40_44","45_49","50_54","55_59"),]$eta_range <- "30_59"
+df[df$classi_eta %in% c("60_64","65_69","70_74","75_79","80_84","85_100"),]$eta_range <- "60_100"
+
+df_agem_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(agem_range = sum(man))
+df_agef_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(agef_range = sum(fem))
+df_hpt_fem_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(hpt_fem_range = sum(hpt_fem))
+df_hpt_male_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(hpt_male_range = sum(hpt_male))
+df_hf_fem_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(hf_fem_range = sum(hf_fem))
+df_hf_male_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(hf_male_range = sum(hf_male))
+
+df_list <- list(df_agem_range, df_agef_range, df_hpt_fem_range, df_hpt_male_range, df_hf_fem_range, df_hf_male_range) 
+df_range <- reduce(df_list, full_join, by= c('DENOMINAZI',"eta_range"))
+
+df_range$totage_range <- df_range$agem_range + df_range$agef_range
+df_range$tothpt_range <- df_range$hpt_fem_range + df_range$hpt_male_range
+df_range$tothf_range <- df_range$hf_fem_range + df_range$hf_male_range
+
+sumage_ASL <- df_range %>% group_by(DENOMINAZI) %>% summarize(age_ASL = sum(totage_range))
+sumhpt_ASL <- df_range %>% group_by(DENOMINAZI) %>% summarize(hpt_ASL = sum(tothpt_range))
+sumhf_ASL <- df_range %>% group_by(DENOMINAZI) %>% summarize(hf_ASL = sum(tothf_range))
+summale_ASL <- df_range %>% group_by(DENOMINAZI) %>% summarize(male_ASL = sum(agem_range))
+sumfem_ASL <- df_range %>% group_by(DENOMINAZI) %>% summarize(fem_ASL = sum(agef_range))
+
+list_ASL <- list(df_range, sumage_ASL, sumhpt_ASL, sumhf_ASL, summale_ASL, sumfem_ASL)
+df_range <- reduce(list_ASL, full_join, by= c('DENOMINAZI'))
+
+df_range$nohptASL <- df_range$age_ASL - df_range$hpt_ASL
+df_range$sumhptASL <- df_range$hpt_ASL + df_range$nohptASL
+
+df_range$nohfASL <- df_range$age_ASL - df_range$hf_ASL
+df_range$sumhfASL <- df_range$hf_ASL + df_range$nohfASL
+
+df_range$genASL <- df_range$male_ASL + df_range$fem_ASL
+write.csv(df_range, file="df_range.csv",row.names = F)
 
 
-
-
-  
-  
