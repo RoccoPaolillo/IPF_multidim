@@ -1,4 +1,4 @@
-"DENOMINAZI","classi_eta","ita_f","ita_m","stran_f","stran_m","fem","man","totage","femASL","manASL","sumgenASL","sumageASL","hpt_fem","hpt_male","hpt","nohpt","hptASL","nohptASL","sumhptASL"
+"DENOMINAZI","classi_eta","ita_f","ita_m","stran_f","stran_m","fem","man","mar_ageASL","mar_femASL","mar_manASL","tot_genASL","tot_ageASL","hpt_fem","hpt_male","hpt","nohpt","mar_hptASL","mar_nohptASL","tot_hptASL"
 "FROSINONE","""00-04""",8065,8295,600,603,8665,8898,17563,250758,243308,494066,494066,6,4,10,17553,116071,377995,494066
 "FROSINONE","""05-09""",9711,9980,623,671,10334,10651,20985,250758,243308,494066,494066,6,7,13,20972,116071,377995,494066
 "FROSINONE","""10-14""",10330,11013,600,640,10930,11653,22583,250758,243308,494066,494066,11,24,35,22548,116071,377995,494066
