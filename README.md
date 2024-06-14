@@ -17,7 +17,7 @@ Variables the testing is based on (TGT in the interface, which represent the mar
   + Hypertension * gender;  Hypertension * age; the cases no hpt are compued as above
   + Hearth failure * gender;  Hypertension * age; the cases  no hf are computed as above
 
-Data used in TGT in the interface multidimensional_ipf.nlogo sono aggregati sull'intera popolazione Lazio. Il dataframe ‘‘‘soc_hpt_hf.csv‘‘‘ in GIS/data/lazio_ASL_istat integrates the row data extracting the ASL level (DENOMINAZI), but raw data in GIS/data/lazio_ASL_istat report an individual sheet for age * gender downloaded from opensalutelazio. Function disease_df in GIS/data/datapreparation.R is to compose them.
+Data used in TGT in the interface multidimensional_ipf.nlogo sono aggregati sull'intera popolazione Lazio. Il dataframe ```soc_hpt_hf.csv``` in GIS/data/lazio_ASL_istat integrates the row data extracting the ASL level (DENOMINAZI), but raw data in GIS/data/lazio_ASL_istat report an individual sheet for age * gender downloaded from opensalutelazio. Function ```disease_df``` in GIS/data/datapreparation.R is to compose them.
 
 * Objective:
   
