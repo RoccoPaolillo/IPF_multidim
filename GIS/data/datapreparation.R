@@ -3,7 +3,7 @@ library(purrr)
 library(dplyr)
 library(stringr)
 
-# sociodemographics
+# data preparation ###########
 
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/sociodem_asl")
 file.list = list.files( pattern = "*.csv")
@@ -68,7 +68,9 @@ df
 }
 
 df <- disease_df("hearth_failure","hf")
-# merging health failure
+
+# merging datasets 
+
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 
 df <- read.csv("df_socdem.csv",sep=",")
@@ -109,9 +111,9 @@ df <- merge(df,df_marg, by= c('DENOMINAZI'))
 
 write.csv(df,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/soc_hpt_hf.csv",row.names = F)
 
-# Age ranges
+# marginals #######
 
-
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 df <- read.csv("soc_hpt_hf.csv",sep =",")
 
 df$eta_range <- "00_00"
@@ -119,7 +121,8 @@ df[df$classi_eta %in% c("00_04","05_09","10_14","15_19","20_24","25_29"),]$eta_r
 df[df$classi_eta %in% c("30_34","35_39","40_44","45_49","50_54","55_59"),]$eta_range <- "30_59"
 df[df$classi_eta %in% c("60_64","65_69","70_74","75_79","80_84","85_100"),]$eta_range <- "60_100"
 
-df_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(man_r = sum(man),
+# population aggregation
+df_range <- df %>% group_by(eta_range) %>% summarize(man_r = sum(man),
                                                                 fem_r = sum(fem),
                                                                 hpt_man_r = sum(hpt_male),
                                                                 male_nohpt_r =  sum(male_nohpt),
@@ -134,8 +137,48 @@ df_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(man_r = sum(man)
 ) 
 
 
-df <- merge(df,df_range, by = c("DENOMINAZI","eta_range"))
+mar_male_pop <- sum(df_range$man_r)
+mar_fem_pop <- sum(df_range$fem_r)
+mar_hpt_pop <- sum(df_range$hpt_fem_r) + sum(df_range$hpt_man_r)
+mar_nohpt_pop <- sum(df_range$fem_nohpt_r) + sum(df_range$male_nohpt_r)
+mar_hf_pop <- sum(df_range$hf_fem_r) + sum(df_range$hf_male_r)
+mar_nohf_pop <-  sum(df_range$fem_nohf_r) + sum(df_range$male_nohf_r)
+mar_00_29 <- df_range[df_range$eta_range == "00_29",]$mar_ageASL_r
+mar_30_59 <- df_range[df_range$eta_range == "30_59",]$mar_ageASL_r
+mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
-write.csv(df,"C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/soc_hpt_hf.csv",row.names = F)
+
+
+# Algorithm #####
+
+cells = c("M_A1_HT_HF", "M_A1_HT_NHF", "M_A1_NHT_HF", "M_A1_NHT_NHF" ,
+"M_A2_HT_HF", "M_A2_HT_NHF", "M_A2_NHT_HF", "M_A2_NHT_NHF",
+"M_A3_HT_HF" , "M_A3_HT_NHF", "M_A3_NHT_HF", "M_A3_NHT_NHF",
+
+"F_A1_HT_HF", "F_A1_HT_NHF", "F_A1_NHT_HF", "F_A1_NHT_NHF" ,
+"F_A2_HT_HF", "F_A2_HT_NHF", "F_A2_NHT_HF", "F_A2_NHT_NHF",
+"F_A3_HT_HF", "F_A3_HT_NHF", "F_A3_NHT_HF", "F_A3_NHT_NHF")
+
+value = c(rep(1,length(cells)))
+
+ipf <- data.frame(cells, value)
+
+fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
+  
+  sum(ipf[unlist(strsplit(ipf$cells,"_"))[1] == "M" ,]$value)
+
+
+  fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
+
+
+
+ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" ) %>% su
+
+for (i in ipf$cells) {
+ if(unlist(strsplit(i,"_"))[1] == "M"){print(sum(df[df$i]))}
+
+}
+
+print(unlist(strsplit("M_A2_NHT_HF","_"))[1])
 
 
