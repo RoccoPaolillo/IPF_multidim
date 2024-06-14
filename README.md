@@ -5,7 +5,7 @@ Data from [opensalutelazio](https://www.opensalutelazio.it/salute/stato_salute.p
 
 Goal: synthetic data for intersectionality disease and sociodemographic.
 
-Algorithm in ```multidimensional_ipf.nlogo```: IPF for each dimension. Here to iterate manually
+Algorithm in ```multidimensional_ipf.nlogo```: IPF for each dimension. For each cross-category, it reports the number of cases estimated for that category. 
 
 Variables the testing is based on (TGT in the interface, which represent the marginals):
 
