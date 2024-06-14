@@ -13,7 +13,7 @@ Variables the testing is based on (TGT in the interface, which represent the mar
    + Gender, 2 categories (M,F)
    + Age, 3 categories (A1: 00-29, A2: 30-59, A3: 60-100): here they are clustered in these ranges, the original dataset is from 00-04 to 85-100 in steps of 5
      
-* Incidence disease:
+* Incidence disease (chosen because of different distribution):
    + Hypertension, 2 categories (HPT, NHT): cases of no hypertension are computed taking the reference level (total cases, male population, female population and substracting the case of hypertension)
    + Heath failure, 2 categories (HF, NHF): cases of no hearth failure are computed taking the reference level (total cases, male population, female population and substracting the case of hearth failure)
 
