@@ -69,7 +69,7 @@ df
 
 df <- disease_df("hearth_failure","hf")
 
-# merging datasets #####
+# merging datasets 
 
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 
@@ -111,9 +111,9 @@ df <- merge(df,df_marg, by= c('DENOMINAZI'))
 
 write.csv(df,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/soc_hpt_hf.csv",row.names = F)
 
-# algorithm #######
+# marginals #######
 
-
+setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 df <- read.csv("soc_hpt_hf.csv",sep =",")
 
 df$eta_range <- "00_00"
@@ -148,6 +148,8 @@ mar_30_59 <- df_range[df_range$eta_range == "30_59",]$mar_ageASL_r
 mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
 
+
+# Algorithm #####
 
 cells = c("M_A1_HT_HF", "M_A1_HT_NHF", "M_A1_NHT_HF", "M_A1_NHT_NHF" ,
 "M_A2_HT_HF", "M_A2_HT_NHF", "M_A2_NHT_HF", "M_A2_NHT_NHF",
