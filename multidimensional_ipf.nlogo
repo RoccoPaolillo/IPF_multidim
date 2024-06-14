@@ -1,26 +1,26 @@
 globals [
-  M_A1_HT_HF M_A1_HT_NHF M_A1_NHT_HF M_A1_NHT_NHF
-  M_A2_HT_HF M_A2_HT_NHF M_A2_NHT_HF M_A2_NHT_NHF
-  M_A3_HT_HF M_A3_HT_NHF M_A3_NHT_HF M_A3_NHT_NHF
+  M_A1_HPT_HF M_A1_HPT_NHF M_A1_NHT_HF M_A1_NHT_NHF
+  M_A2_HPT_HF M_A2_HPT_NHF M_A2_NHT_HF M_A2_NHT_NHF
+  M_A3_HPT_HF M_A3_HPT_NHF M_A3_NHT_HF M_A3_NHT_NHF
 
-  F_A1_HT_HF F_A1_HT_NHF F_A1_NHT_HF F_A1_NHT_NHF
-  F_A2_HT_HF F_A2_HT_NHF F_A2_NHT_HF F_A2_NHT_NHF
-  F_A3_HT_HF F_A3_HT_NHF F_A3_NHT_HF F_A3_NHT_NHF
+  F_A1_HPT_HF F_A1_HPT_NHF F_A1_NHT_HF F_A1_NHT_NHF
+  F_A2_HPT_HF F_A2_HPT_NHF F_A2_NHT_HF F_A2_NHT_NHF
+  F_A3_HPT_HF F_A3_HPT_NHF F_A3_NHT_HF F_A3_NHT_NHF
 
- fitted_M fitted_F fitted_HT fitted_NHT fitted_HF fitted_NHF fitted_A1 fitted_A2 fitted_A3
+ fitted_M fitted_F fitted_HPT fitted_NHT fitted_HF fitted_NHF fitted_A1 fitted_A2 fitted_A3
 ]
 
 
 
 to setup
 
- set M_A1_HT_HF 1 set M_A1_HT_NHF 1   set M_A1_NHT_HF 1  set  M_A1_NHT_NHF 1
-  set  M_A2_HT_HF 1  set  M_A2_HT_NHF 1   set M_A2_NHT_HF 1   set M_A2_NHT_NHF 1
-  set  M_A3_HT_HF 1   set M_A3_HT_NHF 1   set M_A3_NHT_HF 1   set M_A3_NHT_NHF 1
+ set M_A1_HPT_HF 1 set M_A1_HPT_NHF 1   set M_A1_NHT_HF 1  set  M_A1_NHT_NHF 1
+  set  M_A2_HPT_HF 1  set  M_A2_HPT_NHF 1   set M_A2_NHT_HF 1   set M_A2_NHT_NHF 1
+  set  M_A3_HPT_HF 1   set M_A3_HPT_NHF 1   set M_A3_NHT_HF 1   set M_A3_NHT_NHF 1
 
-   set F_A1_HT_HF 1   set F_A1_HT_NHF 1   set F_A1_NHT_HF 1   set F_A1_NHT_NHF  1
-   set F_A2_HT_HF 1   set F_A2_HT_NHF 1   set F_A2_NHT_HF  1  set F_A2_NHT_NHF  1
-   set F_A3_HT_HF 1   set F_A3_HT_NHF 1   set F_A3_NHT_HF  1  set F_A3_NHT_NHF 1
+   set F_A1_HPT_HF 1   set F_A1_HPT_NHF 1   set F_A1_NHT_HF 1   set F_A1_NHT_NHF  1
+   set F_A2_HPT_HF 1   set F_A2_HPT_NHF 1   set F_A2_NHT_HF  1  set F_A2_NHT_NHF  1
+   set F_A3_HPT_HF 1   set F_A3_HPT_NHF 1   set F_A3_NHT_HF  1  set F_A3_NHT_NHF 1
 
 
   update_marginals
@@ -30,29 +30,29 @@ end
 
 to fitting_gender
 
-  set M_A1_HT_HF M_A1_HT_HF * (TGT_M / fitted_M)
- set  M_A1_HT_NHF M_A1_HT_NHF * (TGT_M / fitted_M)
+  set M_A1_HPT_HF M_A1_HPT_HF * (TGT_M / fitted_M)
+ set  M_A1_HPT_NHF M_A1_HPT_NHF * (TGT_M / fitted_M)
   set M_A1_NHT_HF M_A1_NHT_HF *  (TGT_M / fitted_M)
   set M_A1_NHT_NHF M_A1_NHT_NHF * (TGT_M / fitted_M)
-  set M_A2_HT_HF M_A2_HT_HF  * (TGT_M / fitted_M)
-set   M_A2_HT_NHF M_A2_HT_NHF * (TGT_M / fitted_M)
+  set M_A2_HPT_HF M_A2_HPT_HF  * (TGT_M / fitted_M)
+set   M_A2_HPT_NHF M_A2_HPT_NHF * (TGT_M / fitted_M)
  set  M_A2_NHT_HF M_A2_NHT_HF *  (TGT_M / fitted_M)
  set  M_A2_NHT_NHF M_A2_NHT_NHF *  (TGT_M / fitted_M)
- set  M_A3_HT_HF M_A3_HT_HF *  (TGT_M / fitted_M)
- set  M_A3_HT_NHF M_A3_HT_NHF *  (TGT_M / fitted_M)
+ set  M_A3_HPT_HF M_A3_HPT_HF *  (TGT_M / fitted_M)
+ set  M_A3_HPT_NHF M_A3_HPT_NHF *  (TGT_M / fitted_M)
 set   M_A3_NHT_HF M_A3_NHT_HF *  (TGT_M / fitted_M)
  set  M_A3_NHT_NHF M_A3_NHT_NHF *  (TGT_M / fitted_M)
 
- set  F_A1_HT_HF F_A1_HT_HF *  (TGT_F / fitted_F)
-set   F_A1_HT_NHF F_A1_HT_NHF * (TGT_F / fitted_F)
+ set  F_A1_HPT_HF F_A1_HPT_HF *  (TGT_F / fitted_F)
+set   F_A1_HPT_NHF F_A1_HPT_NHF * (TGT_F / fitted_F)
 set   F_A1_NHT_HF  F_A1_NHT_HF * (TGT_F / fitted_F)
  set  F_A1_NHT_NHF F_A1_NHT_NHF * (TGT_F / fitted_F)
- set  F_A2_HT_HF  F_A2_HT_HF * (TGT_F / fitted_F)
-set   F_A2_HT_NHF F_A2_HT_NHF *  (TGT_F / fitted_F)
+ set  F_A2_HPT_HF  F_A2_HPT_HF * (TGT_F / fitted_F)
+set   F_A2_HPT_NHF F_A2_HPT_NHF *  (TGT_F / fitted_F)
  set  F_A2_NHT_HF F_A2_NHT_HF *  (TGT_F / fitted_F)
  set  F_A2_NHT_NHF F_A2_NHT_NHF  *   (TGT_F / fitted_F)
- set  F_A3_HT_HF F_A3_HT_HF * (TGT_F / fitted_F)
-  set F_A3_HT_NHF  F_A3_HT_NHF *  (TGT_F / fitted_F)
+ set  F_A3_HPT_HF F_A3_HPT_HF * (TGT_F / fitted_F)
+  set F_A3_HPT_NHF  F_A3_HPT_NHF *  (TGT_F / fitted_F)
  set  F_A3_NHT_HF F_A3_NHT_HF *  (TGT_F / fitted_F)
  set  F_A3_NHT_NHF F_A3_NHT_NHF *  (TGT_F / fitted_F)
 
@@ -61,102 +61,103 @@ end
 
 to fitting_age
 
-  set M_A1_HT_HF M_A1_HT_HF * (TGT_A1 / fitted_A1)
- set  M_A1_HT_NHF M_A1_HT_NHF * (TGT_A1 / fitted_A1)
+  set M_A1_HPT_HF M_A1_HPT_HF * (TGT_A1 / fitted_A1)
+ set  M_A1_HPT_NHF M_A1_HPT_NHF * (TGT_A1 / fitted_A1)
   set M_A1_NHT_HF M_A1_NHT_HF *  (TGT_A1 / fitted_A1)
   set M_A1_NHT_NHF M_A1_NHT_NHF * (TGT_A1 / fitted_A1)
-  set M_A2_HT_HF M_A2_HT_HF  * (TGT_A2 / fitted_A2)
-set   M_A2_HT_NHF M_A2_HT_NHF * (TGT_A2 / fitted_A2)
+  set M_A2_HPT_HF M_A2_HPT_HF  * (TGT_A2 / fitted_A2)
+set   M_A2_HPT_NHF M_A2_HPT_NHF * (TGT_A2 / fitted_A2)
  set  M_A2_NHT_HF M_A2_NHT_HF *  (TGT_A2 / fitted_A2)
  set  M_A2_NHT_NHF M_A2_NHT_NHF *  (TGT_A2 / fitted_A2)
- set  M_A3_HT_HF M_A3_HT_HF *  (TGT_A3 / fitted_A3)
- set  M_A3_HT_NHF M_A3_HT_NHF *  (TGT_A3 / fitted_A3)
+ set  M_A3_HPT_HF M_A3_HPT_HF *  (TGT_A3 / fitted_A3)
+ set  M_A3_HPT_NHF M_A3_HPT_NHF *  (TGT_A3 / fitted_A3)
 set   M_A3_NHT_HF M_A3_NHT_HF *  (TGT_A3 / fitted_A3)
  set  M_A3_NHT_NHF M_A3_NHT_NHF *  (TGT_A3 / fitted_A3)
 
- set  F_A1_HT_HF F_A1_HT_HF *  (TGT_A1 / fitted_A1)
-set   F_A1_HT_NHF F_A1_HT_NHF * (TGT_A1 / fitted_A1)
+ set  F_A1_HPT_HF F_A1_HPT_HF *  (TGT_A1 / fitted_A1)
+set   F_A1_HPT_NHF F_A1_HPT_NHF * (TGT_A1 / fitted_A1)
 set   F_A1_NHT_HF  F_A1_NHT_HF * (TGT_A1 / fitted_A1)
  set  F_A1_NHT_NHF F_A1_NHT_NHF * (TGT_A1 / fitted_A1)
- set  F_A2_HT_HF  F_A2_HT_HF * (TGT_A2 / fitted_A2)
-set   F_A2_HT_NHF F_A2_HT_NHF *  (TGT_A2 / fitted_A2)
+ set  F_A2_HPT_HF  F_A2_HPT_HF * (TGT_A2 / fitted_A2)
+set   F_A2_HPT_NHF F_A2_HPT_NHF *  (TGT_A2 / fitted_A2)
  set  F_A2_NHT_HF F_A2_NHT_HF *  (TGT_A2 / fitted_A2)
  set  F_A2_NHT_NHF F_A2_NHT_NHF  *   (TGT_A2 / fitted_A2)
- set  F_A3_HT_HF F_A3_HT_HF * (TGT_A3 / fitted_A3)
-  set F_A3_HT_NHF  F_A3_HT_NHF *  (TGT_A3 / fitted_A3)
+ set  F_A3_HPT_HF F_A3_HPT_HF * (TGT_A3 / fitted_A3)
+  set F_A3_HPT_NHF  F_A3_HPT_NHF *  (TGT_A3 / fitted_A3)
  set  F_A3_NHT_HF F_A3_NHT_HF *  (TGT_A3 / fitted_A3)
  set  F_A3_NHT_NHF F_A3_NHT_NHF *  (TGT_A3 / fitted_A3)
   update_marginals
 end
 
 to fitting_hpt
-  set M_A1_HT_HF M_A1_HT_HF * (TGT_HT / fitted_HT)
- set  M_A1_HT_NHF M_A1_HT_NHF * (TGT_HT / fitted_HT)
+  set M_A1_HPT_HF M_A1_HPT_HF * (TGT_HPT / fitted_HPT)
+ set  M_A1_HPT_NHF M_A1_HPT_NHF * (TGT_HPT / fitted_HPT)
   set M_A1_NHT_HF M_A1_NHT_HF *   (TGT_NHT / fitted_NHT)
   set M_A1_NHT_NHF M_A1_NHT_NHF *    (TGT_NHT / fitted_NHT)
-  set M_A2_HT_HF M_A2_HT_HF  * (TGT_HT / fitted_HT)
-set   M_A2_HT_NHF M_A2_HT_NHF *  (TGT_HT / fitted_HT)
+  set M_A2_HPT_HF M_A2_HPT_HF  * (TGT_HPT / fitted_HPT)
+set   M_A2_HPT_NHF M_A2_HPT_NHF *  (TGT_HPT / fitted_HPT)
  set  M_A2_NHT_HF M_A2_NHT_HF *     (TGT_NHT / fitted_NHT)
  set  M_A2_NHT_NHF M_A2_NHT_NHF *    (TGT_NHT / fitted_NHT)
- set  M_A3_HT_HF M_A3_HT_HF *   (TGT_HT / fitted_HT)
- set  M_A3_HT_NHF M_A3_HT_NHF *   (TGT_HT / fitted_HT)
+ set  M_A3_HPT_HF M_A3_HPT_HF *   (TGT_HPT / fitted_HPT)
+ set  M_A3_HPT_NHF M_A3_HPT_NHF *   (TGT_HPT / fitted_HPT)
 set   M_A3_NHT_HF M_A3_NHT_HF *    (TGT_NHT / fitted_NHT)
  set  M_A3_NHT_NHF M_A3_NHT_NHF *    (TGT_NHT / fitted_NHT)
 
- set  F_A1_HT_HF F_A1_HT_HF *  (TGT_HT / fitted_HT)
-set   F_A1_HT_NHF F_A1_HT_NHF *   (TGT_HT / fitted_HT)
+ set  F_A1_HPT_HF F_A1_HPT_HF *  (TGT_HPT / fitted_HPT)
+set   F_A1_HPT_NHF F_A1_HPT_NHF *   (TGT_HPT / fitted_HPT)
 set   F_A1_NHT_HF  F_A1_NHT_HF *   (TGT_NHT / fitted_NHT)
  set  F_A1_NHT_NHF F_A1_NHT_NHF *   (TGT_NHT / fitted_NHT)
- set  F_A2_HT_HF  F_A2_HT_HF *  (TGT_HT / fitted_HT)
-set   F_A2_HT_NHF F_A2_HT_NHF *   (TGT_HT / fitted_HT)
+ set  F_A2_HPT_HF  F_A2_HPT_HF *  (TGT_HPT / fitted_HPT)
+set   F_A2_HPT_NHF F_A2_HPT_NHF *   (TGT_HPT / fitted_HPT)
  set  F_A2_NHT_HF F_A2_NHT_HF *     (TGT_NHT / fitted_NHT)
  set  F_A2_NHT_NHF F_A2_NHT_NHF  *     (TGT_NHT / fitted_NHT)
- set  F_A3_HT_HF F_A3_HT_HF *   (TGT_HT / fitted_HT)
-  set F_A3_HT_NHF  F_A3_HT_NHF *   (TGT_HT / fitted_HT)
+ set  F_A3_HPT_HF F_A3_HPT_HF *   (TGT_HPT / fitted_HPT)
+  set F_A3_HPT_NHF  F_A3_HPT_NHF *   (TGT_HPT / fitted_HPT)
  set  F_A3_NHT_HF F_A3_NHT_HF *     (TGT_NHT / fitted_NHT)
  set  F_A3_NHT_NHF F_A3_NHT_NHF *     (TGT_NHT / fitted_NHT)
   update_marginals
 end
 
-to fitting_hm
-  set M_A1_HT_HF M_A1_HT_HF * (TGT_HT / fitted_HF)
- set  M_A1_HT_NHF M_A1_HT_NHF * (TGT_HT / fitted_NF)
-  set M_A1_NHT_HF M_A1_NHT_HF *   (TGT_NHT / fitted_HF)
-  set M_A1_NHT_NHF M_A1_NHT_NHF *    (TGT_NHT / fitted_NF)
-  set M_A2_HT_HF M_A2_HT_HF  * (TGT_HT / fitted_HF)
-set   M_A2_HT_NHF M_A2_HT_NHF *  (TGT_HT / fitted_NF)
- set  M_A2_NHT_HF M_A2_NHT_HF *     (TGT_NHT / fitted_HF)
- set  M_A2_NHT_NHF M_A2_NHT_NHF *    (TGT_NHT / fitted_NF)
- set  M_A3_HT_HF M_A3_HT_HF *   (TGT_HT / fitted_HF)
- set  M_A3_HT_NHF M_A3_HT_NHF *   (TGT_HT / fitted_NF)
-set   M_A3_NHT_HF M_A3_NHT_HF *    (TGT_NHT / fitted_HF)
- set  M_A3_NHT_NHF M_A3_NHT_NHF *    (TGT_NHT / fitted_NF)
+to fitting_hf
+  set M_A1_HPT_HF M_A1_HPT_HF * (TGT_HF / fitted_HF)
+ set  M_A1_HPT_NHF M_A1_HPT_NHF * (TGT_NHF / fitted_NHF)
+  set M_A1_NHT_HF M_A1_NHT_HF *   (TGT_HF / fitted_HF)
+  set M_A1_NHT_NHF M_A1_NHT_NHF *    (TGT_NHF / fitted_NHF)
+  set M_A2_HPT_HF M_A2_HPT_HF  * (TGT_HF / fitted_HF)
+set   M_A2_HPT_NHF M_A2_HPT_NHF *  (TGT_NHF / fitted_NHF)
+ set  M_A2_NHT_HF M_A2_NHT_HF *     (TGT_HF / fitted_HF)
+ set  M_A2_NHT_NHF M_A2_NHT_NHF *    (TGT_NHF / fitted_NHF)
+ set  M_A3_HPT_HF M_A3_HPT_HF *   (TGT_HF / fitted_HF)
+ set  M_A3_HPT_NHF M_A3_HPT_NHF *   (TGT_NHF / fitted_NHF)
+set   M_A3_NHT_HF M_A3_NHT_HF *    (TGT_HF / fitted_HF)
+ set  M_A3_NHT_NHF M_A3_NHT_NHF *    (TGT_NHF / fitted_NHF)
 
- set  F_A1_HT_HF F_A1_HT_HF *  (TGT_HT / fitted_HF)
-set   F_A1_HT_NHF F_A1_HT_NHF *   (TGT_HT / fitted_NF)
-set   F_A1_NHT_HF  F_A1_NHT_HF *   (TGT_NHT / fitted_HF)
- set  F_A1_NHT_NHF F_A1_NHT_NHF *   (TGT_NHT / fitted_NF)
- set  F_A2_HT_HF  F_A2_HT_HF *  (TGT_HT / fitted_HF)
-set   F_A2_HT_NHF F_A2_HT_NHF *   (TGT_HT / fitted_NF)
- set  F_A2_NHT_HF F_A2_NHT_HF *     (TGT_NHT / fitted_HF)
- set  F_A2_NHT_NHF F_A2_NHT_NHF  *     (TGT_NHT / fitted_NF)
- set  F_A3_HT_HF F_A3_HT_HF *   (TGT_HT / fitted_HF)
-  set F_A3_HT_NHF  F_A3_HT_NHF *   (TGT_HT / fitted_NF)
- set  F_A3_NHT_HF F_A3_NHT_HF *     (TGT_NHT / fitted_HF)
- set  F_A3_NHT_NHF F_A3_NHT_NHF *     (TGT_NHT / fitted_NF)
+ set  F_A1_HPT_HF F_A1_HPT_HF *  (TGT_HF / fitted_HF)
+set   F_A1_HPT_NHF F_A1_HPT_NHF *   (TGT_NHF / fitted_NHF)
+set   F_A1_NHT_HF  F_A1_NHT_HF *   (TGT_HF / fitted_HF)
+ set  F_A1_NHT_NHF F_A1_NHT_NHF *   (TGT_NHF / fitted_NHF)
+ set  F_A2_HPT_HF  F_A2_HPT_HF *  (TGT_HF / fitted_HF)
+set   F_A2_HPT_NHF F_A2_HPT_NHF *   (TGT_NHF / fitted_NHF)
+ set  F_A2_NHT_HF F_A2_NHT_HF *     (TGT_HF / fitted_HF)
+ set  F_A2_NHT_NHF F_A2_NHT_NHF  *     (TGT_NHF / fitted_NHF)
+ set  F_A3_HPT_HF F_A3_HPT_HF *   (TGT_HF / fitted_HF)
+  set F_A3_HPT_NHF  F_A3_HPT_NHF *   (TGT_NHF / fitted_NHF)
+ set  F_A3_NHT_HF F_A3_NHT_HF *     (TGT_HF / fitted_HF)
+ set  F_A3_NHT_NHF F_A3_NHT_NHF *     (TGT_NHF / fitted_NHF)
   update_marginals
 end
 
 to update_marginals
 
-  set fitted_M ( M_A1_HT_HF + M_A1_HT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  +  M_A2_HT_HF + M_A2_HT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +   M_A3_HT_HF +  M_A3_HT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF)
-  set fitted_F (F_A1_HT_HF +  F_A1_HT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF +   F_A2_HT_HF +  F_A2_HT_NHF  + F_A2_NHT_HF +  F_A2_NHT_NHF +   F_A3_HT_HF +  F_A3_HT_NHF +  F_A3_NHT_HF +  F_A3_NHT_NHF)
-  set fitted_HT ( M_A1_HT_HF + M_A1_HT_NHF + M_A2_HT_HF + M_A2_HT_NHF + M_A3_HT_HF +  M_A3_HT_NHF + F_A1_HT_HF +  F_A1_HT_NHF + F_A2_HT_HF +  F_A2_HT_NHF + F_A3_HT_HF +  F_A3_HT_NHF)
+  set fitted_M ( M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  +  M_A2_HPT_HF + M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +   M_A3_HPT_HF +  M_A3_HPT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF)
+  set fitted_F (F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF +   F_A2_HPT_HF +  F_A2_HPT_NHF  + F_A2_NHT_HF +  F_A2_NHT_NHF +   F_A3_HPT_HF +  F_A3_HPT_NHF +  F_A3_NHT_HF +  F_A3_NHT_NHF)
+  set fitted_HPT ( M_A1_HPT_HF + M_A1_HPT_NHF + M_A2_HPT_HF + M_A2_HPT_NHF + M_A3_HPT_HF +  M_A3_HPT_NHF + F_A1_HPT_HF +  F_A1_HPT_NHF + F_A2_HPT_HF +  F_A2_HPT_NHF + F_A3_HPT_HF +  F_A3_HPT_NHF)
   set fitted_NHT (M_A1_NHT_HF +  M_A1_NHT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF + F_A1_NHT_HF +  F_A1_NHT_NHF + F_A2_NHT_HF +  F_A2_NHT_NHF + F_A3_NHT_HF +  F_A3_NHT_NHF)
-  set fitted_A1 ( M_A1_HT_HF + M_A1_HT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  + F_A1_HT_HF +  F_A1_HT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF)
-  set fitted_A2 (M_A2_HT_HF +  M_A2_HT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  F_A2_HT_HF +  F_A2_HT_NHF +  F_A2_NHT_HF +  F_A2_NHT_NHF)
-  set fitted_A3 (M_A3_HT_HF +   M_A3_HT_NHF +   M_A3_NHT_HF + M_A3_NHT_NHF + F_A3_HT_HF + F_A3_HT_NHF + F_A3_NHT_HF + F_A3_NHT_NHF)
-
+  set fitted_A1 ( M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  + F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF)
+  set fitted_A2 (M_A2_HPT_HF +  M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  F_A2_HPT_HF +  F_A2_HPT_NHF +  F_A2_NHT_HF +  F_A2_NHT_NHF)
+  set fitted_A3 (M_A3_HPT_HF +   M_A3_HPT_NHF +   M_A3_NHT_HF + M_A3_NHT_NHF + F_A3_HPT_HF + F_A3_HPT_NHF + F_A3_NHT_HF + F_A3_NHT_NHF)
+  set fitted_HF ( M_A1_HPT_HF +  M_A1_NHT_HF +  M_A2_HPT_HF +  M_A2_NHT_HF  +   M_A3_HPT_HF +  M_A3_NHT_HF + F_A1_HPT_HF +  F_A1_NHT_HF +   F_A2_HPT_HF + F_A2_NHT_HF + F_A3_HPT_HF + F_A3_NHT_HF )
+  set fitted_NHF (  M_A1_HPT_NHF  +  M_A1_NHT_NHF + M_A2_HPT_NHF +  M_A2_NHT_NHF + M_A3_HPT_NHF + M_A3_NHT_NHF + F_A1_HPT_NHF + F_A1_NHT_NHF +  F_A2_HPT_NHF  + F_A2_NHT_NHF +  F_A3_HPT_NHF +  F_A3_NHT_NHF)
 end
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -187,493 +188,747 @@ ticks
 30.0
 
 INPUTBOX
-53
-269
-139
-329
-TGT_B
-90.0
+471
+186
+555
+246
+TGT_A3
+1755721.0
 1
 0
 Number
 
 INPUTBOX
-52
-331
-138
-391
-TGT_S
-1.0
+287
+355
+373
+415
+TGT_HPT
+1193445.0
 1
 0
 Number
 
 INPUTBOX
-55
-143
-139
-203
-TGT_C
-45.0
+277
+185
+361
+245
+TGT_A1
+1745215.0
 1
 0
 Number
 
 INPUTBOX
-55
-205
-139
-265
-TGT_T
-45.0
-1
-0
-Number
-
-INPUTBOX
-54
-19
-138
-79
-TGT_R
-15.0
-1
-0
-Number
-
-INPUTBOX
-54
-81
-138
-141
-TGT_G
-451.0
-1
-0
-Number
-
-MONITOR
-255
-67
-317
-112
-r_c_b_0
-r_c_b_0
-17
-1
-11
-
-MONITOR
-315
-67
-374
-112
-r_c_s_0
-r_c_s_0
-17
-1
-11
-
-MONITOR
-315
-117
 372
-162
-r_t_s_0
-r_t_s_0
-17
+187
+456
+247
+TGT_A2
+2832088.0
+1
+0
+Number
+
+INPUTBOX
+284
+38
+368
+98
+TGT_M
+3073047.0
+1
+0
+Number
+
+INPUTBOX
+379
+38
+463
+98
+TGT_F
+3259977.0
+1
+0
+Number
+
+MONITOR
+635
+119
+732
+164
+M_A1_HPT_HF
+M_A1_HPT_HF
+2
 1
 11
 
 MONITOR
-437
-67
-501
-112
-g_c_b_0
-g_c_b_0
-17
-1
-11
-
-MONITOR
-377
-66
-439
-111
-g_c_s_0
-g_c_s_0
-17
-1
-11
-
-MONITOR
-438
-118
-500
-163
-g_t_b_0
-g_t_b_0
-17
-1
-11
-
-MONITOR
-253
+747
 117
-312
+852
 162
-r_t_b_0
-r_t_b_0
-17
+M_A1_HPT_NHF
+M_A1_HPT_NHF
+2
 1
 11
 
 MONITOR
+747
+169
+852
+214
+M_A2_HPT_NHF
+M_A2_HPT_NHF
+2
+1
+11
+
+MONITOR
+972
+116
+1078
+161
+M_A1_NHT_NHF
+M_A1_NHT_NHF
+2
+1
+11
+
+MONITOR
+862
+117
+960
+162
+M_A1_NHT_HF
+M_A1_NHT_HF
+2
+1
+11
+
+MONITOR
+973
+166
+1079
+211
+M_A2_NHT_NHF
+M_A2_NHT_NHF
+2
+1
+11
+
+MONITOR
+633
+169
+730
+214
+M_A2_HPT_HF
+M_A2_HPT_HF
+2
+1
+11
+
+MONITOR
+864
+168
+962
+213
+M_A2_NHT_HF
+M_A2_NHT_HF
+2
+1
+11
+
+MONITOR
+284
+101
+366
+146
+fitted_M
+M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  +  M_A2_HPT_HF + M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +   M_A3_HPT_HF +  M_A3_HPT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+381
+104
+462
+149
+fitted_F
+F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF +   F_A2_HPT_HF +  F_A2_HPT_NHF  + F_A2_NHT_HF +  F_A2_NHT_NHF +   F_A3_HPT_HF +  F_A3_HPT_NHF +  F_A3_NHT_HF +  F_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+279
+256
+359
+301
+fitted_A1
+M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  + F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF
+2
+1
+11
+
+MONITOR
+368
+255
+458
+300
+fitted_A2
+M_A2_HPT_HF +  M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  F_A2_HPT_HF +  F_A2_HPT_NHF +  F_A2_NHT_HF +  F_A2_NHT_NHF
+2
+1
+11
+
+MONITOR
+468
+254
+552
+299
+fitted_A3
+M_A3_HPT_HF +   M_A3_HPT_NHF +   M_A3_NHT_HF + M_A3_NHT_NHF + F_A3_HPT_HF + F_A3_HPT_NHF + F_A3_NHT_HF + F_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+288
+417
+372
+462
+fitted_HPT
+M_A1_HPT_HF + M_A1_HPT_NHF + M_A2_HPT_HF + M_A2_HPT_NHF + M_A3_HPT_HF +  M_A3_HPT_NHF + F_A1_HPT_HF +  F_A1_HPT_NHF + F_A2_HPT_HF +  F_A2_HPT_NHF + F_A3_HPT_HF +  F_A3_HPT_NHF
+2
+1
+11
+
+BUTTON
+28
+45
+95
+78
+setup
+setup
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+191
+83
+273
+116
+fitting_gender
+fitting_gender
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+185
+233
+264
+266
+fitting_age
+fitting_age
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+189
+395
+270
+428
+fitting_hpt
+fitting_hpt
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+632
+222
+729
+267
+M_A3_HPT_HF
+M_A3_HPT_HF
+2
+1
+11
+
+MONITOR
+750
+219
+855
+264
+M_A3_HPT_NHF
+M_A3_HPT_NHF
+2
+1
+11
+
+MONITOR
+865
+219
+963
+264
+M_A3_NHT_HF
+M_A3_NHT_HF
+2
+1
+11
+
+MONITOR
+972
+221
+1078
+266
+M_A3_NHT_NHF
+M_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+631
+273
+725
+318
+F_A1_HPT_HF
+F_A1_HPT_HF
+2
+1
+11
+
+MONITOR
+752
+268
+855
+313
+F_A1_HPT_NHF
+F_A1_HPT_NHF
+2
+1
+11
+
+MONITOR
+868
+268
+963
+313
+F_A1_NHT_HF
+F_A1_NHT_HF
+2
+1
+11
+
+MONITOR
+973
+268
+1076
+313
+F_A1_NHT_NHF
+F_A1_NHT_NHF
+2
+1
+11
+
+INPUTBOX
+379
+356
+466
+416
+TGT_NHT
+5139579.0
+1
+0
+Number
+
+INPUTBOX
+280
+505
+365
+565
+TGT_HF
+93926.0
+1
+0
+Number
+
+MONITOR
+378
+419
+468
+464
+fitted_NHT
+M_A1_NHT_HF +  M_A1_NHT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF + F_A1_NHT_HF +  F_A1_NHT_NHF + F_A2_NHT_HF +  F_A2_NHT_NHF + F_A3_NHT_HF +  F_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+282
+574
+365
+619
+fitted_HF
+M_A1_HPT_HF +  M_A1_NHT_HF +  M_A2_HPT_HF +  M_A2_NHT_HF  +   M_A3_HPT_HF +  M_A3_NHT_HF + F_A1_HPT_HF +  F_A1_NHT_HF +   F_A2_HPT_HF + F_A2_NHT_HF + F_A3_HPT_HF + F_A3_NHT_HF
+2
+1
+11
+
+BUTTON
+186
+540
+263
+573
+fitting_hf
+fitting_hf
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+INPUTBOX
+370
+505
+457
+565
+TGT_NHF
+6239098.0
+1
+0
+Number
+
+MONITOR
+633
+325
+727
+370
+F_A2_HPT_HF
+F_A2_HPT_HF
+2
+1
+11
+
+MONITOR
+750
+321
+853
+366
+F_A2_HPT_NHF
+F_A2_HPT_NHF
+2
+1
+11
+
+MONITOR
+865
+321
+960
+366
+F_A2_NHT_HF
+F_A2_NHT_HF
+2
+1
+11
+
+MONITOR
+973
+319
+1076
+364
+F_A2_NHT_NHF
+F_A2_NHT_NHF
+2
+1
+11
+
+MONITOR
+634
 375
-115
-435
-160
-g_t_s_0
-g_t_s_0
-17
+728
+420
+F_A3_HPT_HF
+F_A3_HPT_HF
+2
 1
 11
 
 MONITOR
-143
-24
-201
-69
-fitted_R
-r_c_b_0 + r_t_b_0 + r_c_s_0 + r_t_s_0 + \nr_c_b_1 + r_t_b_1 + r_c_s_1 + r_t_s_1
-17
+751
+372
+854
+417
+F_A3_HPT_NHF
+F_A3_HPT_NHF
+2
+1
+11
+
+MONITOR
+867
+369
+962
+414
+F_A3_NHT_HF
+F_A3_NHT_HF
+2
+1
+11
+
+MONITOR
+974
+369
+1077
+414
+F_A3_NHT_NHF
+F_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+368
+573
+457
+618
+fitted_NHF
+M_A1_HPT_NHF  +  M_A1_NHT_NHF + M_A2_HPT_NHF +  M_A2_NHT_NHF + M_A3_HPT_NHF + M_A3_NHT_NHF + F_A1_HPT_NHF + F_A1_NHT_NHF +  F_A2_HPT_NHF  + F_A2_NHT_NHF +  F_A3_HPT_NHF +  F_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+1234
+164
+1315
+209
+M_HPT
+M_A1_HPT_HF + \nM_A2_HPT_HF + \nM_A3_HPT_HF +\nM_A1_HPT_NHF +\nM_A2_HPT_NHF +\nM_A3_HPT_NHF
+2
+1
+11
+
+MONITOR
+1235
+214
+1316
+259
+F_HPT
+F_A1_HPT_HF + \nF_A1_HPT_NHF +\nF_A2_HPT_HF +\nF_A2_HPT_NHF +\n F_A3_HPT_HF +\n F_A3_HPT_NHF
+2
+1
+11
+
+MONITOR
+1329
+155
+1404
+200
+M_A1_HPT
+M_A1_HPT_HF + M_A1_HPT_NHF
+2
+1
+11
+
+MONITOR
+1330
+204
+1405
+249
+M_A2_HPT
+M_A2_HPT_HF + M_A2_HPT_NHF
+2
+1
+11
+
+MONITOR
+1331
+253
+1406
+298
+M_A2_HPT
+M_A3_HPT_HF + M_A3_HPT_NHF
+2
 1
 11
 
 TEXTBOX
-907
-32
-1057
-71
-RED/GREEN\nCIRCLE/TRIANGLE\nBIG/SMALL
+650
+66
+1035
+104
+Each crossed category\nGender_Agerange_hyperthension_heartfailure
+14
+0.0
+1
+
+TEXTBOX
+148
+48
+163
+516
+I\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI
 10
 0.0
 1
 
-MONITOR
-143
-86
-209
-131
-fitted_G
-g_c_b_0 + g_t_b_0 + g_c_s_0 + g_t_s_0 +\ng_c_b_1 + g_t_b_1 + g_c_s_1 + g_t_s_1
-17
-1
-11
-
-MONITOR
-146
-150
-213
-195
-fitted_C
-r_c_b_0 + g_c_b_0 + r_c_s_0 + g_c_s_0 + \nr_c_b_1 + g_c_b_1 + r_c_s_1 + g_c_s_1
-17
-1
-11
-
-MONITOR
-147
-212
-213
-257
-fitted_T
-r_t_b_0 + g_t_b_0 + r_t_s_0 + g_t_s_0 + \nr_t_b_1 + g_t_b_1 + r_t_s_1 + g_t_s_1
-17
-1
-11
-
-MONITOR
-152
-277
-217
-322
-fitted_B
-r_c_b_0 + r_t_b_0 + g_c_b_0 + g_t_b_0 + \nr_c_b_1 + r_t_b_1 + g_c_b_1 + g_t_b_1
-17
-1
-11
-
-MONITOR
-154
-335
-219
-380
-fitted_S
-r_c_s_0 + r_t_s_0 + g_c_s_0 + g_t_s_0 + \nr_c_s_1 + r_t_s_1 + g_c_s_1 + g_t_s_1
-17
-1
-11
-
-BUTTON
-1034
-148
-1097
-181
-setup
-setup
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1299
-241
-1425
-274
-update_marginals
-update_marginals
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1003
-215
-1099
-248
-fitting_color
-fitting_color
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1003
-254
-1099
-287
-fitting_shape
-fitting_shape
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1002
-293
-1099
-326
-fitting_size
-fitting_size
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-MONITOR
-249
-177
-311
-222
-r_c_b_1
-r_c_b_1
-17
-1
-11
-
-MONITOR
-314
-176
-373
-221
-r_c_s_1
-r_c_s_1
-17
-1
-11
-
-MONITOR
-382
-172
-444
-217
-g_c_s_1
-g_c_s_1
-17
-1
-11
-
-MONITOR
-448
-174
-512
-219
-g_c_b_1
-g_c_b_1
-17
-1
-11
-
-MONITOR
-249
-228
-308
-273
-r_t_b_1
-r_t_b_1
-17
-1
-11
-
-MONITOR
-315
-224
-372
-269
-r_t_s_1
-r_t_s_1
-17
-1
-11
-
-MONITOR
-382
-220
-442
-265
-g_t_s_1
-g_t_s_1
-17
-1
-11
-
-MONITOR
-449
-221
+TEXTBOX
+140
 511
-266
-g_t_b_1
-g_t_b_1
-17
+168
+548
+V
+30
+0.0
 1
-11
 
-INPUTBOX
-52
-395
-137
-455
-TGT_0
-25.0
+TEXTBOX
+206
+58
+265
+76
+GENDER
+14
+0.0
 1
-0
-Number
 
-INPUTBOX
-52
-460
-137
-520
-TGT_1
-65.0
+TEXTBOX
+185
+204
+272
+222
+AGE RANGE 
+14
+0.0
 1
-0
-Number
 
-MONITOR
-158
-403
-215
-448
-fitted_0
-r_c_b_0 + r_t_b_0 + r_c_s_0 + r_t_s_0 +\ng_c_s_0 + g_t_s_0 + g_c_b_0 + g_t_b_0
-17
+TEXTBOX
+304
+168
+332
+186
+00-29
+10
+0.0
 1
-11
 
-MONITOR
-159
-472
-216
-517
-fitted_1
-r_c_b_1 + r_t_b_1 + r_c_s_1 + r_t_s_1 +\ng_c_s_1 + g_t_s_1 + g_c_b_1 + g_t_b_1
-17
+TEXTBOX
+396
+173
+429
+191
+30-59
+10
+0.0
 1
-11
 
-BUTTON
-1003
-330
-1101
+TEXTBOX
+494
+170
+529
+188
+60-100
+10
+0.0
+1
+
+TEXTBOX
+174
 363
-fitting_4s
-fitting_4s
-NIL
+277
+381
+HYPERTENSION
+14
+0.0
 1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
+
+TEXTBOX
+180
+495
+255
+530
+HEART FAILURE
+14
+0.0
+1
+
+TEXTBOX
+1253
+89
+1403
+154
+Combinations observables in data below marginals in the population (e.g. gender*hpt, gender*age*hpt) that should be replicated 
+10
+0.0
+1
+
+TEXTBOX
+284
+11
+455
+29
+Target marginals in the population
+11
+0.0
 1
 
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+IPF multidimensional.  The iterative proportional fitting computes a weight for each cross-category to be reconstructed. Here we extend to more than two categories simultaneously
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+At each iteration, one dimension is fitted, computing weights for that dimension for each cell as [observed  marginal target (TGT) of reference / fitted_marginal of reference]
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Here manually, press sequentially the fitted buttons for each dimension as in the arrow.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+The objective is that fitted marginals correspond to their targets.
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+To include a stop rule when the algorithm is more automated. Make a more efficient code, running a foreach <level> and report of weight to compute. Here manually to inspect
 
 ## NETLOGO FEATURES
 
