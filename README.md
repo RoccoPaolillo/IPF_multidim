@@ -7,11 +7,11 @@ Variables the testing is based on (TGT in the interface, which represent the mar
 
 * Socio-demographics:
    + Gender, 2 categories (M,F)
-   + Age, 3 categories (A1: 00-29, A2: 30-59, A3: 85-100): here they are clustered in these ranges, the original dataset is from 00-04 to 85-100 in steps of 5
+   + Age, 3 categories (A1: 00-29, A2: 30-59, A3: 60-100): here they are clustered in these ranges, the original dataset is from 00-04 to 85-100 in steps of 5
      
 * Incidence disease:
-   + Hypertension, 2 categories (HPT, NOHPT): cases of no hypertension are computed taking the reference level (total cases, male population, female population and substracting the case of hypertension)
-   + Heath failure, 2 categories (HF, NOHF): cases of no hearth failure are computed taking the reference level (total cases, male population, female population and substracting the case of hearth failure)
+   + Hypertension, 2 categories (HPT, NHT): cases of no hypertension are computed taking the reference level (total cases, male population, female population and substracting the case of hypertension)
+   + Heath failure, 2 categories (HF, NHF): cases of no hearth failure are computed taking the reference level (total cases, male population, female population and substracting the case of hearth failure)
 
 * Crossed categories available in the empirical observations:
   + Hypertension * gender;  Hypertension * age; the cases no hpt are compued as above
@@ -23,8 +23,8 @@ Data used in TGT in the interface multidimensional_ipf.nlogo sono aggregati sull
   
 The synthetic data elaborated concern sociodemographics (gender(2)*age(3)) that are actually in the empirical data, and the intersection of incidence disease HPT(2) and HF(2) in each intersection of socio-demographics, for which there is no empirical information that justifies the synthetic reconstruction. For instance, for the category man (M) in the first range (A1):
 * M_A1_HPT_HF (with hypertension and with heart failure)
-* M_A1_NOHPT_HF (without hypertension and with heart failure)
-* M_A1_NOHPT_NOHF (without hypertension and without heart failure)
-* M_A1_HPT_NOHF (with hypertension and without heart failure)
+* M_A1_NHT_HF (without hypertension and with heart failure)
+* M_A1_NHT_NHF (without hypertension and without heart failure)
+* M_A1_HPT_NHF (with hypertension and without heart failure)
   
 In the long  term, with more diseases 
