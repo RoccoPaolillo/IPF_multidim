@@ -149,14 +149,34 @@ mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
 
 
+cells = c("M_A1_HT_HF", "M_A1_HT_NHF", "M_A1_NHT_HF", "M_A1_NHT_NHF" ,
+"M_A2_HT_HF", "M_A2_HT_NHF", "M_A2_NHT_HF", "M_A2_NHT_NHF",
+"M_A3_HT_HF" , "M_A3_HT_NHF", "M_A3_NHT_HF", "M_A3_NHT_NHF",
+
+"F_A1_HT_HF", "F_A1_HT_NHF", "F_A1_NHT_HF", "F_A1_NHT_NHF" ,
+"F_A2_HT_HF", "F_A2_HT_NHF", "F_A2_NHT_HF", "F_A2_NHT_NHF",
+"F_A3_HT_HF", "F_A3_HT_NHF", "F_A3_NHT_HF", "F_A3_NHT_NHF")
+
+value = c(rep(1,length(cells)))
+
+ipf <- data.frame(cells, value)
+
+fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
+  
+  sum(ipf[unlist(strsplit(ipf$cells,"_"))[1] == "M" ,]$value)
+
+
+  fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
 
 
 
+ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" ) %>% su
 
+for (i in ipf$cells) {
+ if(unlist(strsplit(i,"_"))[1] == "M"){print(sum(df[df$i]))}
 
+}
 
-
-
-
+print(unlist(strsplit("M_A2_NHT_HF","_"))[1])
 
 
