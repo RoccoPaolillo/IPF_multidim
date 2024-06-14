@@ -4,9 +4,9 @@ Data from [opensalutelazio](https://www.opensalutelazio.it/salute/stato_salute.p
 Goal: synthetic data for intersectionality disease and sociodemographic.
 
 Variables the testing is based on:
-Socio-demographics:
-  * Gender (M,F)
-  * Age (00-29,30-59,85-100): here they are clustered in this ranges, the original dataset is from 00-04 to 85-100 in steps of 5
+* Socio-demographics:
+   + Gender (M,F)
+   + Age (00-29,30-59,85-100): here they are clustered in this ranges, the original dataset is from 00-04 to 85-100 in steps of 5
 Incidence disease:
   * Hypertension (HPT, NOHPT): cases of no hypertension are computed taking the reference level (total cases, male population, female population and substracting the case of hypertension)
   * Heath failure (HF, NOHF): cases of no hearth failure are computed taking the reference level (total cases, male population, female population and substracting the case of hearth failure)
