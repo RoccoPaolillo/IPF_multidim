@@ -188,10 +188,10 @@ ticks
 30.0
 
 INPUTBOX
-57
-268
-141
-328
+471
+186
+555
+246
 TGT_A3
 1755721.0
 1
@@ -199,10 +199,10 @@ TGT_A3
 Number
 
 INPUTBOX
-16
-339
-102
-399
+287
+355
+373
+415
 TGT_HPT
 1193445.0
 1
@@ -210,10 +210,10 @@ TGT_HPT
 Number
 
 INPUTBOX
-55
-143
-139
-203
+277
+185
+361
+245
 TGT_A1
 1745215.0
 1
@@ -221,10 +221,10 @@ TGT_A1
 Number
 
 INPUTBOX
-55
-205
-139
-265
+372
+187
+456
+247
 TGT_A2
 2832088.0
 1
@@ -232,10 +232,10 @@ TGT_A2
 Number
 
 INPUTBOX
-14
-10
+284
+38
+368
 98
-70
 TGT_M
 3073047.0
 1
@@ -243,10 +243,10 @@ TGT_M
 Number
 
 INPUTBOX
-14
-72
+379
+38
+463
 98
-132
 TGT_F
 3259977.0
 1
@@ -254,10 +254,10 @@ TGT_F
 Number
 
 MONITOR
-289
-27
-386
-72
+635
+119
+732
+164
 M_A1_HPT_HF
 M_A1_HPT_HF
 2
@@ -265,10 +265,10 @@ M_A1_HPT_HF
 11
 
 MONITOR
-396
-32
-501
-77
+747
+117
+852
+162
 M_A1_HPT_NHF
 M_A1_HPT_NHF
 2
@@ -276,10 +276,10 @@ M_A1_HPT_NHF
 11
 
 MONITOR
-386
-85
-491
-130
+747
+169
+852
+214
 M_A2_HPT_NHF
 M_A2_HPT_NHF
 2
@@ -287,10 +287,10 @@ M_A2_HPT_NHF
 11
 
 MONITOR
-620
-31
-726
-76
+972
+116
+1078
+161
 M_A1_NHT_NHF
 M_A1_NHT_NHF
 2
@@ -298,10 +298,10 @@ M_A1_NHT_NHF
 11
 
 MONITOR
-512
-31
-610
-76
+862
+117
+960
+162
 M_A1_NHT_HF
 M_A1_NHT_HF
 2
@@ -309,10 +309,10 @@ M_A1_NHT_HF
 11
 
 MONITOR
-615
-83
-721
-128
+973
+166
+1079
+211
 M_A2_NHT_NHF
 M_A2_NHT_NHF
 2
@@ -320,10 +320,10 @@ M_A2_NHT_NHF
 11
 
 MONITOR
-287
-77
-384
-122
+633
+169
+730
+214
 M_A2_HPT_HF
 M_A2_HPT_HF
 2
@@ -331,10 +331,10 @@ M_A2_HPT_HF
 11
 
 MONITOR
-508
-86
-606
-131
+864
+168
+962
+213
 M_A2_NHT_HF
 M_A2_NHT_HF
 2
@@ -342,10 +342,10 @@ M_A2_NHT_HF
 11
 
 MONITOR
-109
-20
-191
-65
+284
+101
+366
+146
 fitted_M
 M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  +  M_A2_HPT_HF + M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +   M_A3_HPT_HF +  M_A3_HPT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF
 2
@@ -353,10 +353,10 @@ M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  +  M_A2_HPT_HF + M_A2
 11
 
 MONITOR
-109
-69
-190
-114
+381
+104
+462
+149
 fitted_F
 F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF +   F_A2_HPT_HF +  F_A2_HPT_NHF  + F_A2_NHT_HF +  F_A2_NHT_NHF +   F_A3_HPT_HF +  F_A3_HPT_NHF +  F_A3_NHT_HF +  F_A3_NHT_NHF
 2
@@ -364,10 +364,10 @@ F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF +   F_A2_HPT_HF +  F_
 11
 
 MONITOR
-144
-150
-237
-195
+279
+256
+359
+301
 fitted_A1
 M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  + F_A1_HPT_HF +  F_A1_HPT_NHF +  F_A1_NHT_HF +  F_A1_NHT_NHF
 2
@@ -375,10 +375,10 @@ M_A1_HPT_HF + M_A1_HPT_NHF +  M_A1_NHT_HF +  M_A1_NHT_NHF  + F_A1_HPT_HF +  F_A1
 11
 
 MONITOR
-147
-212
-237
-257
+368
+255
+458
+300
 fitted_A2
 M_A2_HPT_HF +  M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  F_A2_HPT_HF +  F_A2_HPT_NHF +  F_A2_NHT_HF +  F_A2_NHT_NHF
 2
@@ -386,10 +386,10 @@ M_A2_HPT_HF +  M_A2_HPT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  F_A2_HPT_HF +  F_A
 11
 
 MONITOR
-150
-271
-241
-316
+468
+254
+552
+299
 fitted_A3
 M_A3_HPT_HF +   M_A3_HPT_NHF +   M_A3_NHT_HF + M_A3_NHT_NHF + F_A3_HPT_HF + F_A3_HPT_NHF + F_A3_NHT_HF + F_A3_NHT_NHF
 2
@@ -397,10 +397,10 @@ M_A3_HPT_HF +   M_A3_HPT_NHF +   M_A3_NHT_HF + M_A3_NHT_NHF + F_A3_HPT_HF + F_A3
 11
 
 MONITOR
-111
-350
-204
-395
+288
+417
+372
+462
 fitted_HPT
 M_A1_HPT_HF + M_A1_HPT_NHF + M_A2_HPT_HF + M_A2_HPT_NHF + M_A3_HPT_HF +  M_A3_HPT_NHF + F_A1_HPT_HF +  F_A1_HPT_NHF + F_A2_HPT_HF +  F_A2_HPT_NHF + F_A3_HPT_HF +  F_A3_HPT_NHF
 2
@@ -408,10 +408,10 @@ M_A1_HPT_HF + M_A1_HPT_NHF + M_A2_HPT_HF + M_A2_HPT_NHF + M_A3_HPT_HF +  M_A3_HP
 11
 
 BUTTON
-1034
-148
-1097
-181
+28
+45
+95
+78
 setup
 setup
 NIL
@@ -425,27 +425,10 @@ NIL
 1
 
 BUTTON
-1299
-241
-1425
-274
-update_marginals
-update_marginals
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1003
-215
-1100
-248
+191
+83
+273
+116
 fitting_gender
 fitting_gender
 NIL
@@ -459,99 +442,99 @@ NIL
 1
 
 BUTTON
-1003
-254
-1099
-287
-fitting_age
-fitting_age
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-BUTTON
-1002
-293
-1099
-326
-fitting_hpt
-fitting_hpt
-NIL
-1
-T
-OBSERVER
-NIL
-NIL
-NIL
-NIL
-1
-
-MONITOR
-284
-137
-381
-182
-M_A3_HPT_HF
-M_A3_HPT_HF
-2
-1
-11
-
-MONITOR
-381
-140
-486
 185
-M_A3_HPT_NHF
-M_A3_HPT_NHF
-2
-1
-11
-
-MONITOR
-498
-143
-596
-188
-M_A3_NHT_HF
-M_A3_NHT_HF
-2
-1
-11
-
-MONITOR
-614
-138
-720
-183
-M_A3_NHT_NHF
-M_A3_NHT_NHF
-2
-1
-11
-
-MONITOR
-283
-188
-377
 233
-F_A1_HPT_HF
-F_A1_HPT_HF
-2
+264
+266
+fitting_age
+fitting_age
+NIL
 1
-11
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
 
-MONITOR
-383
+BUTTON
 189
-486
-234
+395
+270
+428
+fitting_hpt
+fitting_hpt
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+632
+222
+729
+267
+M_A3_HPT_HF
+M_A3_HPT_HF
+2
+1
+11
+
+MONITOR
+750
+219
+855
+264
+M_A3_HPT_NHF
+M_A3_HPT_NHF
+2
+1
+11
+
+MONITOR
+865
+219
+963
+264
+M_A3_NHT_HF
+M_A3_NHT_HF
+2
+1
+11
+
+MONITOR
+972
+221
+1078
+266
+M_A3_NHT_NHF
+M_A3_NHT_NHF
+2
+1
+11
+
+MONITOR
+631
+273
+725
+318
+F_A1_HPT_HF
+F_A1_HPT_HF
+2
+1
+11
+
+MONITOR
+752
+268
+855
+313
 F_A1_HPT_NHF
 F_A1_HPT_NHF
 2
@@ -559,10 +542,10 @@ F_A1_HPT_NHF
 11
 
 MONITOR
-501
-192
-596
-237
+868
+268
+963
+313
 F_A1_NHT_HF
 F_A1_NHT_HF
 2
@@ -570,10 +553,10 @@ F_A1_NHT_HF
 11
 
 MONITOR
-615
-185
-718
-230
+973
+268
+1076
+313
 F_A1_NHT_NHF
 F_A1_NHT_NHF
 2
@@ -581,10 +564,10 @@ F_A1_NHT_NHF
 11
 
 INPUTBOX
-17
-402
-102
-462
+379
+356
+466
+416
 TGT_NHT
 5139579.0
 1
@@ -592,10 +575,10 @@ TGT_NHT
 Number
 
 INPUTBOX
-64
-468
-149
-528
+280
+505
+365
+565
 TGT_HF
 93926.0
 1
@@ -603,10 +586,10 @@ TGT_HF
 Number
 
 MONITOR
-110
-397
-200
-442
+378
+419
+468
+464
 fitted_NHT
 M_A1_NHT_HF +  M_A1_NHT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  M_A3_NHT_HF +  M_A3_NHT_NHF + F_A1_NHT_HF +  F_A1_NHT_NHF + F_A2_NHT_HF +  F_A2_NHT_NHF + F_A3_NHT_HF +  F_A3_NHT_NHF
 2
@@ -614,10 +597,10 @@ M_A1_NHT_HF +  M_A1_NHT_NHF +  M_A2_NHT_HF +  M_A2_NHT_NHF +  M_A3_NHT_HF +  M_A
 11
 
 MONITOR
-153
-483
-244
-528
+282
+574
+365
+619
 fitted_HF
 M_A1_HPT_HF +  M_A1_NHT_HF +  M_A2_HPT_HF +  M_A2_NHT_HF  +   M_A3_HPT_HF +  M_A3_NHT_HF + F_A1_HPT_HF +  F_A1_NHT_HF +   F_A2_HPT_HF + F_A2_NHT_HF + F_A3_HPT_HF + F_A3_NHT_HF
 2
@@ -625,10 +608,10 @@ M_A1_HPT_HF +  M_A1_NHT_HF +  M_A2_HPT_HF +  M_A2_NHT_HF  +   M_A3_HPT_HF +  M_A
 11
 
 BUTTON
-1003
-330
-1101
-363
+186
+540
+263
+573
 fitting_hf
 fitting_hf
 NIL
@@ -642,10 +625,10 @@ NIL
 1
 
 INPUTBOX
-61
-531
-148
-591
+370
+505
+457
+565
 TGT_NHF
 6239098.0
 1
@@ -653,10 +636,10 @@ TGT_NHF
 Number
 
 MONITOR
-285
-240
-379
-285
+633
+325
+727
+370
 F_A2_HPT_HF
 F_A2_HPT_HF
 2
@@ -664,10 +647,10 @@ F_A2_HPT_HF
 11
 
 MONITOR
-381
-242
-484
-287
+750
+321
+853
+366
 F_A2_HPT_NHF
 F_A2_HPT_NHF
 2
@@ -675,10 +658,10 @@ F_A2_HPT_NHF
 11
 
 MONITOR
-498
-245
-593
-290
+865
+321
+960
+366
 F_A2_NHT_HF
 F_A2_NHT_HF
 2
@@ -686,10 +669,10 @@ F_A2_NHT_HF
 11
 
 MONITOR
-606
-244
-709
-289
+973
+319
+1076
+364
 F_A2_NHT_NHF
 F_A2_NHT_NHF
 2
@@ -697,10 +680,10 @@ F_A2_NHT_NHF
 11
 
 MONITOR
-286
-290
-380
-335
+634
+375
+728
+420
 F_A3_HPT_HF
 F_A3_HPT_HF
 2
@@ -708,10 +691,10 @@ F_A3_HPT_HF
 11
 
 MONITOR
-382
-293
-485
-338
+751
+372
+854
+417
 F_A3_HPT_NHF
 F_A3_HPT_NHF
 2
@@ -719,10 +702,10 @@ F_A3_HPT_NHF
 11
 
 MONITOR
-500
-293
-595
-338
+867
+369
+962
+414
 F_A3_NHT_HF
 F_A3_NHT_HF
 2
@@ -730,10 +713,10 @@ F_A3_NHT_HF
 11
 
 MONITOR
-607
-294
-710
-339
+974
+369
+1077
+414
 F_A3_NHT_NHF
 F_A3_NHT_NHF
 2
@@ -741,10 +724,10 @@ F_A3_NHT_NHF
 11
 
 MONITOR
-151
-534
-240
-579
+368
+573
+457
+618
 fitted_NHF
 M_A1_HPT_NHF  +  M_A1_NHT_NHF + M_A2_HPT_NHF +  M_A2_NHT_NHF + M_A3_HPT_NHF + M_A3_NHT_NHF + F_A1_HPT_NHF + F_A1_NHT_NHF +  F_A2_HPT_NHF  + F_A2_NHT_NHF +  F_A3_HPT_NHF +  F_A3_NHT_NHF
 2
@@ -752,10 +735,10 @@ M_A1_HPT_NHF  +  M_A1_NHT_NHF + M_A2_HPT_NHF +  M_A2_NHT_NHF + M_A3_HPT_NHF + M_
 11
 
 MONITOR
-365
-372
-446
-417
+1234
+164
+1315
+209
 M_HPT
 M_A1_HPT_HF + \nM_A2_HPT_HF + \nM_A3_HPT_HF +\nM_A1_HPT_NHF +\nM_A2_HPT_NHF +\nM_A3_HPT_NHF
 2
@@ -763,10 +746,10 @@ M_A1_HPT_HF + \nM_A2_HPT_HF + \nM_A3_HPT_HF +\nM_A1_HPT_NHF +\nM_A2_HPT_NHF +\nM
 11
 
 MONITOR
-366
-422
-447
-467
+1235
+214
+1316
+259
 F_HPT
 F_A1_HPT_HF + \nF_A1_HPT_NHF +\nF_A2_HPT_HF +\nF_A2_HPT_NHF +\n F_A3_HPT_HF +\n F_A3_HPT_NHF
 2
@@ -774,10 +757,10 @@ F_A1_HPT_HF + \nF_A1_HPT_NHF +\nF_A2_HPT_HF +\nF_A2_HPT_NHF +\n F_A3_HPT_HF +\n 
 11
 
 MONITOR
-488
-373
-563
-418
+1329
+155
+1404
+200
 M_A1_HPT
 M_A1_HPT_HF + M_A1_HPT_NHF
 2
@@ -785,10 +768,10 @@ M_A1_HPT_HF + M_A1_HPT_NHF
 11
 
 MONITOR
-489
-422
-564
-467
+1330
+204
+1405
+249
 M_A2_HPT
 M_A2_HPT_HF + M_A2_HPT_NHF
 2
@@ -796,40 +779,156 @@ M_A2_HPT_HF + M_A2_HPT_NHF
 11
 
 MONITOR
-490
-471
-565
-516
+1331
+253
+1406
+298
 M_A2_HPT
 M_A3_HPT_HF + M_A3_HPT_NHF
 2
 1
 11
 
+TEXTBOX
+650
+66
+1035
+104
+Each crossed category\nGender_Agerange_hyperthension_heartfailure
+14
+0.0
+1
+
+TEXTBOX
+148
+48
+163
+516
+I\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI\nI
+10
+0.0
+1
+
+TEXTBOX
+140
+511
+168
+548
+V
+30
+0.0
+1
+
+TEXTBOX
+206
+58
+265
+76
+GENDER
+14
+0.0
+1
+
+TEXTBOX
+185
+204
+272
+222
+AGE RANGE 
+14
+0.0
+1
+
+TEXTBOX
+304
+168
+332
+186
+00-29
+10
+0.0
+1
+
+TEXTBOX
+396
+173
+429
+191
+30-59
+10
+0.0
+1
+
+TEXTBOX
+494
+170
+529
+188
+60-100
+10
+0.0
+1
+
+TEXTBOX
+174
+363
+277
+381
+HYPERTENSION
+14
+0.0
+1
+
+TEXTBOX
+180
+495
+255
+530
+HEART FAILURE
+14
+0.0
+1
+
+TEXTBOX
+1253
+89
+1403
+154
+Combinations observables in data below marginals in the population (e.g. gender*hpt, gender*age*hpt) that should be replicated 
+10
+0.0
+1
+
+TEXTBOX
+284
+11
+455
+29
+Target marginals in the population
+11
+0.0
+1
+
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+IPF multidimensional.  The iterative proportional fitting computes a weight for each cross-category to be reconstructed. Here we extend to more than two categories simultaneously
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+At each iteration, one dimension is fitted, computing weights for that dimension for each cell as [observed  marginal target (TGT) of reference / fitted_marginal of reference]
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Here manually, press sequentially the fitted buttons for each dimension as in the arrow.
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
+The objective is that fitted marginals correspond to their targets.
 
 ## EXTENDING THE MODEL
 
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
+To include a stop rule when the algorithm is more automated. Make a more efficient code, running a foreach <level> and report of weight to compute. Here manually to inspect
 
 ## NETLOGO FEATURES
 
