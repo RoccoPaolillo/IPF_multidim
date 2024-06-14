@@ -31,4 +31,4 @@ The synthetic data elaborated concern sociodemographics (gender(2)*age(3)) that 
 * M_A1_NHT_NHF (without hypertension and without heart failure)
 * M_A1_HPT_NHF (with hypertension and without heart failure)
   
-In the long  term, with more diseases 
+In the long  term, with more diseases and function run for each category, here to test
