@@ -15,6 +15,7 @@ globals [
 
 
 to setup
+   clear-all
   set M_A1 1 set M_A2 1 set M_A3  1 set F_A1  1 set F_A2 1 set F_A3 1
 
  set M_A1_HPT_HF 1 set M_A1_HPT_NHF 1   set M_A1_NHT_HF 1  set  M_A1_NHT_NHF 1
@@ -765,16 +766,6 @@ M_A1_HPT_NHF  +  M_A1_NHT_NHF + M_A2_HPT_NHF +  M_A2_NHT_NHF + M_A3_HPT_NHF + M_
 11
 
 TEXTBOX
-650
-66
-1035
-104
-Each crossed category\nGender_Agerange_hyperthension_heartfailure
-14
-0.0
-1
-
-TEXTBOX
 148
 48
 163
@@ -875,10 +866,10 @@ Target marginals in the population
 1
 
 MONITOR
-609
-123
-682
-168
+590
+56
+663
+101
 NIL
 M_A1
 2
@@ -886,10 +877,10 @@ M_A1
 11
 
 MONITOR
-686
-124
-769
-169
+591
+106
+665
+151
 NIL
 M_A2
 2
@@ -897,10 +888,10 @@ M_A2
 11
 
 MONITOR
-775
-124
-844
-169
+591
+155
+664
+200
 NIL
 M_A3
 17
@@ -908,10 +899,10 @@ M_A3
 11
 
 MONITOR
-608
-173
-683
-218
+589
+203
+664
+248
 NIL
 F_A1
 2
@@ -919,10 +910,10 @@ F_A1
 11
 
 MONITOR
-686
-173
-771
-218
+590
+254
+667
+299
 NIL
 F_A2
 2
@@ -930,15 +921,91 @@ F_A2
 11
 
 MONITOR
-775
-175
-844
-220
+591
+301
+668
+346
 NIL
 F_A3
 2
 1
 11
+
+MONITOR
+669
+54
+761
+99
+NIL
+M_A1 / 907152
+2
+1
+11
+
+MONITOR
+671
+103
+766
+148
+NIL
+M_A2 / 1393659
+2
+1
+11
+
+MONITOR
+671
+151
+759
+196
+NIL
+M_A3 / 772236
+2
+1
+11
+
+MONITOR
+672
+202
+763
+247
+NIL
+F_A1 / 838063
+2
+1
+11
+
+MONITOR
+672
+251
+764
+296
+NIL
+F_A2 / 1438429
+2
+1
+11
+
+MONITOR
+672
+299
+760
+344
+NIL
+F_A3 / 983485
+2
+1
+11
+
+TEXTBOX
+597
+28
+747
+46
+SOCIODEMOGRAPHICS
+10
+0.0
+1
 
 @#$#@#$#@
 ## WHAT IS IT?
