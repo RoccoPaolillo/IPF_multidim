@@ -148,6 +148,7 @@ mar_00_29 <- df_range[df_range$eta_range == "00_29",]$mar_ageASL_r
 mar_30_59 <- df_range[df_range$eta_range == "30_59",]$mar_ageASL_r
 mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
+write.csv(df_range,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv",row.names = F)
 
 
 # Algorithm #####
