@@ -11,14 +11,14 @@ file.list = list.files( pattern = "*.csv")
 theData_list<-lapply(file.list, read.csv2)
 df <-bind_rows(theData_list)
 names(df) <- c("classi_eta","ita_f","ita_m","stran_f","stran_m","DENOMINAZI")
-df$fem <- df$ita_f + df$stran_f # tot fem ASL>age
-df$man <- df$ita_m + df$stran_m # tot men ASL>age
-df$mar_ageASL <- df$fem + df$man  # tot age ASL>age
-mar_manASL <- df %>% group_by(DENOMINAZI) %>% summarize(mar_manASL = sum(man))
-mar_femASL <- df %>% group_by(DENOMINAZI) %>% summarize(mar_femASL = sum(fem))
-dftotgentomerge <- merge(mar_femASL,mar_manASL, by = c("DENOMINAZI"))
-df <- merge(df,dftotgentomerge,by = c("DENOMINAZI"))
-df$tot_genASL <- df$mar_femASL + df$mar_manASL
+df$fem <- df$ita_f + df$stran_f 
+df$man <- df$ita_m + df$stran_m 
+df$mar_ageASL <- df$fem + df$man  # marginal of age for that ASL, since each row is a age class per ASL(DENOMINAZI)
+mar_manASL <- df %>% group_by(DENOMINAZI) %>% summarize(mar_manASL = sum(man)) # marginal male population per ASL
+mar_femASL <- df %>% group_by(DENOMINAZI) %>% summarize(mar_femASL = sum(fem)) # marginal female population per ASL
+dftotgentomerge <- merge(mar_femASL,mar_manASL, by = c("DENOMINAZI")) # total population
+df <- merge(df,dftotgentomerge,by = c("DENOMINAZI")) # adds the marginal total population to the sociodemographic df per ASL
+df$tot_genASL <- df$mar_femASL + df$mar_manASL # reports the marginal total gender (total population) per ASL
 
 dftot_age <- df %>% group_by(DENOMINAZI) %>% summarize(tot_ageASL = sum(mar_ageASL))
 df <- merge(df,dftot_age,by = c("DENOMINAZI"))
@@ -41,7 +41,7 @@ for (i in file.list) {
  df$gender <- paste0(disease,"_",unlist(strsplit(i,"-"))[1])
  df$classi_eta <- unlist(strsplit(i,"-"))[2]
  names(df)[1] = "DENOMINAZI"
-names(df)[2] = disease
+ names(df)[2] = disease
  results[[i]] = df
 }
 df <- bind_rows(results)
@@ -76,19 +76,20 @@ setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_
 df <- read.csv("df_socdem.csv",sep=",")
 df$classi_eta <- str_replace_all(df$classi_eta,"-","_")
 df$classi_eta <- str_replace_all(df$classi_eta,"\"","")
-hf <- read.csv("hf.csv",sep=",")
-hpt <- read.csv("hpt.csv",sep=",")
+hf <- read.csv("hf.csv",sep=",") # hf heart failure
+hpt <- read.csv("hpt.csv",sep=",") # hpt hypertension
 # hf$classi_eta <- paste0("\"",hf$classi_eta,"\"")
 
 df <- reduce(list(df,hf,hpt), full_join, by= c('DENOMINAZI',"classi_eta"))
 
-df$tot_hpt <- df$hpt_fem + df$hpt_male
-df$tot_nohpt <- df$mar_ageASL - df$tot_hpt
-df$male_nohpt <- df$man - df$hpt_male
-df$fem_nohpt <- df$fem - df$hpt_fem
+df$tot_hpt <- df$hpt_fem + df$hpt_male  # total population hpt
+df$tot_nohpt <- df$mar_ageASL - df$tot_hpt # compute who has not hpt at marginal level: population for ageXASL minus marginal population with hpt
+df$male_nohpt <- df$man - df$hpt_male # compute male without hpt: male population ageXASL minus males with hpt for ageXASL
+df$fem_nohpt <- df$fem - df$hpt_fem # compute female without hpt: male population ageXASL minus females with hpt for ageXASL
 
-df$tot_hf <- df$hf_fem + df$hf_male
-df$tot_nohf <- df$mar_ageASL - df$tot_hf
+# idem for heart failure
+df$tot_hf <- df$hf_fem + df$hf_male 
+df$tot_nohf <- df$mar_ageASL - df$tot_hf 
 df$male_nohf <- df$man - df$hf_male
 df$fem_nohf <-  df$fem - df$hf_fem
 
@@ -111,7 +112,7 @@ df <- merge(df,df_marg, by= c('DENOMINAZI'))
 
 write.csv(df,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/soc_hpt_hf.csv",row.names = F)
 
-# marginals #######
+# marginals for the population #######
 
 setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 df <- read.csv("soc_hpt_hf.csv",sep =",")
