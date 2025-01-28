@@ -7,35 +7,44 @@ np.random.seed(37)
 random.seed(37)
 
 #height = [
-    np.random.normal(5.5, 1.0, 100),
-    np.random.normal(5.3, 1.0, 200),
-    np.random.normal(5.9, 1.0, 300),
-    np.random.normal(5.7, 1.0, 200),
-    np.random.normal(5.3, 1.0, 400),
-    np.random.normal(5.2, 1.0, 500),
-    np.random.normal(5.8, 1.0, 300),
-    np.random.normal(5.5, 1.0, 200)
+#    np.random.normal(5.5, 1.0, 100),
+#     np.random.normal(5.3, 1.0, 200),
+#     np.random.normal(5.9, 1.0, 300),
+#     np.random.normal(5.7, 1.0, 200),
+#     np.random.normal(5.3, 1.0, 400),
+#     np.random.normal(5.2, 1.0, 500),
+#     np.random.normal(5.8, 1.0, 300),
+#     np.random.normal(5.5, 1.0, 200)
+# ]
+
+demographic = [
+    ['00_49', 'male', 'yeshpt', 'yeshf'],
+    ['00_49', 'male', 'yeshpt', 'nohf'],
+    ['00_49', 'male', 'nohpt', 'yeshf'],
+    ['00_49', 'male', 'nohpt', 'nohf'],      
+    ['00_49', 'female', 'yeshpt', 'yeshf'],
+    ['00_49', 'female', 'yeshpt', 'nohf'],
+    ['00_49', 'female', 'nohpt', 'yeshf'],
+    ['00_49', 'female', 'nohpt', 'nohf'],      
+    ['50_100', 'male', 'yeshpt', 'yeshf'],
+    ['50_100', 'male', 'yeshpt', 'nohf'],
+    ['50_100', 'male', 'nohpt', 'yeshf'],
+    ['50_100', 'male', 'nohpt', 'nohf'],      
+    ['50_100', 'female', 'yeshpt', 'yeshf'],
+    ['50_100', 'female', 'yeshpt', 'nohf'],
+    ['50_100', 'female', 'nohpt', 'yeshf'],
+    ['50_100', 'female', 'nohpt', 'nohf']         
+  
 ]
 
-# demographic = [
-    ['white', 'minor', 'male'],
-    ['white', 'minor', 'female'],
-    ['white', 'adult', 'male'],
-    ['white', 'adult', 'female'],
-    ['other', 'minor', 'male'],
-    ['other', 'minor', 'female'],
-    ['other', 'adult', 'male'],
-    ['other', 'adult', 'female']
-]
-
-data = [[{'race': d[0], 'age': d[1], 'gender': d[2], 'height': h} for h in s]
-        for d, s in zip(demographic, height)]
+data = [[{'age': d[0], 'gender': d[1], 'hpt': d[2],  'hf': d[3]}] for d in demographic]
 data = list(itertools.chain(*data))
 
 df = pd.DataFrame(data)
 df.head()
 
-df.race.value_counts().sort_index() / df.shape[0]
+ct3 = pd.crosstab(df.age, [df.gender, df.hpt,df.hf])
+ct3
 
 ###
 
@@ -55,10 +64,10 @@ def get_table(df, targets):
     return factors, target_marginals, table
 
 f, u, X = get_table(df, {
-    'age': {'00_29': 1745215, '30_59': 2832088, '60_100': 1755721},
-    'gender': {'male': 3073047, 'female': 3259977},
-    'hpt': {'yeshpt': 1193445, 'nohpt': 5139579},
-    "hf": {'yeshf': 93926, 'nohf': 6239098}
+    'age': {'00_49': 266633, '50_100': 227433},
+    'gender': {'male': 243308, 'female': 250758},
+    'hpt': {'yeshpt': 116071, 'nohpt': 377995},
+    "hf": {'yeshf': 7927, 'nohf': 486139}
 })
 
 ### mipf
@@ -146,7 +155,7 @@ def get_weights(X, max_iters=50, zero_threshold=0.0001, convergence_threshold=3,
 
 import functools
 
-w = get_weights(X, max_iters=50, zero_threshold=0.0001, convergence_threshold=3, debug=True)
+w = get_weights(X, max_iters=20000, zero_threshold=0.0001, convergence_threshold=5, debug=True)
 
 def get_sampling_weights(df, f, w):
     get_filters = lambda df, fields, values: [df[f] == v for f, v in zip(fields, values)]
@@ -154,7 +163,7 @@ def get_sampling_weights(df, f, w):
 
     return {k: v / get_total(df, f, k) for k, v in zip(list(itertools.product(*[sorted(df[c].unique()) for c in f])), np.ravel(w))}
 
-def get_samples(df, f, w, n=10_000):
+def get_samples(df, f, w, n=494066):
     weights = get_sampling_weights(df, f, w)
     s = df.apply(lambda r: weights[tuple([r[c] for c in f])], axis=1)
     return df.sample(n=n, replace=True, weights=s)
@@ -162,14 +171,7 @@ def get_samples(df, f, w, n=10_000):
 sample_df = get_samples(df, f, w)
 sample_df
 
-ct = pd.crosstab(sample_df.race, [sample_df.age, sample_df.gender])
+ct = pd.crosstab(sample_df.age, [sample_df.gender, sample_df.hpt, sample_df.hf])
 ct
 
-sample_df2 = get_samples(df, f, w, n=10)
 
-ct2 = pd.crosstab(sample_df2.race, [sample_df2.age, sample_df2.gender])
-
-data = pd.read_csv('C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv')
-
-ct3 = pd.crosstab(df.race, [df.age, df.gender])
-ct3
