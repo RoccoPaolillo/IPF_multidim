@@ -6,7 +6,7 @@ import itertools
 np.random.seed(37)
 random.seed(37)
 
-height = [
+#height = [
     np.random.normal(5.5, 1.0, 100),
     np.random.normal(5.3, 1.0, 200),
     np.random.normal(5.9, 1.0, 300),
@@ -17,7 +17,7 @@ height = [
     np.random.normal(5.5, 1.0, 200)
 ]
 
-demographic = [
+# demographic = [
     ['white', 'minor', 'male'],
     ['white', 'minor', 'female'],
     ['white', 'adult', 'male'],
@@ -55,9 +55,10 @@ def get_table(df, targets):
     return factors, target_marginals, table
 
 f, u, X = get_table(df, {
-    'race': {'white': 5800, 'other': 4200},
-    'age': {'minor': 2800, 'adult': 7200},
-    'gender': {'male': 4900, 'female': 5100}
+    'age': {'00_29': 1745215, '30_59': 2832088, '60_100': 1755721},
+    'gender': {'male': 3073047, 'female': 3259977},
+    'hpt': {'yeshpt': 1193445, 'nohpt': 5139579},
+    "hf": {'yeshf': 93926, 'nohf': 6239098}
 })
 
 ### mipf
@@ -170,4 +171,5 @@ ct2 = pd.crosstab(sample_df2.race, [sample_df2.age, sample_df2.gender])
 
 data = pd.read_csv('C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv')
 
-
+ct3 = pd.crosstab(df.race, [df.age, df.gender])
+ct3
