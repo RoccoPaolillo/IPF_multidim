@@ -64,10 +64,10 @@ def get_table(df, targets):
     return factors, target_marginals, table
 
 f, u, X = get_table(df, {
-    'age': {'00_49': 787111, '50_100': 607690},
-    'gender': {'male': 673619, 'female': 721182},
-    'hpt': {'yeshpt': 260122, 'nohpt': 1134679},
-    "hf": {'yeshf': 20488, 'nohf': 1374313}
+    'age': {'00_49': 266633, '50_100': 227433},
+    'gender': {'male': 243308, 'female': 250758},
+    'hpt': {'yeshpt': 116071, 'nohpt': 377995},
+    "hf": {'yeshf': 7927, 'nohf': 486139}
 })
 
 ### mipf
@@ -155,7 +155,7 @@ def get_weights(X, max_iters=50, zero_threshold=0.0001, convergence_threshold=3,
 
 import functools
 
-w = get_weights(X, max_iters=1, zero_threshold=0.0001, convergence_threshold=3, debug=True)
+w = get_weights(X, max_iters=20000, zero_threshold=0.0001, convergence_threshold=3, debug=True)
 
 def get_sampling_weights(df, f, w):
     get_filters = lambda df, fields, values: [df[f] == v for f, v in zip(fields, values)]
@@ -163,7 +163,7 @@ def get_sampling_weights(df, f, w):
 
     return {k: v / get_total(df, f, k) for k, v in zip(list(itertools.product(*[sorted(df[c].unique()) for c in f])), np.ravel(w))}
 
-def get_samples(df, f, w, n=1394801):
+def get_samples(df, f, w, n=494066):
     weights = get_sampling_weights(df, f, w)
     s = df.apply(lambda r: weights[tuple([r[c] for c in f])], axis=1)
     return df.sample(n=n, replace=True, weights=s)
