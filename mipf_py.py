@@ -17,33 +17,40 @@ random.seed(37)
 #     np.random.normal(5.5, 1.0, 200)
 # ]
 
+#demographic = [
+#    ['00_49', 'male', 'yeshpt', 'yeshf'],
+#    ['00_49', 'male', 'yeshpt', 'nohf'],
+#    ['00_49', 'male', 'nohpt', 'yeshf'],
+#    ['00_49', 'male', 'nohpt', 'nohf'],      
+#    ['00_49', 'female', 'yeshpt', 'yeshf'],
+#    ['00_49', 'female', 'yeshpt', 'nohf'],
+#    ['00_49', 'female', 'nohpt', 'yeshf'],
+#    ['00_49', 'female', 'nohpt', 'nohf'],      
+#    ['50_100', 'male', 'yeshpt', 'yeshf'],
+#    ['50_100', 'male', 'yeshpt', 'nohf'],
+#    ['50_100', 'male', 'nohpt', 'yeshf'],
+#    ['50_100', 'male', 'nohpt', 'nohf'],      
+#    ['50_100', 'female', 'yeshpt', 'yeshf'],
+#    ['50_100', 'female', 'yeshpt', 'nohf'],
+#    ['50_100', 'female', 'nohpt', 'yeshf'],
+#    ['50_100', 'female', 'nohpt', 'nohf']         
+#]
+
 demographic = [
-    ['00_49', 'male', 'yeshpt', 'yeshf'],
-    ['00_49', 'male', 'yeshpt', 'nohf'],
-    ['00_49', 'male', 'nohpt', 'yeshf'],
-    ['00_49', 'male', 'nohpt', 'nohf'],      
-    ['00_49', 'female', 'yeshpt', 'yeshf'],
-    ['00_49', 'female', 'yeshpt', 'nohf'],
-    ['00_49', 'female', 'nohpt', 'yeshf'],
-    ['00_49', 'female', 'nohpt', 'nohf'],      
-    ['50_100', 'male', 'yeshpt', 'yeshf'],
-    ['50_100', 'male', 'yeshpt', 'nohf'],
-    ['50_100', 'male', 'nohpt', 'yeshf'],
-    ['50_100', 'male', 'nohpt', 'nohf'],      
-    ['50_100', 'female', 'yeshpt', 'yeshf'],
-    ['50_100', 'female', 'yeshpt', 'nohf'],
-    ['50_100', 'female', 'nohpt', 'yeshf'],
-    ['50_100', 'female', 'nohpt', 'nohf']         
+    ['00_49', 'male'],
+    ['00_49', 'female'],
+    ['50_100', 'male'],
+    ['50_100', 'female'],
   
 ]
 
-data = [[{'age': d[0], 'gender': d[1], 'hpt': d[2],  'hf': d[3]}] for d in demographic]
+data = [[{'age': d[0], 'gender': d[1]}] for d in demographic]
 data = list(itertools.chain(*data))
 
 df = pd.DataFrame(data)
 df.head()
 
-ct3 = pd.crosstab(df.age, [df.gender, df.hpt,df.hf])
+ct3 = pd.crosstab(df.age, [df.gender])
 ct3
 
 ###
@@ -64,10 +71,8 @@ def get_table(df, targets):
     return factors, target_marginals, table
 
 f, u, X = get_table(df, {
-    'age': {'00_49': 787111, '50_100': 607690},
-    'gender': {'male': 673619, 'female': 721182},
-    'hpt': {'yeshpt': 260122, 'nohpt': 1134679},
-    "hf": {'yeshf': 20488, 'nohf': 1374313}
+    'age': {'00_49': 20, '50_100': 80},
+    'gender': {'male': 40, 'female': 60}
 })
 
 ### mipf
@@ -163,7 +168,7 @@ def get_sampling_weights(df, f, w):
 
     return {k: v / get_total(df, f, k) for k, v in zip(list(itertools.product(*[sorted(df[c].unique()) for c in f])), np.ravel(w))}
 
-def get_samples(df, f, w, n=1394801):
+def get_samples(df, f, w, n=100):
     weights = get_sampling_weights(df, f, w)
     s = df.apply(lambda r: weights[tuple([r[c] for c in f])], axis=1)
     return df.sample(n=n, replace=True, weights=s)
@@ -171,6 +176,6 @@ def get_samples(df, f, w, n=1394801):
 sample_df = get_samples(df, f, w)
 sample_df
 
-ct = pd.crosstab(sample_df.age, [sample_df.gender, sample_df.hpt, sample_df.hf])
+ct = pd.crosstab(sample_df.age, [sample_df.gender])
 ct
 
