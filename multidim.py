@@ -30,11 +30,12 @@ def ipf_update(M, u, v):
 
 # ------- sociodem: 3 categories age gender -------
 
-TGT0_30 =  1745215 #  array_m[51:81,2].sum() + array_f[51:81,2].sum()
+# emprirical target
+TGT0_30 =  1745215   
 TGT30_60 = 2832088
 TGT60_100 = 1755721
-TGTmale = 3073047 #  array_m[0:51,2].sum() + array_m[51:81,2].sum() + array_m[81:101,2].sum()
-TGTfemale = 3259977 #  array_f[0:51,2].sum() + array_f[51:81,2].sum() + array_f[81:101,2].sum()
+TGTmale = 3073047   
+TGTfemale = 3259977  
 
 
 u = np.array([TGT0_30, TGT30_60,TGT60_100]) # row target (age)
@@ -58,9 +59,10 @@ for _ in range(500):
 
 Xdem
 
+# ---- disease incidence ----
 # gender HPT
 
-TGTHPT = 1193445
+TGTHPT = 1193445 # empirical target
 TGTNOHPT = 5139579
 
 Xgenhpt = np.array([[1,1],
@@ -81,7 +83,7 @@ Xgenhpt
 
 # gender HF
 
-TGTHF = 93926
+TGTHF = 93926 # empirical target
 TGTNOHF = 6239098
 
 Xgenhf = np.array([[1,1],
@@ -99,12 +101,12 @@ for _ in range(500):
 Xgenhf
 
 
-# gen age HPT
-TGT0_30HPT = 3547
-TGT30_60HPT = 252543
-TGT60_100HPT = 937355
-TGTmaleHPT = 579109
-TGTfemaleHPT = 614336
+# gen age HPT 
+TGT0_30HPT = 3547   # empirical target
+TGT30_60HPT = 252543  # empirical target
+TGT60_100HPT = 937355  # empirical target
+TGTmaleHPT = 579109 # synthetic target
+TGTfemaleHPT = 614336 # synthetic target
 
 u_hpt =  np.array([TGT0_30HPT,TGT30_60HPT,TGT60_100HPT]) # row hpt <=30, hpt 30-60, hpt > 60
 v_hpt = np.array([TGTmaleHPT,TGTfemaleHPT]) # man wiyh hpt, fem with hpt
@@ -121,11 +123,11 @@ for _ in range(20):
 Xhpt
 
 # gen age HF
-TGT0_30HF = 424
-TGT30_60HF = 8459
-TGT60_100HF = 85043
-TGTmaleHF = 45577
-TGTfemaleHF = 48349
+TGT0_30HF = 424  # empirical target
+TGT30_60HF = 8459  # empirical target
+TGT60_100HF = 85043  # empirical target
+TGTmaleHF = 45577 # synthetic target
+TGTfemaleHF = 48349 # synthetic target
 
 u_hf =  np.array([TGT0_30HF,TGT30_60HF,TGT60_100HF]) # row hpt <=30, hpt 30-60, hpt > 60
 v_hf = np.array([TGTmaleHF,TGTfemaleHF]) # man wiyh hpt, fem with hpt
