@@ -28,7 +28,7 @@ def ipf_update(M, u, v):
     return np.round(O), d_u, d_v
 
 
-# ------- 3 categories age -------
+# ------- sociodem: 3 categories age gender -------
 
 TGT0_30 =  1745215 #  array_m[51:81,2].sum() + array_f[51:81,2].sum()
 TGT30_60 = 2832088
