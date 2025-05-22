@@ -59,6 +59,15 @@ for _ in range(500):
 
 Xdem
 
+# test joint probability
+
+round((TGTmale / (TGTmale + TGTfemale)) * TGT0_30)
+round((TGTmale / (TGTmale + TGTfemale)) * TGT30_60)
+round((TGTmale / (TGTmale + TGTfemale)) * TGT60_100)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGT0_30)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGT30_60)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGT60_100)
+
 # ---- disease incidence ----
 # gender HPT
 
@@ -79,6 +88,12 @@ for _ in range(500):
 
 Xgenhpt
 
+# test joint probability
+
+round((TGTmale / (TGTmale + TGTfemale)) * TGTHPT)
+round((TGTmale / (TGTmale + TGTfemale)) * TGTNOHPT)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGTHPT)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGTNOHPT)
 
 
 # gender HF
@@ -100,8 +115,41 @@ for _ in range(500):
 
 Xgenhf
 
+# test joint probability
+
+round((TGTmale / (TGTmale + TGTfemale)) * TGTHF)
+round((TGTmale / (TGTmale + TGTfemale)) * TGTNOHF)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGTHF)
+round((TGTfemale / (TGTmale + TGTfemale)) * TGTNOHF)
+
+
 
 # gen age HPT 
+TGT0_30HPT = 3547   # empirical target
+TGT30_60HPT = 252543  # empirical target
+TGT60_100HPT = 937355  # empirical target
+TGTmaleHPT = 579109 # synthetic target
+TGTfemaleHPT = 614336 # synthetic target
+
+u_hpt =  np.array([TGT0_30HPT,TGT30_60HPT,TGT60_100HPT]) # row hpt <=30, hpt 30-60, hpt > 60
+v_hpt = np.array([TGTmaleHPT,TGTfemaleHPT]) # man wiyh hpt, fem with hpt
+
+Xhpt = Xdem.copy()
+Xhpt
+
+for _ in range(20):
+    Xhpt, d_u, d_v = ipf_update(Xhpt, u_hpt, v_hpt)
+    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
+    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
+        break
+
+Xhpt
+
+# test joint probability
+
+round( (TGT0_30HPT / TGTHPT))
+
+# AGE x HPT
 TGT0_30HPT = 3547   # empirical target
 TGT30_60HPT = 252543  # empirical target
 TGT60_100HPT = 937355  # empirical target
@@ -154,3 +202,5 @@ def percsample(T):
 
 # percentage fitted
 Xdemper = percsample(Xdem) 
+
+
