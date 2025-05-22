@@ -191,6 +191,8 @@ for _ in range(20):
 
 Xhf
 
+
+
 # compute percentages
 
 def percsample(T):
@@ -202,29 +204,3 @@ def percsample(T):
 Xdemper = percsample(Xdem) 
 
 
-# age hpt
-
-TGTHPT = 1193445 # empirical target
-TGTNOHPT = 5139579
-
-Xagehpt = Xdem.copy()
-
-u_age = np.array([TGT0_30, TGT30_60,TGT60_100]) # row target (hpt)
-v_age = np.array([TGTHPT, TGTNOHPT]) #  target (gender)
-
-for _ in range(500):
-    Xagehpt, d_u, d_v = ipf_update(Xagehpt, u_age, v_age)
-    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
-    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
-        break
-
-Xagehpt
-
-# test joint probability
-
-round((TGT0_30 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTHPT)
-round((TGT30_60 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTHPT)
-round((TGT60_100 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTHPT)
-round((TGT0_30 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTNOHPT)
-round((TGT30_60 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTNOHPT)
-round((TGT60_100 / (TGT0_30 + TGT30_60 + TGT60_100)) * TGTNOHPT)
