@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 
 window = tk.Tk()
 window.title("Synthetic Populations Generator")
-window.geometry("700x700")
+window.geometry("700x700") 
 
-welcome_label = tk.Label(window, text="Benvenut* in Synthetic Populations Generator!\n Posso aiutarti integrando dati sulla popolazione che ti interessa", font=("Arial", 12), wraplength=500, justify="center")
+welcome_label = tk.Label(window, text="Welcome to Synthetic Populations Generator!\n I can integrate population data you need", font=("Arial", 12), wraplength=500, justify="center")
 welcome_label.pack(pady=10)
 
 entries = {}
@@ -31,7 +31,7 @@ def upload_csv():
                 widget.destroy()
         entries.clear()
 
-        uploaded_variables = tk.Label(window, text="Queste sono le informazioni correnti su cui lavorerò", font=("Arial", 12), wraplength=500, justify="center")
+        uploaded_variables = tk.Label(window, text="These are the information collected I will work with", font=("Arial", 12), wraplength=500, justify="center")
         uploaded_variables.pack(pady=10)
 
 
@@ -47,7 +47,7 @@ def upload_csv():
             entries[var] = entry
 
         # Add compute button
-        compute_button = tk.Button(window, text="Calcola e salva in CSV", command=compute_and_save)
+        compute_button = tk.Button(window, text="Compute and save in CSV", command=compute_and_save)
         compute_button.place(relx=0.75, rely=0.2, anchor='center')
 #        compute_button.pack(pady=10)
 
@@ -171,7 +171,7 @@ def compute_and_save():
             plt.tight_layout()
             plt.show()
             
-        plot_button = tk.Button(window, text="Visualizza i Risultati", command=show_plot)
+        plot_button = tk.Button(window, text="Visualize Results", command=show_plot)
         plot_button.place(relx=0.75, rely=0.5, anchor='center')
 
 
@@ -184,7 +184,7 @@ def compute_and_save():
         
         
 # Upload button
-upload_button = tk.Button(window, text="Mi serve un CSV con Variable e Value della popolazione da sintetizzare", command=upload_csv)
+upload_button = tk.Button(window, text="I need a CSV file with Variable and Value of the population to synthetize", command=upload_csv)
 upload_button.pack(pady=20)
 
             
