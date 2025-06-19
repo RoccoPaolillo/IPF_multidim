@@ -76,23 +76,34 @@ def compute_and_save():
 
 # computation
 
+        # popolazione
         total = TGTmale + TGTfemale
+        
+        # first level synthetic, joint 2 genderXage; total,age,gender empirical
         male30 = round((TGTmale / total) * TGT0_30)
         male60 = round((TGTmale / total) * TGT30_60)
         male100 = round((TGTmale / total) * TGT60_100)
         female30 = round((TGTfemale / total) * TGT0_30)
         female60 =  round((TGTfemale / total) * TGT30_60)
         female100 = round((TGTfemale / total) * TGT60_100)
+        # first level synthetic, joint genderXhpt
         maleHPT = round((TGTmale / total) * TGTHPT)
         femaleHPT =  round((TGTfemale / total) * TGTHPT)
+#        maleNOHPT = round((TGTmale / total) * TGTNOHPT)
+#        femaleNOHPT =  round((TGTfemale / total) * TGTNOHPT)
+        # first level synthetic,  joint genderXhf
         maleHF =   round((TGTmale / total) * TGTHF)
         femaleHF = round((TGTfemale / total) * TGTHF)
+        
+        # second level synthetic, joint 3 genderXhptXage -> ageXhpt from empirical data; genderXhpt synthetic
         maleHPT30 =  round((maleHPT / (maleHPT + femaleHPT)) *  TGT0_30HPT)
         maleHPT60 = round((maleHPT / (maleHPT + femaleHPT)) *  TGT30_60HPT)
         maleHPT100 =  round((maleHPT / (maleHPT + femaleHPT)) *  TGT60_100HPT)
         femaleHPT30 = round((femaleHPT / (maleHPT + femaleHPT)) *  TGT0_30HPT)
         femaleHPT60 =  round((femaleHPT / (maleHPT + femaleHPT)) *  TGT30_60HPT)
         femaleHPT100 =   round((femaleHPT / (maleHPT + femaleHPT)) *  TGT60_100HPT)
+        
+        # second level synthetic, joint 3 genderXhfXage -> ageXhf from empirical data; genderXhf synthetic
         maleHF30 =   round((maleHF / (maleHF + femaleHF)) * TGT0_30HF) 
         maleHF60 =  round((maleHF / (maleHF + femaleHF)) * TGT30_60HF)
         maleHF100 =    round((maleHF / (maleHF + femaleHF)) * TGT60_100HF)
@@ -100,10 +111,10 @@ def compute_and_save():
         femaleHF60 =  round((femaleHF / (maleHF + femaleHF)) * TGT30_60HF)
         femaleHF100 =  round((femaleHF / (maleHF + femaleHF)) * TGT60_100HF)
 
+        # third level synthetic, joint 4 genderXhfXageXhpt -> male30 synth I level; maleHPT30 synth II livello; maleHF30 synth II livello
         male_HF_HPT_30 = round( total * ((male30 / total) * ((maleHPT30 / male30) * (maleHF30 / male30))) )
         male_HF_HPT_60 = round( total * ((male60 / total) * ((maleHPT60 / male60) * (maleHF60 / male60))) )
         male_HF_HPT_100 = round( total * ((male100 / total) * ((maleHPT100 / male100) * (maleHF100 / male100))) )
-        
         female_HF_HPT_30 = round( total * ((female30 / total) * ((femaleHPT30 / female30) * (femaleHF30 / female30))) )
         female_HF_HPT_60 = round( total * ((female60 / total) * ((femaleHPT60 / female60) * (femaleHF60 / female60))) )
         female_HF_HPT_100 = round( total * ((female100 / total) * ((femaleHPT100 / female100) * (femaleHF100 / female100))) )
