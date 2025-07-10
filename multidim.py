@@ -147,28 +147,13 @@ Xhpt
 
 # test joint probability
 
-round( (TGT0_30HPT / TGTHPT))
+round( (TGTmaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT0_30HPT)
+round( (TGTmaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT30_60HPT)
+round( (TGTmaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT60_100HPT)
+round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT0_30HPT)
+round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT30_60HPT)
+round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT60_100HPT)
 
-# AGE x HPT
-TGT0_30HPT = 3547   # empirical target
-TGT30_60HPT = 252543  # empirical target
-TGT60_100HPT = 937355  # empirical target
-TGTmaleHPT = 579109 # synthetic target
-TGTfemaleHPT = 614336 # synthetic target
-
-u_hpt =  np.array([TGT0_30HPT,TGT30_60HPT,TGT60_100HPT]) # row hpt <=30, hpt 30-60, hpt > 60
-v_hpt = np.array([TGTmaleHPT,TGTfemaleHPT]) # man wiyh hpt, fem with hpt
-
-Xhpt = Xdem.copy()
-Xhpt
-
-for _ in range(20):
-    Xhpt, d_u, d_v = ipf_update(Xhpt, u_hpt, v_hpt)
-    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
-    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
-        break
-
-Xhpt
 
 # gen age HF
 TGT0_30HF = 424  # empirical target
@@ -191,6 +176,69 @@ for _ in range(20):
 
 Xhf
 
+round( (TGTmaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT0_30HF)
+round( (TGTmaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT30_60HF)
+round( (TGTmaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT60_100HF)
+round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT0_30HF)
+round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT30_60HF)
+round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT60_100HF)
+
+# age X HPT
+
+TGT0_30 =  1745215   
+TGT30_60 = 2832088
+TGT60_100 = 1755721
+TGTHPT = 1193445 # empirical target
+TGTNOHPT = 5139579
+
+u_age =  np.array([TGT0_30,TGT30_60,TGT60_100]) # row hpt <=30, hpt 30-60, hpt > 60
+v_hpt = np.array([TGTHPT,TGTNOHPT]) # column hpt, no hpt
+
+X = np.array([
+    [1,1],
+    [1,1],
+    [1,1]
+])
+
+Xhptage = X.copy()
+Xhptage
+
+for _ in range(20):
+    Xhptage, d_u, d_v = ipf_update(Xhptage, u_age, v_hpt)
+    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
+    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
+        break
+
+Xhptage
+
+# age X HF
+
+
+TGT0_30 =  1745215   
+TGT30_60 = 2832088
+TGT60_100 = 1755721
+TGTHF = 93926 # empirical target
+TGTNOHF = 6239098
+
+u_age =  np.array([TGT0_30,TGT30_60,TGT60_100]) # row hpt <=30, hpt 30-60, hpt > 60
+v_hf = np.array([TGTHF,TGTNOHF]) # # column hf, no hf
+
+X = np.array([
+    [1,1],
+    [1,1],
+    [1,1]
+])
+
+Xhfage = X.copy()
+Xhfage
+
+for _ in range(20):
+    Xhfage, d_u, d_v = ipf_update(Xhfage, u_age, v_hf)
+    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
+    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
+        break
+
+Xhfage
 
 
 # compute percentages
