@@ -240,6 +240,35 @@ for _ in range(20):
 
 Xhfage
 
+# gender X HPT
+
+TGTmale = 3073047   
+TGTfemale = 3259977 
+TGTHPT = 1193445 # empirical target
+TGTNOHPT = 5139579   
+
+
+u = np.array([TGTmale, TGTfemale]) # row target (age)
+v = np.array([TGTHPT, TGTNOHPT]) # col target (gender)
+
+X = np.array([
+    [1,1],
+    [1,1]
+])
+
+Xhptgen = X.copy()
+Xhptgen
+
+
+for _ in range(500):
+    Xhptgen, d_u, d_v = ipf_update(Xhptgen, u, v)
+    print(f'd_u = {d_u:.5f}, d_v = {d_v:.5f}')
+    if d_u <= 0.00001 and d_v <= 0.00001:          # algorithm stops if the distance below threshold
+        break
+
+Xhptgen
+
+
 
 # compute percentages
 
