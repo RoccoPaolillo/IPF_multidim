@@ -119,6 +119,26 @@ def compute_and_save():
         female_HF_HPT_60 = round( total * ((female60 / total) * ((femaleHPT60 / female60) * (femaleHF60 / female60))) )
         female_HF_HPT_100 = round( total * ((female100 / total) * ((femaleHPT100 / female100) * (femaleHF100 / female100))) )
         
+        
+        
+        # comparison test
+        TGT60_100HPT_2 = ((TGTHPT / total) * TGT60_100) 
+        TGT60_100HF_2 = ((TGTHF / total) * TGT60_100)
+        TGT60_100HPT_2 = ((TGTHPT / total) * TGT60_100) *  (TGT60_100HPT / TGT60_100HPT_2)
+        TGT60_100HF_2 = ((TGTHF / total) * TGT60_100) *  (TGT60_100HF / TGT60_100HF_2)
+
+        male_HF_HPT_100_2 = round((((TGTmale / total) *  TGT60_100HPT_2  ) * ((TGTmale / total) * TGT60_100HF_2)) / ((TGTmale / total ) * TGT60_100))  
+
+        TGT60_100HPT_3 = ((TGT60_100 / total) * TGTHPT)
+        TGT60_100HF_3 = ((TGT60_100 / total) * TGTHF)
+        TGT60_100HPT_3 = ((TGT60_100 / total) * TGTHPT) *  (TGT60_100HPT / TGT60_100HPT_3)
+        TGT60_100HF_3 = ((TGT60_100 / total) * TGTHF) *  (TGT60_100HF / TGT60_100HF_3)
+
+        male_HF_HPT_100_3 = round((((TGTmale / total) *  TGT60_100HPT_3  ) * ((TGTmale / total) * TGT60_100HF_3)) / ((TGTmale / total ) * (TGT60_100)))
+
+
+
+    
 
         results = {
             "male_0_30": male30,
