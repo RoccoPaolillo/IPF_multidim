@@ -136,9 +136,10 @@ def compute_and_save():
 
         male_HF_HPT_100_3 = round((((TGTmale / total) *  TGT60_100HPT_3  ) * ((TGTmale / total) * TGT60_100HF_3)) / ((TGTmale / total ) * (TGT60_100)))
 
+ round((((TGTmale / total) * ((TGT60_100 / total) * TGTHPT)) * ((TGTmale / total) * ((TGT60_100 / total) * TGTHF))) / ((TGTmale / total) * TGT60_100))
 
-
-    
+round(((TGTmale/total) * (TGT60_100/total) * (TGTHPT/total) * (TGTHF / total)) * total)
+round(( ((TGTmale / total) * (TGT60_100HPT)) * ((TGTmale/total) * (TGT60_100HF))) / ((TGTmale / total) * TGT60_100))    
 
         results = {
             "male_0_30": male30,

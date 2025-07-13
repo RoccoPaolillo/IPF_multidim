@@ -31,6 +31,7 @@ def ipf_update(M, u, v):
 # ------- sociodem: 3 categories age gender -------
 
 # emprirical target
+total = 6333024
 TGT0_30 =  1745215   
 TGT30_60 = 2832088
 TGT60_100 = 1755721
@@ -61,12 +62,12 @@ Xdem
 
 # test joint probability
 
-round((TGTmale / (TGTmale + TGTfemale)) * TGT0_30)
-round((TGTmale / (TGTmale + TGTfemale)) * TGT30_60)
-round((TGTmale / (TGTmale + TGTfemale)) * TGT60_100)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGT0_30)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGT30_60)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGT60_100)
+round((TGTmale / total) * TGT0_30)
+round((TGTmale / total) * TGT30_60)
+round((TGTmale / total) * TGT60_100)
+round((TGTfemale / total) * TGT0_30)
+round((TGTfemale / total) * TGT30_60)
+round((TGTfemale / total) * TGT60_100)
 
 # ---- disease incidence ----
 # gender HPT
@@ -90,10 +91,10 @@ Xgenhpt
 
 # test joint probability
 
-round((TGTmale / (TGTmale + TGTfemale)) * TGTHPT)
-round((TGTmale / (TGTmale + TGTfemale)) * TGTNOHPT)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGTHPT)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGTNOHPT)
+round((TGTmale / total) * TGTHPT)
+round((TGTmale / total) * TGTNOHPT)
+round((TGTfemale / total) * TGTHPT)
+round((TGTfemale / total) * TGTNOHPT)
 
 
 # gender HF
@@ -117,10 +118,10 @@ Xgenhf
 
 # test joint probability
 
-round((TGTmale / (TGTmale + TGTfemale)) * TGTHF)
-round((TGTmale / (TGTmale + TGTfemale)) * TGTNOHF)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGTHF)
-round((TGTfemale / (TGTmale + TGTfemale)) * TGTNOHF)
+round((TGTmale / total) * TGTHF)
+round((TGTmale / total) * TGTNOHF)
+round((TGTfemale / total) * TGTHF)
+round((TGTfemale / total) * TGTNOHF)
 
 
 
@@ -145,7 +146,7 @@ for _ in range(20):
 
 Xhpt
 
-# test joint probability
+# test probability form
 
 round( (TGTmaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT0_30HPT)
 round( (TGTmaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT30_60HPT)
@@ -154,6 +155,13 @@ round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT0_30HPT)
 round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT30_60HPT)
 round( (TGTfemaleHPT / (TGTmaleHPT + TGTfemaleHPT)) * TGT60_100HPT)
 
+# conditional probability known joint probability
+round((TGT0_30HPT / TGT0_30) * ((TGTmale / total) * TGT0_30)) 
+round((TGT30_60HPT / TGT30_60) * ((TGTmale / total) * TGT30_60)) 
+round((TGT60_100HPT / TGT60_100) * ((TGTmale / total) * TGT60_100)) 
+round((TGT0_30HPT / TGT0_30) * ((TGTfemale / total) * TGT0_30)) 
+round((TGT30_60HPT / TGT30_60) * ((TGTfemale / total) * TGT30_60)) 
+round((TGT60_100HPT / TGT60_100) * ((TGTfemale / total) * TGT60_100)) 
 
 # gen age HF
 TGT0_30HF = 424  # empirical target
@@ -183,6 +191,16 @@ round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT0_30HF)
 round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT30_60HF)
 round( (TGTfemaleHF / (TGTmaleHF + TGTfemaleHF)) * TGT60_100HF)
 
+# conditional probability known joint probability
+
+round((TGT0_30HF / TGT0_30) * ((TGTmale / total) * TGT0_30)) 
+round((TGT30_60HF / TGT30_60) * ((TGTmale / total) * TGT30_60)) 
+round((TGT60_100HF / TGT60_100) * ((TGTmale / total) * TGT60_100)) 
+round((TGT0_30HF / TGT0_30) * ((TGTfemale / total) * TGT0_30)) 
+round((TGT30_60HF / TGT30_60) * ((TGTfemale / total) * TGT30_60)) 
+round((TGT60_100HF / TGT60_100) * ((TGTfemale / total) * TGT60_100)) 
+
+
 # age X HPT
 
 TGT0_30 =  1745215   
@@ -210,6 +228,16 @@ for _ in range(20):
         break
 
 Xhptage
+
+# joint probability
+
+round((TGTHPT / total) * TGT0_30) 
+round((TGTHPT / total) * TGT30_60) 
+round((TGTHPT / total) * TGT60_100) 
+round((TGTNOHPT / total) * TGT0_30) 
+round((TGTNOHPT / total) * TGT30_60) 
+round((TGTNOHPT / total) * TGT60_100) 
+
 
 # age X HF
 
@@ -240,6 +268,15 @@ for _ in range(20):
 
 Xhfage
 
+# test probability
+round((TGTHF / total) * TGT0_30) 
+round((TGTHF / total) * TGT30_60) 
+round((TGTHF / total) * TGT60_100) 
+round((TGTNOHF / total) * TGT0_30) 
+round((TGTNOHF / total) * TGT30_60) 
+round((TGTNOHF / total) * TGT60_100) 
+
+
 # gender X HPT
 
 TGTmale = 3073047   
@@ -248,8 +285,8 @@ TGTHPT = 1193445 # empirical target
 TGTNOHPT = 5139579   
 
 
-u = np.array([TGTmale, TGTfemale]) # row target (age)
-v = np.array([TGTHPT, TGTNOHPT]) # col target (gender)
+u = np.array([TGTmale, TGTfemale]) # row target (gender)
+v = np.array([TGTHPT, TGTNOHPT]) # col target (hpt)
 
 X = np.array([
     [1,1],
@@ -268,9 +305,77 @@ for _ in range(500):
 
 Xhptgen
 
+# test probability
+round(( TGTHPT / total) *  TGTmale) 
+round((TGTHPT / total) *  TGTfemale) 
+round((TGTNOHPT / total) *  TGTmale) 
+round((TGTNOHPT / total) *  TGTfemale) 
+
+# multiple dimensions probabilities
+
+total = TGTmale + TGTfemale
+        
+        # first level synthetic, joint 2 genderXage; total,age,gender empirical
+male30 = round((TGTmale / total) * TGT0_30)
+male60 = round((TGTmale / total) * TGT30_60)
+male100 = round((TGTmale / total) * TGT60_100)
+female30 = round((TGTfemale / total) * TGT0_30)
+female60 =  round((TGTfemale / total) * TGT30_60)
+female100 = round((TGTfemale / total) * TGT60_100)
+        # first level synthetic, joint genderXhpt
+maleHPT = round((TGTmale / total) * TGTHPT)
+femaleHPT =  round((TGTfemale / total) * TGTHPT)
+#        maleNOHPT = round((TGTmale / total) * TGTNOHPT)
+#        femaleNOHPT =  round((TGTfemale / total) * TGTNOHPT)
+        # first level synthetic,  joint genderXhf
+maleHF =   round((TGTmale / total) * TGTHF)
+femaleHF = round((TGTfemale / total) * TGTHF)
+        
+        # second level synthetic, joint 3 genderXhptXage -> ageXhpt from empirical data; genderXhpt synthetic
+maleHPT30 =  round((maleHPT / TGTHPT) *  TGT0_30HPT)
+maleHPT60 = round((maleHPT / TGTHPT) *  TGT30_60HPT)
+maleHPT100 =  round((maleHPT / TGTHPT) *  TGT60_100HPT)
+femaleHPT30 = round((femaleHPT / (TGTHPT)) *  TGT0_30HPT)
+femaleHPT60 =  round((femaleHPT / (TGTHPT)) *  TGT30_60HPT)
+femaleHPT100 =   round((femaleHPT / (TGTHPT)) *  TGT60_100HPT)
+        
+        # second level synthetic, joint 3 genderXhfXage -> ageXhf from empirical data; genderXhf synthetic
+maleHF30 =   round((maleHF / TGTHF) * TGT0_30HF) 
+maleHF60 =  round((maleHF / TGTHF) * TGT30_60HF)
+maleHF100 =    round((maleHF / TGTHF) * TGT60_100HF)
+femaleHF30 =   round((femaleHF / (TGTHF)) * TGT0_30HF)
+femaleHF60 =  round((femaleHF / (TGTHF)) * TGT30_60HF)
+femaleHF100 =  round((femaleHF / (TGTHF)) * TGT60_100HF)
+
+        # third level synthetic, joint 4 genderXhfXageXhpt -> male30 synth I level; maleHPT30 synth II livello; maleHF30 synth II livello
+male_HF_HPT_30 = round( total * ((male30 / total) * ((maleHPT30 / male30) * (maleHF30 / male30))) ) # 0
+male_HF_HPT_60 = round( total * ((male60 / total) * ((maleHPT60 / male60) * (maleHF60 / male60))) ) # 366
+male_HF_HPT_100 = round( total * ((male100 / total) * ((maleHPT100 / male100) * (maleHF100 / male100))) ) # 22032
+female_HF_HPT_30 = round( total * ((female30 / total) * ((femaleHPT30 / female30) * (femaleHF30 / female30))) ) # 0 
+female_HF_HPT_60 = round( total * ((female60 / total) * ((femaleHPT60 / female60) * (femaleHF60 / female60))) ) # 388
+female_HF_HPT_100 = round( total * ((female100 / total) * ((femaleHPT100 / female100) * (femaleHF100 / female100))) ) # 23371
+        
+
+# conditional probabilities known joint probabilities
+
+maleHF_HPT_30_2cr = round(((TGTmale / total) * TGT0_30) * ((TGT0_30HPT / TGT0_30) * (TGT0_30HF / TGT0_30)) ) #  0
+maleHF_HPT_60_2cr = round(((TGTmale / total) * TGT30_60) * ((TGT30_60HPT / TGT30_60) * (TGT30_60HF / TGT30_60)) ) # 366
+maleHF_HPT_100_2cr = round(((TGTmale / total) * TGT60_100) * ((TGT60_100HPT / TGT60_100) * (TGT60_100HF / TGT60_100))) # 22032
+femaleHF_HPT_30_2cr = round(((TGTfemale / total) * TGT0_30) * ((TGT0_30HPT / TGT0_30) * (TGT0_30HF / TGT0_30)) ) #  0
+femaleHF_HPT_60_2cr = round(((TGTfemale / total) * TGT30_60) * ((TGT30_60HPT / TGT30_60) * (TGT30_60HF / TGT30_60)) ) # 388
+femaleHF_HPT_100_2cr = round(((TGTfemale / total) * TGT60_100) * ((TGT60_100HPT / TGT60_100) * (TGT60_100HF / TGT60_100))) # 23371
+
+# if joint probabilities are not known
+maleHF_HPT_30_2 = round(total * ((TGTmale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT0_30 / total))) # 2367
+maleHF_HPT_60_2 = round(total * ((TGTmale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT30_60 / total))) # 3841
+maleHF_HPT_100_2 = round(total * ((TGTmale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT60_100 / total)))  # 2381
+femaleHF_HPT_30_2 = round(total * ((TGTfemale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT0_30 / total))) # 2367
+femaleHF_HPT_60_2 = round(total * ((TGTfemale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT30_60 / total))) # 3841
+femaleHF_HPT_100_2 = round(total * ((TGTfemale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT60_100 / total)))  # 2381
 
 
-# compute percentages
+
+
 
 def percsample(T):
     P = np.array([[T[r,c]  / T.sum() for c in range(T.shape[1])]
