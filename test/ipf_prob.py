@@ -365,6 +365,32 @@ femaleHF_HPT_30_2cr = round(((TGTfemale / total) * TGT0_30) * ((TGT0_30HPT / TGT
 femaleHF_HPT_60_2cr = round(((TGTfemale / total) * TGT30_60) * ((TGT30_60HPT / TGT30_60) * (TGT30_60HF / TGT30_60)) ) # 388
 femaleHF_HPT_100_2cr = round(((TGTfemale / total) * TGT60_100) * ((TGT60_100HPT / TGT60_100) * (TGT60_100HF / TGT60_100))) # 23371
 
+
+#
+
+maleNHF_HPT_30 = round(((TGTmale / total) * TGT0_30) * ((TGT0_30HPT / TGT0_30) * (TGT0_30NOHF / TGT0_30)) ) #  1721
+maleNHF_HPT_60 = round(((TGTmale / total) * TGT30_60) * ((TGT30_60HPT / TGT30_60) * (TGT30_60NOHF / TGT30_60)) ) # 122178
+maleNHF_HPT_100 = round(((TGTmale / total) * TGT60_100) * ((TGT60_100HPT / TGT60_100) * (TGT60_100NOHF / TGT60_100))) # 432812
+femaleNHF_HPT_30 = round(((TGTfemale / total) * TGT0_30) * ((TGT0_30HPT / TGT0_30) * (TGT0_30NOHF / TGT0_30)) ) # 1825
+femaleNHF_HPT_60 = round(((TGTfemale / total) * TGT30_60) * ((TGT30_60HPT / TGT30_60) * (TGT30_60NOHF / TGT30_60)) ) # 129610
+femaleNHF_HPT_100 = round(((TGTfemale / total) * TGT60_100) * ((TGT60_100HPT / TGT60_100) * (TGT60_100NOHF / TGT60_100))) # 459140
+
+maleNHF_NHPT_30 = round(((TGTmale / total) * TGT0_30) * ((TGT0_30NOHPT / TGT0_30) * (TGT0_30NOHF / TGT0_30)) ) #  844925
+maleNHF_NHPT_60 = round(((TGTmale / total) * TGT30_60) * ((TGT30_60NOHPT / TGT30_60) * (TGT30_60NOHF / TGT30_60)) ) # 1247964
+maleNHF_NHPT_100 = round(((TGTmale / total) * TGT60_100) * ((TGT60_100NOHPT / TGT60_100) * (TGT60_100NOHF / TGT60_100))) # 377870
+femaleNHF_NHPT_30 = round(((TGTfemale / total) * TGT0_30) * ((TGT0_30NOHPT / TGT0_30) * (TGT0_30NOHF / TGT0_30)) ) # 896320
+femaleNHF_NHPT_60 = round(((TGTfemale / total) * TGT30_60) * ((TGT30_60NOHPT / TGT30_60) * (TGT30_60NOHF / TGT30_60)) ) # 1323876
+femaleNHF_NHPT_100 = round(((TGTfemale / total) * TGT60_100) * ((TGT60_100NOHPT / TGT60_100) * (TGT60_100NOHF / TGT60_100))) # 400856
+
+
+maleHF_NHPT_30 = round(((TGTmale / total) * TGT0_30) * ((TGT0_30NOHPT / TGT0_30) * (TGT0_30HF / TGT0_30)) ) # 205
+maleHF_NHPT_60 = round(((TGTmale / total) * TGT30_60) * ((TGT30_60NOHPT / TGT30_60) * (TGT30_60HF / TGT30_60)) ) # 3739 
+maleHF_NHPT_100 = round(((TGTmale / total) * TGT60_100) * ((TGT60_100NOHPT / TGT60_100) * (TGT60_100HF / TGT60_100))) # 19235
+femaleHF_NHPT_30 = round(((TGTfemale / total) * TGT0_30) * ((TGT0_30NOHPT / TGT0_30) * (TGT0_30HF / TGT0_30)) ) #  218
+femaleHF_NHPT_60 = round(((TGTfemale / total) * TGT30_60) * ((TGT30_60NOHPT / TGT30_60) * (TGT30_60HF / TGT30_60)) ) # 3966
+femaleHF_NHPT_100 = round(((TGTfemale / total) * TGT60_100) * ((TGT60_100NOHPT / TGT60_100) * (TGT60_100HF / TGT60_100))) # 20405
+
+
 # if joint probabilities are not known
 maleHF_HPT_30_2 = round(total * ((TGTmale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT0_30 / total))) # 2367
 maleHF_HPT_60_2 = round(total * ((TGTmale / total) * (TGTHF / total) * (TGTHPT  / total) * (TGT30_60 / total))) # 3841

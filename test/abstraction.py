@@ -14,6 +14,16 @@ TGT60_100HPT = 937355  # empirical target
 TGT0_30HF = 424  # empirical target
 TGT30_60HF = 8459  # empirical target
 TGT60_100HF = 85043  # empirical target
+
+#### empirical computed by difference
+
+TGT0_30NOHPT =  1741668
+TGT30_60NOHPT =	2579545
+TGT60_100NOHPT = 818366
+TGT0_30NOHF = 1744791
+TGT30_60NOHF = 2823629
+TGT60_100NOHF = 1670678
+
 ####
 TGTmaleHPT = 579109 # synthetic target
 TGTfemaleHPT = 614336 # synthetic target
