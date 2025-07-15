@@ -1,27 +1,18 @@
-from itertools import product
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-# import combinations as it_combinations
-
-
+from itertools import product
+from collections import defaultdict
 
 def generalized_joint_estimator(df, total_population):
-    # Separate joint and marginal distributions
     joint_df = df[df['variable'].str.contains('_')]
     marginals_df = df[~df['variable'].str.contains('_')]
 
     # Build marginal lookup
     marginal_lookup = dict(zip(zip(marginals_df['variable'], marginals_df['category']), marginals_df['value']))
-
-    # Group marginals by variable
     marginal_groups = marginals_df.groupby('variable')['category'].apply(list).to_dict()
     variables = list(marginal_groups.keys())
-
-    # Generate all combinations of categories
     all_combinations = list(product(*[marginal_groups[v] for v in variables]))
 
-    # Step 1: Parse joint distributions into a structured dictionary
+    # Parse joint distributions
     joint_distributions = {}
     for _, row in joint_df.iterrows():
         vars_tuple = tuple(row['variable'].split('_'))
@@ -29,47 +20,56 @@ def generalized_joint_estimator(df, total_population):
         value = row['value']
         joint_distributions.setdefault(vars_tuple, {})[cats_tuple] = value
 
-    # Step 2: Estimate each combination
-    results = []
+    # Group joint distributions by shared base variable (only 2-way for now)
+    joint_groups_by_base = defaultdict(list)
+    for joint_vars in joint_distributions:
+        if len(joint_vars) == 2:  # 2 variables dictionaries
+            base, dependent = joint_vars
+            joint_groups_by_base[base].append((base, dependent))
 
-    for category_combo in all_combinations:
-        combo_dict = dict(zip(variables, category_combo))
+    results = []
+    for combo in all_combinations:
+        combo_dict = dict(zip(variables, combo))
         estimate = 1.0
         used_vars = set()
         used_joints = []
 
-        # Try using joint distributions in descending order of joint size
-        for joint_vars in sorted(joint_distributions.keys(), key=lambda x: -len(x)):
-            if all(v in combo_dict for v in joint_vars):
-                joint_cats = tuple(combo_dict[v] for v in joint_vars)
-                joint_val = joint_distributions[joint_vars].get(joint_cats, None)
+        # First, apply joint groups sharing the same base
+        for base_var, joint_list in joint_groups_by_base.items():
+            base_val = combo_dict.get(base_var)
+            base_count = marginal_lookup.get((base_var, base_val), None)
 
-                # Find base variable to normalize the joint (first variable)
-                base_var = joint_vars[0]
-                base_cat = combo_dict[base_var]
-                base_val = marginal_lookup.get((base_var, base_cat), None)
+            if base_val is not None and base_count:
+                # Apply each joint conditional on base
+                joint_conditional_used = False
+                conditional_product = 1.0
+                for joint_vars in joint_list:
+                    _, dep_var = joint_vars
+                    dep_val = combo_dict.get(dep_var)
+                    joint_val = joint_distributions[joint_vars].get((base_val, dep_val), None)
 
-                if joint_val is not None and base_val:
-                    # P(joint | base_var) * P(base_var)
-                    estimate *= (joint_val / base_val) * (base_val / total_population)
-                    used_vars.update(joint_vars)
-                    used_joints.append('_'.join(joint_vars))
+                    if joint_val is not None:
+                        conditional_product *= joint_val / base_count
+                        used_vars.update(joint_vars)
+                        used_joints.append('_'.join(joint_vars))
+                        joint_conditional_used = True
 
-        # Multiply remaining marginals
+                if joint_conditional_used:
+                    estimate *= (base_count / total_population) * conditional_product   # first element means it calculates probability instead of taking the marginal itself (e.g. age)
+
+        # Multiply marginals for any variables not yet used
         for var in variables:
             if var not in used_vars:
                 val = marginal_lookup.get((var, combo_dict[var]), 0)
-                estimate *= val / total_population
+                estimate *= val / total_population                    # this means it accumulates from estimate in the previous block
 
         results.append({
-            'combination': category_combo,
+            'combination': combo,
             'estimated_count': round(estimate * total_population),
-            'used_joints': ', '.join(sorted(used_joints)) if used_joints else 'none'
+            'used_joints': ', '.join(sorted(set(used_joints))) if used_joints else 'none'
         })
 
     return pd.DataFrame(results)
-
-# Apply the generalized function to the current dataset
 
 df = pd.read_csv("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/input_marginals.csv", delimiter=';')
 total_population = 6333024
