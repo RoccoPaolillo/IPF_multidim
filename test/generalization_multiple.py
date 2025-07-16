@@ -83,6 +83,10 @@ def syntheticextraction(df):
         
     return results_df
 
+os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
+df = pd.read_csv("input_file.csv", delimiter=';')
+synthetic_df = syntheticextraction(df)
+
 
 
 
