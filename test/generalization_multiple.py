@@ -3,7 +3,7 @@ from itertools import product
 from collections import defaultdict
 import os
 
-def syntheticextraction(df):
+def syntheticextraction(df, target_components):
     from itertools import product
     from collections import defaultdict
     
@@ -79,15 +79,48 @@ def syntheticextraction(df):
         })
         
         results_df = pd.DataFrame(results)
-        results_df.to_csv('syntheticpopulation.csv', index=False)
+        
+        if target_components == ["all"]:
+            results_df.to_csv('syntheticpopulation.csv', index=False)
+        else:
+            component_sums = defaultdict(float)
+
+            # Loop through each row
+            for _, row in results_df.iterrows():
+                components = row['combination'].split('_')
+                for component in components:
+                    component_sums[component] += row['estimated_count']
+
+            # Convert to a DataFrame for readability
+            result_df = pd.DataFrame(component_sums.items(), columns=['component', 'total_estimated_count'])
+            result_df = result_df.sort_values(by='total_estimated_count', ascending=False)
+            result_df['total_estimated_count'] = result_df['total_estimated_count'].astype(int)
+#            result_df.to_csv("back_marginals.csv",index = False)
+
+
+            # Define the target components to filter for
+            #target_components = ["age3060","hptyes"]
+
+
+
+            # Filter rows where all target components are present
+            mask = result_df['combination'].apply(lambda x: all(comp in x.split('_') for comp in target_components))
+            matching_rows = result_df[mask]
+
+            # Calculate total
+            result_df = matching_rows['estimated_count'].sum()
+            result_df = pd.DataFrame([{'combination': '_'.join(target_components) ,'estimated_count': result_df}])
+            result_df.to_csv("filtered_synthetic.csv", index=False)
+        
+        
+        
+        
+        
+        
+        
         
     return results_df
 
 os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
 df = pd.read_csv("input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df)
-
-
-
-
-
+synthetic_df = syntheticextraction(df, target_components = ["age30","male"])
