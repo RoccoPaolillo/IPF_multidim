@@ -1,8 +1,9 @@
 import pandas as pd
 from itertools import product
 from collections import defaultdict
+import os
 
-def generalized_joint_estimator_flexible_base(df, total_population):
+def syntheticextraction(df, total_population):
     from itertools import product
     from collections import defaultdict
 
@@ -66,8 +67,8 @@ def generalized_joint_estimator_flexible_base(df, total_population):
 
     return pd.DataFrame(results)
 
-
-
-df = pd.read_csv("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/input_marginals.csv", delimiter=';')
+os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
+df = pd.read_csv("age_gender_hpt.csv", delimiter=';')
 total_population = 6333024
-results_generalized = generalized_joint_estimator_flexible_base(df, total_population)
+synthetic_df = syntheticextraction(df, total_population)
+synthetic_df.to_csv('syntheticpopulation.csv', index=False)
