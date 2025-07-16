@@ -1,0 +1,6 @@
+combination,variables,estimated_count,weights_joints
+age60100_male_hfyes_hptno,age_gender_hf_hpt,19235,"age_hf, age_hpt"
+age60100_male_hfno_hptno,age_gender_hf_hpt,377870,"age_hf, age_hpt"
+age60100_female_hfyes_hptno,age_gender_hf_hpt,20405,"age_hf, age_hpt"
+age60100_female_hfno_hptno,age_gender_hf_hpt,400856,"age_hf, age_hpt"
+age60100_hptno,,818366,
