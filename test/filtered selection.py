@@ -22,7 +22,7 @@ result_df.to_csv("back_marginals.csv",index = False)
 
 
 # Define the target components to filter for
-target_components = ["age3060","hptyes"]
+target_components = ["female","age60100","hptyes"]
 
 
 
@@ -33,4 +33,4 @@ matching_rows = df[mask]
 # Calculate total
 total_estimated_count = matching_rows['estimated_count'].sum()
 total_estimated_countdf = pd.DataFrame([{'combination': '_'.join(target_components) ,'estimated_count': total_estimated_count}])
-total_estimated_countdf.to_csv("filtered_synthetic.csv", index=False)
+total_estimated_countdf.to_csv("filtered_syntheticTEST.csv", index=False)
