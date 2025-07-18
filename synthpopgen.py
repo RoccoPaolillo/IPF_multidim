@@ -95,7 +95,6 @@ def syntheticextraction(df, target_components):
             result_df = pd.DataFrame(component_sums.items(), columns=['component', 'total_estimated_count'])
             result_df = result_df.sort_values(by='total_estimated_count', ascending=False)
             result_df['total_estimated_count'] = result_df['total_estimated_count'].astype(int)
-            result_df.to_csv("back_marginals.csv",index = False)
 
 
             # Filter rows where all target components are present
@@ -112,4 +111,5 @@ def syntheticextraction(df, target_components):
 
 os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
 df = pd.read_csv("input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df, target_components = ["female","age60100","hptyes"])
+synthetic_df = syntheticextraction(df, target_components = ["all"])
+# synthetic_df = syntheticextraction(df, target_components = ["male","hptyes"])
