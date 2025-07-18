@@ -15,4 +15,4 @@ Algorithm in ```multidim.py``` to implement multiple iterative proportional fitt
    + Hypertension, 2 categories (HPT, NHT): cases of no hypertension are computed taking the reference level (total cases, male population, female population and substracting the case of hypertension)
    + Heath failure, 2 categories (HF, NHF): cases of no hearth failure are computed taking the reference level (total cases, male population, female population and substracting the case of hearth failure)
 
-Reproducing joint categories age * gender * disease 
+Reproducing joint categories age (age30,age3060,age60100) * gender (male, female) * hpt (hptyes, hptno) * hf (hfyes, hfno)
