@@ -20,7 +20,7 @@ Reproducing joint categories age (age30,age3060,age60100) * gender (male, female
 # Handling input file
 
 Data to be integrated are in input_file.csv. Here is how the user must upload:
-* variable: the knonw marginals and joint target used for estimate. Joint variables must be linked by "_"
+* variable: the knonw marginals and joint target used for estimate. Known joint variables and categories must be linked by "_"
 * category: the level known for each variable
 * value: the value of each category
 Estimates here assume data derive from the same population, i.e. the sum of categories for each variable give the same result
