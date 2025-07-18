@@ -17,7 +17,7 @@ Algorithm in ```multidim.py``` to implement multiple iterative proportional fitt
 
 Reproducing joint categories age (age30,age3060,age60100) * gender (male, female) * hpt (hptyes, hptno) * hf (hfyes, hfno)
 
-# HANDLING INPUT FILE
+# Handling input file
 
 Data to be integrated are in input_file.csv. Here is how the user must upload:
 * variable: the knonw marginals and joint target used for estimate. Joint variables must be linked by "_"
