@@ -6,13 +6,38 @@ import os
 def syntheticextraction(df, target_components):
     from itertools import product
     from collections import defaultdict
-    
-    # total population computed as sum of categories first variable (assuming sample from same population)
+
+    # total population computed as sum of categories of the first variable
     total_population = int(df[df['variable'] == df["variable"].unique()[0]]["value"].sum())
 
-    # identify what joint distribution used for correction exist (separated by _) or marginals
+    # identify joint and marginal distributions
     joint_df = df[df['variable'].str.contains('_')]
     marginals_df = df[~df['variable'].str.contains('_')]
+
+    # Determine whether target_components are variables or categories
+    variables_set = set(df["variable"])
+    categories_set = set(df["category"])
+
+    # Activate modality "all", "variable" or "category" based
+    if target_components == ["all"]:
+        filter_mode = "all"
+    elif all(comp in variables_set for comp in target_components):
+        filter_mode = "variable"
+    elif all(comp in categories_set for comp in target_components):
+        filter_mode = "category"
+    else:
+        raise ValueError("target_components must be all in either df['variable'] or df['category'], or set to ['all'].")
+
+    # --- FILTERING based on target_components ---
+    if filter_mode == "variable":
+        # Filter marginals to only the selected variables
+        marginals_df = marginals_df[marginals_df['variable'].isin(target_components)].copy()
+
+        # Filter joints where any part of the joint variable name is in target_components
+        def joint_filter(var):
+            return any(v in target_components for v in var.split('_'))
+
+        joint_df = joint_df[joint_df['variable'].apply(joint_filter)].copy()
 
     # identify all possible combinations
     marginal_lookup = dict(zip(zip(marginals_df['variable'], marginals_df['category']), marginals_df['value']))
@@ -68,7 +93,7 @@ def syntheticextraction(df, target_components):
                 # updates again the estimate for each combination by the probability of remaining marginals
                 # (MALE/population) * (AGE30/population) * (HPT30/AGE30)
                 estimate *= val / total_population
-        
+
         results.append({
             'combination': '_'.join(combo),
             'variables': '_'.join(variables),
@@ -77,39 +102,37 @@ def syntheticextraction(df, target_components):
             # meaning what known joint weights have been used
             'weights_joints': ', '.join(sorted(set(used_joints))) if used_joints else 'none'
         })
-        
-        results_df = pd.DataFrame(results)
-        
-        if target_components == ["all"]:
-            results_df.to_csv('syntheticpopulation.csv', index=False)
-        else:
-            component_sums = defaultdict(float)
 
-            # Loop through each row
-            for _, row in results_df.iterrows():
-                components = row['combination'].split('_')
-                for component in components:
-                    component_sums[component] += row['estimated_count']
+    results_df = pd.DataFrame(results)
 
-            # Convert to a DataFrame for readability
-            result_df = pd.DataFrame(component_sums.items(), columns=['component', 'total_estimated_count'])
-            result_df = result_df.sort_values(by='total_estimated_count', ascending=False)
-            result_df['total_estimated_count'] = result_df['total_estimated_count'].astype(int)
+    if filter_mode == "category":
+        component_sums = defaultdict(float)
 
+        # Loop through each row
+        for _, row in results_df.iterrows():
+            components = row['combination'].split('_')
+            for component in components:
+                component_sums[component] += row['estimated_count']
 
-            # Filter rows where all target components are present
-            mask = results_df['combination'].apply(lambda x: all(comp in x.split('_') for comp in target_components))
-            matching_rows = results_df[mask]
+        # Convert to a DataFrame for readability
+        result_df = pd.DataFrame(component_sums.items(), columns=['component', 'total_estimated_count'])
+        result_df = result_df.sort_values(by='total_estimated_count', ascending=False)
+        result_df['total_estimated_count'] = result_df['total_estimated_count'].astype(int)
 
-            # Calculate total
-            filtered_df = matching_rows['estimated_count'].sum()
-            filtered_df = pd.DataFrame([{'combination': '_'.join(target_components) ,'estimated_count': filtered_df}])
-            filtered_df.to_csv("filtered_synthetic.csv", index=False)
-        
-   
+        # Filter rows where all target components are present
+        mask = results_df['combination'].apply(lambda x: all(comp in x.split('_') for comp in target_components))
+        matching_rows = results_df[mask]
+
+        # Calculate total
+        filtered_df = matching_rows['estimated_count'].sum()
+        filtered_df = pd.DataFrame([{'combination': '_'.join(target_components), 'estimated_count': filtered_df}])
+        filtered_df.to_csv("filtered_synthetic.csv", index=False)
+
+    else:
+        results_df.to_csv('syntheticpopulation.csv', index=False)
+
     return results_df
 
-os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
+os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim_new2/")
 df = pd.read_csv("input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df, target_components = ["all"])
-# synthetic_df = syntheticextraction(df, target_components = ["male","hptyes"])
+synthetic_df = syntheticextraction(df, target_components = ["age","hf"])
