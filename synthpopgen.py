@@ -133,6 +133,6 @@ def syntheticextraction(df, target_components):
 
     return results_df
 
-os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim_new2/")
+os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
 df = pd.read_csv("input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df, target_components = ["age","hf"])
+synthetic_df = syntheticextraction(df, target_components = ["age30_hptyes","male"])
