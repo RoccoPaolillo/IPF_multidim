@@ -114,7 +114,7 @@ write.csv(df,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/da
 
 # marginals for the population #######
 
-setwd("C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
+setwd("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/")
 df <- read.csv("soc_hpt_hf.csv",sep =",")
 
 df$eta_range <- "00_00"
@@ -123,7 +123,7 @@ df[df$classi_eta %in% c("30_34","35_39","40_44","45_49","50_54","55_59"),]$eta_r
 df[df$classi_eta %in% c("60_64","65_69","70_74","75_79","80_84","85_100"),]$eta_range <- "60_100"
 
 # population aggregation
-df_range <- df %>% group_by(eta_range) %>% summarize(man_r = sum(man),
+df_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(man_r = sum(man),
                                                                 fem_r = sum(fem),
                                                                 hpt_man_r = sum(hpt_male),
                                                                 male_nohpt_r =  sum(male_nohpt),
