@@ -66,7 +66,8 @@ def syntheticextraction(df, target_components):
         if len(joint_vars) >= 2:
             base = joint_vars[0]
             joint_groups_by_base[base].append(joint_vars)
-
+            
+# from here the actual algorithm
     results = []
 
     for combo in all_combinations:
@@ -107,6 +108,8 @@ def syntheticextraction(df, target_components):
             'weights_joints': ', '.join(sorted(set(used_joints))) if used_joints else 'none'
         })
 
+# from here the output preparation
+    
     results_df = pd.DataFrame(results)
 
     if filter_mode == "category":
@@ -134,3 +137,4 @@ def syntheticextraction(df, target_components):
 os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
 df = pd.read_csv("input_file.csv", delimiter=';')
 synthetic_df = syntheticextraction(df, target_components = ["age30","hfno","hptno"])
+
