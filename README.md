@@ -30,7 +30,7 @@ Computation is possible also if this does not hold, but at cost of error in esti
 # Flowchart of the service
 
 ![Alt text](images/flowchart.jpg)
-<img src="images/flowchart.jpg" alt="Alt text" width="300" height="200"/>
+<img src="images/flowchart.jpg" alt="Alt text" width="400" height="300"/>
 
 # How to use it
 
