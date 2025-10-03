@@ -27,6 +27,11 @@ Estimates here assume data derive from the same population, i.e. the sum of cate
 The total_population used for normalization is taken as the sum of categories of the first variable, under this assumption.
 Computation is possible also if this does not hold, but at cost of error in estimates.
 
+# Flowchart of the service
+
+![Alt text](images/flowchart.jpg)
+
+
 # How to use it
 
 In the function [syntheticextraction()](https://github.com/RoccoPaolillo/IPF_multidim/blob/fe4028a2aa2d4bb09b77c771c21a761b52446807/synthpopgen.py#L114) target_components = ["all"] for the entire synthetic population, filter by category column for specific segments, e.g. target_components = ["male","age60100"]
