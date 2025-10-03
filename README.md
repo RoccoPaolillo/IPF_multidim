@@ -1,5 +1,5 @@
 # IPF_multidim
-Multidimensionality of IPF, project FOSSR
+Multidimensionality of IPF, project FOSSR (WP5.5 Synthetic Populations Generator)
 
 Data from [opensalutelazio](https://www.opensalutelazio.it/salute/stato_salute.php?stato_salute) Data concern the resident population and the cases of illness out of the residential population. So the resident population is the reference for the synthetic population
 
