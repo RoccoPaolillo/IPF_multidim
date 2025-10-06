@@ -29,8 +29,12 @@ Computation is possible also if this does not hold, but at cost of error in esti
 
 # Flowchart of the service
 
-<div align="center" style="background-color:white; padding:10px; display:inline-block;">
-  <img src="images/flowchart.png" alt="Alt text" width="700" height="600"/>
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="images/flowchart_white_bg.png">
+    <source media="(prefers-color-scheme: light)" srcset="images/flowchart.png">
+    <img src="images/flowchart.png" alt="Flowchart" width="700" height="600">
+  </picture>
 </div>
 
 # How to use it
