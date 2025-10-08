@@ -135,6 +135,6 @@ def syntheticextraction(df, target_components):
     return results_df
 
 os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
-df = pd.read_csv("input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df, target_components = ["age30","hfno","hptno"])
+df = pd.read_csv("test/input_file.csv", delimiter=';')
+synthetic_df = syntheticextraction(df, target_components = ["hfno","hptno","age30"]) # "age30","hfno","hptno" "all"
 
