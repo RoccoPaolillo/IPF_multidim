@@ -17,16 +17,125 @@ Algorithm in ```multidim.py``` to implement multiple iterative proportional fitt
 
 Reproducing joint categories age (age30,age3060,age60100) * gender (male, female) * hpt (hptyes, hptno) * hf (hfyes, hfno)
 
-# Handling input file
+## Handling input file
 
-Data to be integrated are in input_file.csv. Here is how the user must upload:
-* variable: the knonw marginals and joint target used for estimate. Known joint variables and categories must be linked by "_"
-* category: the level known for each variable
-* value: the value of each category
-Estimates here assume data derive from the same population, i.e. the sum of categories for each variable give the same result
-The total_population used for normalization is taken as the sum of categories of the first variable, under this assumption.
-Computation is possible also if this does not hold, but at cost of error in estimates.
+Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-based format where each row represents a population constraint across different dimensions:
 
-# How to use it
+**Format:**
 
-In the function [syntheticextraction()](https://github.com/RoccoPaolillo/IPF_multidim/blob/fe4028a2aa2d4bb09b77c771c21a761b52446807/synthpopgen.py#L114) target_components = ["all"] for the entire synthetic population, filter by category column for specific segments, e.g. target_components = ["male","age60100"]
+```csv
+gender;age;hpt;hf;value
+male;;;;3073047
+female;;;;3259977
+;30;;;1745215
+;3060;;;2832088
+;60100;;;1755721
+;;yes;;1193445
+;;no;;5139579
+;;;yes;93926
+;;;no;6239098
+;30;yes;;3547
+;3060;yes;;252543
+;60100;yes;;937355
+```
+
+**Structure:**
+
+* **Dimension columns** (gender, age, hpt, hf): Each column represents a dimension/variable
+* **Empty cells**: Indicate that dimension is not constrained in that row
+* **Single non-empty cell**: Represents a marginal distribution (e.g., `male;;;;3073047` = 3,073,047 males)
+* **Multiple non-empty cells**: Represents a joint distribution (e.g., `;30;yes;;3547` = 3,547 people aged 30 with hypertension)
+* **value**: The count for that constraint
+
+**Assumptions:**
+
+* Estimates assume data derive from the same population (i.e., the sum of categories for each variable should match the total population)
+* Total population used for normalization is taken as the sum of the first complete marginal distribution
+* Computation is possible even if totals don't perfectly match, but at the cost of estimation error
+
+## How to use it
+
+### Installation
+
+1. Create a virtual environment:
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate  # On macOS/Linux
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pip install pandas
+   ```
+
+### Running the script
+
+The script accepts command-line arguments for input, output, and filtering:
+
+#### Command-line Usage
+
+```bash
+# Show help and usage information
+python synthpopgen.py --help
+
+# Generate full synthetic population (all combinations) to stdout
+python synthpopgen.py -i input_file_tuples.csv -f all
+
+# Generate full synthetic population and save to file
+python synthpopgen.py -i input_file_tuples.csv -f all -o output.csv
+
+# Filter for age=30, hpt=no, hf=no (any gender) and print to stdout
+python synthpopgen.py -i input_file_tuples.csv -f "age:30,hpt:no,hf:no"
+
+# Filter for female, age=60-100, hpt=yes (any hf) and save to file
+python synthpopgen.py -i input_file_tuples.csv -f "gender:female,age:60100,hpt:yes" -o results.csv
+
+# Filter for males only (all other dimensions "any")
+python synthpopgen.py -i input_file_tuples.csv -f "gender:male"
+```
+
+#### Command-line Arguments
+
+* `-i, --input` (required): Input CSV file in tuple format
+* `-o, --output` (optional): Output CSV file. If not specified, results are printed to stdout
+* `-f, --filter` (optional): Filter specification (defaults to "all" if not specified)
+  * Use `"all"` to generate the full synthetic population with all combinations
+  * Use `"dimension:value"` pairs separated by commas to filter specific dimensions
+  * Omitted dimensions default to "any" (all values for that dimension)
+
+#### Filter Examples
+
+```bash
+# Full population - all combinations of all dimensions
+python synthpopgen.py -i input.csv -f "all"
+
+# Single dimension filter - all ages for males
+python synthpopgen.py -i input.csv -f "gender:male"
+
+# Multiple dimension filter - specific age and health conditions
+python synthpopgen.py -i input.csv -f "age:30,hpt:no,hf:no"
+
+# Partial filter - female, age 60-100, any hpt/hf status
+python synthpopgen.py -i input.csv -f "gender:female,age:60100"
+```
+
+### Output Format
+
+The script outputs results in the same tuple format as the input file (semicolon-delimited):
+
+```csv
+gender;age;hpt;hf;value
+male;30;yes;yes;0
+male;30;yes;no;430
+male;30;no;yes;51
+male;30;no;no;211231
+```
+
+**Behavior:**
+
+* When using `-f all`: Generates all possible combinations of dimensions
+* When filtering (e.g., `-f "age:30,hpt:no"`): Returns all rows matching the filter criteria
+* Each row represents one combination with its estimated population count
+* Output can be redirected to a file using `-o` or printed to stdout
