@@ -4,13 +4,14 @@ from collections import defaultdict
 import argparse
 import sys
 
-def syntheticextraction(df_tuples, target_components):
+def syntheticextraction(df_tuples, target_components, display_mode='split'):
     """
     Perform synthetic population extraction using IPF algorithm.
     
     Args:
         df_tuples: DataFrame with columns for each dimension (gender, age, hpt, hf) and value
         target_components: List of target categories to filter results
+        display_mode: 'split' (default) shows all combinations, 'aggregate' sums unspecified dimensions
     """
 
     # Get dimension columns (all except 'value')
@@ -167,6 +168,18 @@ def syntheticextraction(df_tuples, target_components):
             output_rows.append(tuple_row)
         
         results_df = pd.DataFrame(output_rows)
+        
+        # Apply display mode
+        if display_mode == 'aggregate':
+            # For aggregate mode, set unspecified dimensions to empty and sum values
+            agg_row = {}
+            for i, (dim, target) in enumerate(zip(dimension_cols, target_components)):
+                if target is not None:
+                    agg_row[dim] = target
+                else:
+                    agg_row[dim] = ''
+            agg_row['value'] = total_est
+            results_df = pd.DataFrame([agg_row])
     else:
         # For "all" mode, convert results to tuple format matching input structure
         output_rows = []
@@ -241,13 +254,13 @@ Examples:
   # Generate full synthetic population to file
   python synthpopgen.py -i input_file_tuples.csv -f all -o output.csv
   
-  # Filter for age=30, hpt=no, hf=no (any gender) and save to file
-  python synthpopgen.py -i input_file_tuples.csv -f "age:30,hpt:no,hf:no" -o filtered.csv
+  # Filter for age=30, hpt=no, hf=no (any gender) - split mode (default)
+  python synthpopgen.py -i input_file_tuples.csv -f "age:30,hpt:no,hf:no" -d split
   
-  # Filter for male, age=60-100, hpt=yes (any hf)
-  python synthpopgen.py -i input_file_tuples.csv -f "gender:male,age:60100,hpt:yes"
+  # Filter for male, age=30, hf=yes (any hpt) - aggregate mode (sum into one row)
+  python synthpopgen.py -i input_file_tuples.csv -f "gender:male,age:30,hf:yes" -d aggregate
   
-  # Filter for female only (all other dimensions)
+  # Filter for female only - split mode shows all combinations
   python synthpopgen.py -i input_file_tuples.csv -f "gender:female" -o female_results.csv
         """
     )
@@ -275,6 +288,18 @@ Examples:
              'Example: "gender:male,age:30,hpt:no" or "age:60100"'
     )
     
+    parser.add_argument(
+        '-d', '--display',
+        required=False,
+        default='split',
+        choices=['split', 'aggregate'],
+        help='Display mode (optional, defaults to "split"). '
+             '"split": show all combinations of unspecified dimensions (multiple rows). '
+             '"aggregate": sum up unspecified dimensions into a single row with empty values for those dimensions. '
+             'Example with -f "gender:male,age:30,hf:yes": '
+             'split shows 2 rows (hpt:yes and hpt:no), aggregate shows 1 row with empty hpt.'
+    )
+    
     args = parser.parse_args()
     
     try:
@@ -289,7 +314,7 @@ Examples:
         target_components = parse_filter(args.filter, df_tuples)
         
         # Run synthetic extraction
-        synthetic_df = syntheticextraction(df_tuples, target_components)
+        synthetic_df = syntheticextraction(df_tuples, target_components, display_mode=args.display)
         
         # Output results in tuple format (semicolon-delimited, matching input format)
         if args.output:
