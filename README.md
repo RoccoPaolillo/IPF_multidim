@@ -104,6 +104,10 @@ python synthpopgen.py -i input_file_tuples.csv -f "gender:male"
   * Use `"all"` to generate the full synthetic population with all combinations
   * Use `"dimension:value"` pairs separated by commas to filter specific dimensions
   * Omitted dimensions default to "any" (all values for that dimension)
+* `-d, --display` (optional): Display mode for filtered results (defaults to "split" if not specified)
+  * `"split"` (default): Shows all combinations of unspecified dimensions as separate rows
+  * `"aggregate"`: Sums values across unspecified dimensions into a single aggregated row
+  * Only affects filtered output; ignored when `-f all` is used
 
 #### Filter Examples
 
@@ -121,6 +125,48 @@ python synthpopgen.py -i input.csv -f "age:30,hpt:no,hf:no"
 python synthpopgen.py -i input.csv -f "gender:female,age:60100"
 ```
 
+#### Display Mode Examples
+
+The `-d/--display` parameter controls how unspecified dimensions are shown in the output:
+
+**Split mode (default)** - Shows all combinations:
+
+```bash
+python synthpopgen.py -i input.csv -f "gender:male,age:30,hf:yes" -d split
+# Output:
+# gender;age;hpt;hf;value
+# male;30;yes;yes;0
+# male;30;no;yes;205
+```
+
+**Aggregate mode** - Sums into a single row:
+
+```bash
+python synthpopgen.py -i input.csv -f "gender:male,age:30,hf:yes" -d aggregate
+# Output:
+# gender;age;hpt;hf;value
+# male;30;;yes;205
+```
+
+Note how in aggregate mode, the unspecified dimension (`hpt`) is shown as empty, and the value is the sum of all combinations (0 + 205 = 205).
+
+**More complex example** with two unspecified dimensions:
+
+```bash
+# Split mode: 4 rows (2 hpt values × 2 hf values)
+python synthpopgen.py -i input.csv -f "gender:male,age:30" -d split
+# Output:
+# male;30;yes;yes;0
+# male;30;yes;no;1721
+# male;30;no;yes;205
+# male;30;no;no;844925
+
+# Aggregate mode: 1 row (sum of all 4 combinations)
+python synthpopgen.py -i input.csv -f "gender:male,age:30" -d aggregate
+# Output:
+# male;30;;;846851
+```
+
 ### Output Format
 
 The script outputs results in the same tuple format as the input file (semicolon-delimited):
@@ -136,6 +182,7 @@ male;30;no;no;211231
 **Behavior:**
 
 * When using `-f all`: Generates all possible combinations of dimensions
-* When filtering (e.g., `-f "age:30,hpt:no"`): Returns all rows matching the filter criteria
-* Each row represents one combination with its estimated population count
+* When filtering with `-d split` (default): Returns all rows matching the filter criteria, showing all combinations of unspecified dimensions
+* When filtering with `-d aggregate`: Returns a single row with summed values across unspecified dimensions (shown as empty cells)
+* Each row represents one combination (or aggregate) with its estimated population count
 * Output can be redirected to a file using `-o` or printed to stdout
