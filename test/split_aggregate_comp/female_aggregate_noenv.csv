@@ -1,0 +1,13 @@
+gender;age;hpt;hf;value
+female;30;yes;yes;0
+female;30;yes;no;1825
+female;30;no;yes;218
+female;30;no;no;896320
+female;3060;yes;yes;388
+female;3060;yes;no;129610
+female;3060;no;yes;3966
+female;3060;no;no;1323876
+female;60100;yes;yes;23372
+female;60100;yes;no;459140
+female;60100;no;yes;20405
+female;60100;no;no;400856
