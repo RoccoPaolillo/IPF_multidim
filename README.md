@@ -1,5 +1,5 @@
 # IPF_multidim
-Multidimensionality of IPF, project FOSSR
+Multidimensionality of IPF, project FOSSR (WP5.5 Synthetic Populations Generator)
 
 Data from [opensalutelazio](https://www.opensalutelazio.it/salute/stato_salute.php?stato_salute) Data concern the resident population and the cases of illness out of the residential population. So the resident population is the reference for the synthetic population
 
@@ -22,6 +22,13 @@ Reproducing joint categories age (age30,age3060,age60100) * gender (male, female
 Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-based format where each row represents a population constraint across different dimensions:
 
 **Format:**
+# Flowchart of the service
+
+<div align="center" style="background-color:white; padding:10px; display:inline-block;">
+  <img src="images/picture.jpg" alt="Alt text" width="700" height="600"/>
+</div>
+
+# How to use it
 
 ```csv
 gender;age;hpt;hf;value
