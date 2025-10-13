@@ -94,40 +94,6 @@ def syntheticextraction(df_tuples, target_components, display_mode='split'):
         )
     
     # Main IPF calculation
-
-    # --- FILTERING based on target_components ---
-    if filter_mode == "variable":
-        # Filter marginals to only the selected variables
-        marginals_df = marginals_df[marginals_df['variable'].isin(target_components)].copy()
-
-        # Filter joints where any part of the joint variable name is in target_components
-        def joint_filter(var):
-            return any(v in target_components for v in var.split('_'))
-
-        joint_df = joint_df[joint_df['variable'].apply(joint_filter)].copy()
-
-    # identify all possible combinations
-    marginal_lookup = dict(zip(zip(marginals_df['variable'], marginals_df['category']), marginals_df['value']))
-    marginal_groups = marginals_df.groupby('variable')['category'].apply(list).to_dict()
-    variables = list(marginal_groups.keys())
-    all_combinations = list(product(*[marginal_groups[v] for v in variables]))
-
-    # joint distributions used for conditional probability (equivalent to marginals empirical for cross-category in IPF)
-    joint_distributions = {}
-    for _, row in joint_df.iterrows():
-        vars_tuple = tuple(row['variable'].split('_'))
-        cats_tuple = tuple(row['category'].split('_'))
-        value = row['value']
-        joint_distributions.setdefault(vars_tuple, {})[cats_tuple] = value
-
-    # Allow joints of length >= 2, grouped categories by base (first variable)
-    joint_groups_by_base = defaultdict(list)
-    for joint_vars in joint_distributions:
-        if len(joint_vars) >= 2:
-            base = joint_vars[0]
-            joint_groups_by_base[base].append(joint_vars)
-            
-# from here the actual algorithm
     results = []
     
     for combo in all_combinations:
@@ -172,8 +138,6 @@ def syntheticextraction(df_tuples, target_components, display_mode='split'):
             'estimated_count': round(estimate * total_population),
             'weights_joints': ', '.join(sorted(set(used_joints))) if used_joints else 'none'
         })
-
-# from here the output preparation
     
     results_df = pd.DataFrame(results)
     
@@ -368,7 +332,3 @@ Examples:
 
 if __name__ == "__main__":
     main()
-os.chdir("C:/Users/LENOVO/Documents/GitHub/IPF_multidim/")
-df = pd.read_csv("test/input_file.csv", delimiter=';')
-synthetic_df = syntheticextraction(df, target_components = ["hfno","hptno","age30"]) # "age30","hfno","hptno" "all"
-
