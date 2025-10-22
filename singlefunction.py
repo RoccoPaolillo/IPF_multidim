@@ -5,13 +5,7 @@ def syntheticextraction_flex(df_or_path,
                              target_components,
                              display_mode="split",
                              output_path = "output.csv"):
-    """
-    Flexible version of syntheticextraction:
-    - Accepts either a CSV file path or a DataFrame
-    - Accepts either a string filter or a parsed list
-    - Automatically writes output to CSV
-    """
-
+    
     # load input
     if isinstance(df_or_path, str):
         df = pd.read_csv(df_or_path, delimiter=";", dtype=str)
