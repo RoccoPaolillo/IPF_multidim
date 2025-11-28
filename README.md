@@ -64,7 +64,10 @@ female;;;;3259977
 
 0. Download from GitHub repository:
    * Code > Download .zip file or open with GitHub Desktop
-   * alternatively, from cmd line:  git clone https://github.com/RoccoPaolillo/IPF_multidim.git
+   * alternatively, from cmd line:
+
+git clone https://github.com/RoccoPaolillo/IPF_multidim.git
+
 
 ### Installation
 
