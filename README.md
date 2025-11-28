@@ -28,7 +28,7 @@ Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-base
   <img src="images/picture.jpg" alt="Alt text" width="700" height="600"/>
 </div>
 
-# How to use it
+# How it works
 
 ```csv
 gender;age;hpt;hf;value
@@ -61,6 +61,10 @@ female;;;;3259977
 * Computation is possible even if totals don't perfectly match, but at the cost of estimation error
 
 ## How to use it
+
+0. Download from GitHub repository:
+   * Code > Download .zip file or open with GitHub Desktop
+   * alternatively, from cmd line:  git clone https://github.com/RoccoPaolillo/IPF_multidim.git
 
 ### Installation
 
