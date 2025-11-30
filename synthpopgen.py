@@ -332,5 +332,3 @@ Examples:
  
 if __name__ == "__main__":
     main()
-
-syntheticextraction(df_tuples = args.input, target_components = args.filter, display_mode = args.display)
