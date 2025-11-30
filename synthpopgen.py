@@ -4,7 +4,7 @@ from collections import defaultdict
 import argparse
 import sys
 
-def syntheticextraction(df_tuples, target_components, display_mode='split'):
+def syntheticextraction(df_tuples, target_components, display_mode='split', output):
     """
     Perform synthetic population extraction using IPF algorithm.
     
@@ -239,10 +239,10 @@ def parse_filter(filter_str, df_tuples):
     target_components = [filter_dict.get(dim, None) for dim in dimension_cols]
     return target_components
 
-def main():
-    """
-    Main function to handle command-line arguments and run synthetic extraction.
-    """
+ def main():
+     """
+     Main function to handle command-line arguments and run synthetic extraction.
+     """
     parser = argparse.ArgumentParser(
         description='Synthetic population extraction using IPF algorithm',
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -258,7 +258,7 @@ Examples:
   python synthpopgen.py -i input_file_tuples.csv -f "age:30,hpt:no,hf:no" -d split
   
   # Filter for male, age=30, hf=yes (any hpt) - aggregate mode (sum into one row)
-  python synthpopgen.py -i input_file_tuples.csv -f "gender:male,age:30,hf:yes" -d aggregate
+#   python synthpopgen.py -i input_file_tuples.csv -f "gender:male,age:30,hf:yes" -d aggregate
   
   # Filter for female only - split mode shows all combinations
   python synthpopgen.py -i input_file_tuples.csv -f "gender:female" -o female_results.csv
@@ -295,8 +295,8 @@ Examples:
         choices=['split', 'aggregate'],
         help='Display mode (optional, defaults to "split"). '
              '"split": show all combinations of unspecified dimensions (multiple rows). '
-             '"aggregate": sum up unspecified dimensions into a single row with empty values for those dimensions. '
-             'Example with -f "gender:male,age:30,hf:yes": '
+            '"aggregate": sum up unspecified dimensions into a single row with empty values for those dimensions. '
+            'Example with -f "gender:male,age:30,hf:yes": '
              'split shows 2 rows (hpt:yes and hpt:no), aggregate shows 1 row with empty hpt.'
     )
     
@@ -329,9 +329,8 @@ Examples:
     except Exception as e:
         print(f"Error: {str(e)}", file=sys.stderr)
         sys.exit(1)
-
+ 
 if __name__ == "__main__":
     main()
 
-
-syntheticextraction(df_tuples = args.input, target_components = args.filter, display_mode = args.display)
+syntheticextraction(df_tuples = args.input, target_components = args.filter, display_mode = args.display, output = args.output)
