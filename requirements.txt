@@ -1,6 +1,3 @@
 pandas
-collections
-argparse
-sys
 numpy
 matplotlib
