@@ -4,7 +4,7 @@ from collections import defaultdict
 import argparse
 import sys
 
-def syntheticextraction(df_tuples, target_components, display_mode='split', output):
+def syntheticextraction(df_tuples, target_components, display_mode='split', outputdf):
     """
     Perform synthetic population extraction using IPF algorithm.
     
@@ -317,11 +317,12 @@ Examples:
         synthetic_df = syntheticextraction(df_tuples, target_components, display_mode=args.display)
         
         # Output results in tuple format (semicolon-delimited, matching input format)
-        if args.output:
-            synthetic_df.to_csv(args.output, index=False, sep=';')
-            print(f"Results saved to {args.output}", file=sys.stderr)
-        else:
-            print(synthetic_df.to_csv(index=False, sep=';'))
+        outputdf = args.output
+        #if args.output:
+        synthetic_df.to_csv(outputdf, index=False, sep=';')
+#            print(f"Results saved to {args.output}", file=sys.stderr)
+#        else:
+#            print(synthetic_df.to_csv(index=False, sep=';'))
 
     except FileNotFoundError:
         print(f"Error: Input file '{args.input}' not found.", file=sys.stderr)
