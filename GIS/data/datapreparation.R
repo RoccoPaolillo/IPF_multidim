@@ -148,39 +148,46 @@ mar_00_29 <- df_range[df_range$eta_range == "00_29",]$mar_ageASL_r
 mar_30_59 <- df_range[df_range$eta_range == "30_59",]$mar_ageASL_r
 mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
+
+
+df_asl <- df_range %>%
+  group_by(DENOMINAZI) %>%
+  summarise(
+    mar_male_pop  = sum(man_r, na.rm = TRUE),
+    mar_fem_pop  = sum(fem_r, na.rm = TRUE),
+    
+    mar_hpt_pop   = sum(hpt_fem_r + hpt_man_r, na.rm = TRUE),
+    mar_nohpt_pop = sum(fem_nohpt_r + male_nohpt_r, na.rm = TRUE),
+    
+    mar_hf_pop    = sum(hf_fem_r + hf_male_r, na.rm = TRUE),
+    mar_nohf_pop  = sum(fem_nohf_r + male_nohf_r, na.rm = TRUE),
+    
+    mar_00_29     = sum(mar_ageASL_r[eta_range == "00_29"], na.rm = TRUE),
+    mar_30_59    = sum(mar_ageASL_r[eta_range == "30_59"], na.rm = TRUE),
+    mar_60_100    = sum(mar_ageASL_r[eta_range == "60_100"], na.rm = TRUE)
+  ) %>%
+  mutate(DENOMINAZI = gsub(" ","_",DENOMINAZI))
+
+df_aslage <- df_range %>%
+  group_by(DENOMINAZI,eta_range) %>%
+  summarise(
+    mar_male_pop  = sum(man_r, na.rm = TRUE),
+    mar_fem_pop  = sum(fem_r, na.rm = TRUE),
+    
+    mar_hpt_pop   = sum(hpt_fem_r + hpt_man_r, na.rm = TRUE),
+    mar_nohpt_pop = sum(fem_nohpt_r + male_nohpt_r, na.rm = TRUE),
+    
+    mar_hf_pop    = sum(hf_fem_r + hf_male_r, na.rm = TRUE),
+    mar_nohf_pop  = sum(fem_nohf_r + male_nohf_r, na.rm = TRUE),
+    
+    mar_00_29     = sum(mar_ageASL_r[eta_range == "00_29"], na.rm = TRUE),
+    mar_30_59    = sum(mar_ageASL_r[eta_range == "30_59"], na.rm = TRUE),
+    mar_60_100    = sum(mar_ageASL_r[eta_range == "60_100"], na.rm = TRUE)
+  ) %>%
+  mutate(DENOMINAZI = gsub(" ","_",DENOMINAZI))
+
 write.csv(df_range,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv",row.names = F)
+write.csv(df_asl,file= "C:/Users/LENOVO/Documents/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_asl.csv",row.names = F)
 
-
-# Algorithm #####
-
-cells = c("M_A1_HT_HF", "M_A1_HT_NHF", "M_A1_NHT_HF", "M_A1_NHT_NHF" ,
-"M_A2_HT_HF", "M_A2_HT_NHF", "M_A2_NHT_HF", "M_A2_NHT_NHF",
-"M_A3_HT_HF" , "M_A3_HT_NHF", "M_A3_NHT_HF", "M_A3_NHT_NHF",
-
-"F_A1_HT_HF", "F_A1_HT_NHF", "F_A1_NHT_HF", "F_A1_NHT_NHF" ,
-"F_A2_HT_HF", "F_A2_HT_NHF", "F_A2_NHT_HF", "F_A2_NHT_NHF",
-"F_A3_HT_HF", "F_A3_HT_NHF", "F_A3_NHT_HF", "F_A3_NHT_NHF")
-
-value = c(rep(1,length(cells)))
-
-ipf <- data.frame(cells, value)
-
-fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
-  
-  sum(ipf[unlist(strsplit(ipf$cells,"_"))[1] == "M" ,]$value)
-
-
-  fitted_M <- ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" )
-
-
-
-ipf %>% filter(unlist(strsplit(cells,"_"))[1] == "M" ) %>% su
-
-for (i in ipf$cells) {
- if(unlist(strsplit(i,"_"))[1] == "M"){print(sum(df[df$i]))}
-
-}
-
-print(unlist(strsplit("M_A2_NHT_HF","_"))[1])
 
 
