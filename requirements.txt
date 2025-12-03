@@ -1,7 +1,3 @@
 pandas
-itertools
-collections
-argparse
-sys
 numpy
 matplotlib
