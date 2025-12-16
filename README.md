@@ -122,7 +122,8 @@ python synthpopgen.py -i input_file_tuples.csv -f "gender:male"
   * `"split"` (default): Shows all combinations of unspecified dimensions as separate rows
   * `"aggregate"`: Sums values across unspecified dimensions into a single aggregated row
   * Only affects filtered output; ignored when `-f all` is used
-
+* `--validate` (optional) to print validation measure in a separate csv for RMSE (Root Mean Squared Error) and a separate csv for APE (Average Percentage Error). It works only if -f all option is used
+   
 #### Filter Examples
 
 ```bash
@@ -207,5 +208,6 @@ If metrics of validation want to be reported
 python synthpopgen.py -i report_validation/input_no_agexhpt.csv -f all -o output.csv --validate validation.csv
 ```
 It will report one csv with output, one *_RMSE.csv with RMSE global mease, *_APE.csv with average percentage error for each constraint identified.
+
 It works only on -f all option and printed .csv results
 
