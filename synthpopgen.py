@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 from itertools import product
 from collections import defaultdict
 import argparse
@@ -156,8 +157,6 @@ def syntheticextraction(df_tuples, target_components, display_mode='split'):
         matching_rows = results_df[results_df['combination'].apply(match_tuple)]
         total_est = int(matching_rows['estimated_count'].sum())
         
-        # Create label showing only non-None components
-        label_parts = [f"{variables[i]}={target}" for i, target in enumerate(target_components) if target is not None]
         
         # Convert to tuple format matching input structure
         output_rows = []
@@ -239,6 +238,95 @@ def parse_filter(filter_str, df_tuples):
     target_components = [filter_dict.get(dim, None) for dim in dimension_cols]
     return target_components
 
+
+def compute_rmse(df_tuples, synthetic_df):
+    """
+    RMSE between observed constraints in df_tuples (value)
+    and synthetic_df (value), where synthetic_df is full-joint and
+    is aggregated to match each constraint row.
+    """
+    dimension_cols = [c for c in df_tuples.columns if c not in ("value", "n_active_dims")]
+
+    squared_errors = []
+
+    for _, obs_row in df_tuples.iterrows():
+        active_dims = {
+            dim: str(obs_row[dim]).strip()
+            for dim in dimension_cols
+            if pd.notna(obs_row[dim]) and str(obs_row[dim]).strip() != ''
+        }
+
+        mask = pd.Series(True, index=synthetic_df.index)
+        for dim, val in active_dims.items():
+            mask &= synthetic_df[dim].astype(str) == val
+
+        predicted_sum = synthetic_df.loc[mask, "value"].sum()
+        observed_value = obs_row["value"]
+        squared_errors.append((predicted_sum - observed_value) ** 2)
+
+    return float(np.sqrt(np.mean(squared_errors)))
+
+
+def _constraint_key_from_row(row, dimension_cols):
+    parts = []
+    for dim in dimension_cols:
+        v = row[dim]
+        if pd.notna(v) and str(v).strip() != '':
+            parts.append(f"{dim}={str(v).strip()}")
+    return ",".join(parts)
+
+
+def compute_ape(df_tuples, synthetic_df, eps=1e-12):
+    """
+    APE only for constraints that exist in df_tuples (empirical observables),
+    aggregated by unique constraint definition (e.g., gender=male, age=30,hpt=yes).
+    """
+    dimension_cols = [c for c in df_tuples.columns if c not in ("value", "n_active_dims")]
+
+    if "n_active_dims" not in df_tuples.columns:
+        df_tuples = df_tuples.copy()
+        df_tuples["n_active_dims"] = df_tuples[dimension_cols].notna().sum(axis=1)
+
+    rows = []
+    for _, obs_row in df_tuples.iterrows():
+        active_dims = {
+            dim: str(obs_row[dim]).strip()
+            for dim in dimension_cols
+            if pd.notna(obs_row[dim]) and str(obs_row[dim]).strip() != ''
+        }
+
+        mask = pd.Series(True, index=synthetic_df.index)
+        for dim, val in active_dims.items():
+            mask &= synthetic_df[dim].astype(str) == val
+
+        predicted = float(synthetic_df.loc[mask, "value"].sum())
+        observed = float(obs_row["value"])
+
+        rows.append({
+            "constraint": _constraint_key_from_row(obs_row, dimension_cols),
+            "n_active_dims": len(active_dims),
+            "observed": observed,
+            "predicted": predicted
+        })
+
+    ape_df = (
+        pd.DataFrame(rows)
+        .groupby(["constraint", "n_active_dims"], as_index=False)
+        .agg(observed=("observed", "sum"), predicted=("predicted", "sum"))
+    )
+
+    ape_df["avg_percentage_err"] = np.where(
+        np.abs(ape_df["observed"]) > eps,
+        np.abs(ape_df["predicted"] - ape_df["observed"]) / ape_df["observed"] * 100.0,
+        np.nan
+    )
+    ape_df = ape_df.drop(columns=["n_active_dims"])
+    ape_df["avg_percentage_err"] = ape_df["avg_percentage_err"].round(8)
+
+    return ape_df
+
+
+
 def main():
     """
     Main function to handle command-line arguments and run synthetic extraction.
@@ -300,6 +388,13 @@ Examples:
              'split shows 2 rows (hpt:yes and hpt:no), aggregate shows 1 row with empty hpt.'
     )
     
+    parser.add_argument(
+    '--validate',
+    metavar='FILE',
+    help='Run validation (RMSE) against input constraints and write results to FILE. '
+         'Validation is allowed only when -f "all".'
+    )
+    
     args = parser.parse_args()
     
     try:
@@ -309,13 +404,36 @@ Examples:
         
         # Convert value column to numeric
         df_tuples['value'] = pd.to_numeric(df_tuples['value'])
+        # Validation is allowed only with full synthetic (-f all)
+        if args.validate and args.filter.lower() != "all":
+            print(
+                'Error: --validate can only be used together with -f "all".',
+                file=sys.stderr
+                )
+            sys.exit(1)
         
         # Parse filter argument into target_components
         target_components = parse_filter(args.filter, df_tuples)
         
         # Run synthetic extraction
         synthetic_df = syntheticextraction(df_tuples, target_components, display_mode=args.display)
-        
+        # --- Optional validation (ONLY if requested) ---
+        if args.validate:
+            rmse = compute_rmse(df_tuples, synthetic_df)
+            rmse_df = pd.DataFrame([{
+        "metric": "RMSE",
+        "value": rmse,
+        "n_constraints": len(df_tuples)
+    }])
+
+        ape_df = compute_ape(df_tuples, synthetic_df)
+
+        base = args.validate.rsplit(".", 1)[0]
+        rmse_df.to_csv(base + "_RMSE.csv", index=False, sep=';')
+        ape_df["observed"] = ape_df["observed"].round().astype("Int64")
+        ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
+        ape_df.to_csv(base + "_APE.csv", index=False, sep=';')
+
         # Output results in tuple format (semicolon-delimited, matching input format)
         if args.output:
             synthetic_df.to_csv(args.output, index=False, sep=';')
@@ -329,6 +447,9 @@ Examples:
     except Exception as e:
         print(f"Error: {str(e)}", file=sys.stderr)
         sys.exit(1)
- 
+
+
+
+
 if __name__ == "__main__":
     main()

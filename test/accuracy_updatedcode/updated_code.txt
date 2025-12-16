@@ -1,0 +1,2 @@
+compute_ape for average percentage error
+compute_rmse for RMSE
