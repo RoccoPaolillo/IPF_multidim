@@ -157,8 +157,6 @@ def syntheticextraction(df_tuples, target_components, display_mode='split'):
         matching_rows = results_df[results_df['combination'].apply(match_tuple)]
         total_est = int(matching_rows['estimated_count'].sum())
         
-        # Create label showing only non-None components
-        label_parts = [f"{variables[i]}={target}" for i, target in enumerate(target_components) if target is not None]
         
         # Convert to tuple format matching input structure
         output_rows = []
@@ -268,6 +266,67 @@ def compute_rmse(df_tuples, synthetic_df):
 
     return float(np.sqrt(np.mean(squared_errors)))
 
+
+def _constraint_key_from_row(row, dimension_cols):
+    parts = []
+    for dim in dimension_cols:
+        v = row[dim]
+        if pd.notna(v) and str(v).strip() != '':
+            parts.append(f"{dim}={str(v).strip()}")
+    return ",".join(parts)
+
+
+def compute_ape(df_tuples, synthetic_df, eps=1e-12):
+    """
+    APE only for constraints that exist in df_tuples (empirical observables),
+    aggregated by unique constraint definition (e.g., gender=male, age=30,hpt=yes).
+    """
+    dimension_cols = [c for c in df_tuples.columns if c not in ("value", "n_active_dims")]
+
+    if "n_active_dims" not in df_tuples.columns:
+        df_tuples = df_tuples.copy()
+        df_tuples["n_active_dims"] = df_tuples[dimension_cols].notna().sum(axis=1)
+
+    rows = []
+    for _, obs_row in df_tuples.iterrows():
+        active_dims = {
+            dim: str(obs_row[dim]).strip()
+            for dim in dimension_cols
+            if pd.notna(obs_row[dim]) and str(obs_row[dim]).strip() != ''
+        }
+
+        mask = pd.Series(True, index=synthetic_df.index)
+        for dim, val in active_dims.items():
+            mask &= synthetic_df[dim].astype(str) == val
+
+        predicted = float(synthetic_df.loc[mask, "value"].sum())
+        observed = float(obs_row["value"])
+
+        rows.append({
+            "constraint": _constraint_key_from_row(obs_row, dimension_cols),
+            "n_active_dims": len(active_dims),
+            "observed": observed,
+            "predicted": predicted
+        })
+
+    ape_df = (
+        pd.DataFrame(rows)
+        .groupby(["constraint", "n_active_dims"], as_index=False)
+        .agg(observed=("observed", "sum"), predicted=("predicted", "sum"))
+    )
+
+    ape_df["avg_percentage_err"] = np.where(
+        np.abs(ape_df["observed"]) > eps,
+        np.abs(ape_df["predicted"] - ape_df["observed"]) / ape_df["observed"] * 100.0,
+        np.nan
+    )
+    ape_df = ape_df.drop(columns=["n_active_dims"])
+    ape_df["avg_percentage_err"] = ape_df["avg_percentage_err"].round(8)
+
+    return ape_df
+
+
+
 def main():
     """
     Main function to handle command-line arguments and run synthetic extraction.
@@ -361,14 +420,19 @@ Examples:
         # --- Optional validation (ONLY if requested) ---
         if args.validate:
             rmse = compute_rmse(df_tuples, synthetic_df)
+            rmse_df = pd.DataFrame([{
+        "metric": "RMSE",
+        "value": rmse,
+        "n_constraints": len(df_tuples)
+    }])
 
-            validation_df = pd.DataFrame([{
-                "metric": "RMSE",
-                "value": rmse,
-                "n_constraints": len(df_tuples)
-            }])
+        ape_df = compute_ape(df_tuples, synthetic_df)
 
-            validation_df.to_csv(args.validate, index=False)
+        base = args.validate.rsplit(".", 1)[0]
+        rmse_df.to_csv(base + "_RMSE.csv", index=False, sep=';')
+        ape_df["observed"] = ape_df["observed"].round().astype("Int64")
+        ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
+        ape_df.to_csv(base + "_APE.csv", index=False, sep=';')
 
         # Output results in tuple format (semicolon-delimited, matching input format)
         if args.output:
