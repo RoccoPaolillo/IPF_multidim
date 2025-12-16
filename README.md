@@ -200,3 +200,11 @@ male;30;no;no;211231
 * When filtering with `-d aggregate`: Returns a single row with summed values across unspecified dimensions (shown as empty cells)
 * Each row represents one combination (or aggregate) with its estimated population count
 * Output can be redirected to a file using `-o` or printed to stdout
+
+
+If metrics of validation want to be reported
+```bash
+python synthpopgen.py -i report_validation/input_no_agexhpt.csv -f all -o output.csv --validate validation.csv
+```
+It will report one csv with output, one *_RMSE.csv with RMSE global mease, *_APE.csv with average percentage error for each constraint identified
+
