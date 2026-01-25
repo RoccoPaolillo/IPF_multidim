@@ -150,6 +150,28 @@ mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
 
 write.csv(df_range,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv",row.names = F)
 
+  
+asl_df <- function(X){df_range %>% filter(DENOMINAZI == X) %>% mutate(
+  mar_male_asl = sum(man_r),
+  mar_fem_asl = sum(fem_r),
+  mar_hptage_asl = hpt_fem_r + hpt_man_r,
+  mar_nohptage_asl = male_nohpt_r, fem_nohpt_r,
+  mar_hfage_asl = hf_fem_r + hf_male_r,
+  mar_nohfage_asl = male_nohf_r, fem_nohf_r,
+  mar_hpt_asl = sum(mar_hptage_asl),
+  mar_nohpt_asl = sum(mar_nohptage_asl),
+  mar_hf_asl = sum(mar_hfage_asl),
+  mar_nohf_asl = sum(mar_nohfage_asl)
+) %>%
+  select(DENOMINAZI, eta_range,mar_male_asl,mar_fem_asl,mar_hptage_asl, mar_nohptage_asl,mar_hfage_asl,mar_nohfage_asl,
+         mar_hpt_asl,mar_nohpt_asl,mar_hf_asl,mar_nohf_asl, mar_ageASL_r ) }
+
+frosinon <- asl_df("FROSINONE")
+latina <- asl_df("LATINA")
+rieti <- asl_df("RIETI")
+roma1 <- asl_df("ROMA 1")
+roma2 <- asl_df("ROMA 2")
+
 
 # Algorithm #####
 
