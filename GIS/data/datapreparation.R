@@ -171,7 +171,11 @@ latina <- asl_df("LATINA")
 rieti <- asl_df("RIETI")
 roma1 <- asl_df("ROMA 1")
 roma2 <- asl_df("ROMA 2")
-
+roma3 <- asl_df("ROMA 3")
+roma4 <- asl_df("ROMA 4")
+roma5 <- asl_df("ROMA 5")
+roma6 <- asl_df("ROMA 6")
+viterbo <- asl_df("VITERBO")
 
 # Algorithm #####
 
