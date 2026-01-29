@@ -389,10 +389,14 @@ Examples:
     )
     
     parser.add_argument(
-    '--validate',
-    metavar='FILE',
-    help='Run validation (RMSE) against input constraints and write results to FILE. '
-         'Validation is allowed only when -f "all".'
+    '-v', '--validate',
+    nargs='?',              # value is optional
+    const='validation',     # if flag present without value -> "validation"
+    default=None,           # if flag absent -> None
+    metavar='BASENAME',
+    help=('Run validation (RMSE + APE). '
+          'If you pass no value, it uses "validation" (producing validation_RMSE.csv and validation_APE.csv). '
+          'Validation is allowed only when -f "all".')
     )
     
     args = parser.parse_args()
@@ -428,11 +432,13 @@ Examples:
 
             ape_df = compute_ape(df_tuples, synthetic_df)
 
-            base = args.validate.rsplit(".", 1)[0]
+            base = str(args.validate).strip()
+            base = base.rsplit(".", 1)[0]
             rmse_df.to_csv(base + "_RMSE.csv", index=False, sep=';')
             ape_df["observed"] = ape_df["observed"].round().astype("Int64")
             ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
             ape_df.to_csv(base + "_APE.csv", index=False, sep=';')
+        
 
         # Output results in tuple format (semicolon-delimited, matching input format)
         if args.output:
