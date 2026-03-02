@@ -27,16 +27,39 @@ def syntheticextraction(df_tuples, target_components, display_mode='split', synt
     # Compute total population from first dimension's marginal only
     # Find rows with exactly one non-NA dimension
     marginal_mask = df_tuples[dimension_cols].notna().sum(axis=1) == 1
-
-    total_population = None
+    
+    totals = []
+    totals_by_dim = {}
+    
     for dim in dimension_cols:
         dim_marginals = df_tuples[marginal_mask & df_tuples[dim].notna()]
         if len(dim_marginals) > 0:
-            total_population = int(dim_marginals['value'].sum())
-            break
+            dim_total = float(dim_marginals["value"].sum())
+        if dim_total > 0:
+            totals.append(dim_total)
+            totals_by_dim[dim] = dim_total
+    
+    if len(totals) == 0:
+        raise ValueError("Could not infer a valid total population from marginals (no positive marginal totals).")
+        
+    avg_total = float(np.mean(totals))
+    total_population = int(round(avg_total))
+    
+    if total_population <= 0:
+        raise ValueError("Could not infer a valid total population from marginals (average total <= 0).")
+    
+    
+#    marginal_mask = df_tuples[dimension_cols].notna().sum(axis=1) == 1
 
-    if total_population is None or total_population <= 0:
-        raise ValueError("Could not infer a valid total population from marginals (sum <= 0).")
+#    total_population = None
+#    for dim in dimension_cols:
+#        dim_marginals = df_tuples[marginal_mask & df_tuples[dim].notna()]
+#        if len(dim_marginals) > 0:
+#            total_population = int(dim_marginals['value'].sum())
+#            break
+
+#    if total_population is None or total_population <= 0:
+#        raise ValueError("Could not infer a valid total population from marginals (sum <= 0).")
 
     # Separate marginal and joint distributions
     df_tuples = df_tuples.copy()
