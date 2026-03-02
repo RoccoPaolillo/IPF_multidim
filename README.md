@@ -25,7 +25,7 @@ Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-base
 # Flowchart of the service
 
 <div align="center" style="background-color:white; padding:10px; display:inline-block;">
-  <img src="images/picture.jpg" alt="Alt text" width="700" height="600"/>
+  <img src="images/algorithm.jpg" alt="Alt text" width="700" height="600"/>
 </div>
 
 # How it works
