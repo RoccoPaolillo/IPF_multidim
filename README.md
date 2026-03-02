@@ -1,5 +1,5 @@
 <div align="center" style="background-color:white; padding:10px; display:inline-block;">
-  <img src="images/FOSSR handbook-SPG_RP.jpeg" alt="Alt text" width="500" height="400"/>
+  <img src="images/FOSSR handbook-SPG_RP.jpeg" alt="Alt text" width="500" height="300"/>
 </div>
 
 
