@@ -1,3 +1,8 @@
+<div align="center" style="background-color:white; padding:10px; display:inline-block;">
+  <img src="FOSSR handbook-SPG_RP.jpg" alt="Alt text" width="700" height="600"/>
+</div>
+
+
 # IPF_multidim
 Multidimensionality of IPF, project FOSSR (WP5.5 Synthetic Populations Generator)
 
