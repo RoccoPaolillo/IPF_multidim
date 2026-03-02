@@ -217,5 +217,5 @@ It will report one csv with output, one *_RMSE.csv with RMSE global mease, *_APE
 It works only on -f all option and printed .csv results
 
 #### Extra delivery
-* Local demo [spg_fossr.exe](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/spg_fossr.exe) generated with [synthpopgen_gui.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/synthpopgen_gui.py) code
-* Single function code importer [singlefunction.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/singlefunction.py)
+* Local demo [spg_fossr.exe](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/spg_fossr.exe) generated with [synthpopgen_gui.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/synthpopgen_gui.py) code in the extra folder
+* Single function code importer [singlefunction.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/ef057c01ae5b32fd390e6cb5b3b58254559e40b6/singlefunction.py) in the extra folder
