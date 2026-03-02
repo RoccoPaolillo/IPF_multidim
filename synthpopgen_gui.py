@@ -51,7 +51,7 @@ class SynthPopGUI(tk.Tk):
 
         # --- LOGO HEADER ---
         # Put the logo image in the same folder as this script, OR change this to an absolute path.
-        logo_path = "FOSSR handbook-SPG_RP.jpeg"
+        logo_path = "images/FOSSR handbook-SPG_RP.jpeg"
         try:
             img = Image.open(logo_path)
             img = img.resize((300, 150))
