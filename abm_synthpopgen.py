@@ -76,8 +76,10 @@ class PopulationModel(mesa.Model):
 
 
 ### To run the actual model
-# model initialized with output.csv (df_agents in the code)      
-model = PopulationModel("output2.csv", sep=";")
+# model initialized with output.csv (df_agents in the code)    
+# NOTE! The script is already set to use "output.csv" as external file generated from the SPG service
+# You can set to another file
+model = PopulationModel("output.csv", sep=";")
 # model.run_for(2) # to execute 3 runs (0,1,2)  
 # to collect report     
 model_vars = model.datacollector.get_model_vars_dataframe()
