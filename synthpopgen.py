@@ -1,7 +1,6 @@
 import os
 import sys
 import argparse
-import mesa
 from itertools import product
 from collections import defaultdict
 
@@ -641,3 +640,4 @@ Examples:
 
 if __name__ == "__main__":
     main()
+
