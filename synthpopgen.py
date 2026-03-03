@@ -620,7 +620,7 @@ Examples:
             
         # --- Optional abm ---
         if args.abm: 
-            out_dir = os.path.dirname(args.output) if args.output else os.getcwd() 
+            out_dir = os.path.dirname(args.abm) if args.abm else os.getcwd() 
             abm_path = os.path.join(out_dir, "abm_synthpopgen.py") 
             with open(abm_path, "w", encoding="utf-8") as f: 
                 f.write(generate_abm_script()) 
