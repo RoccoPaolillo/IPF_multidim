@@ -610,6 +610,14 @@ Examples:
 
             print(f"Validation saved to {rmse_path} and {ape_path}", file=sys.stderr)
             
+        
+        # Output results
+        if args.output:
+            synthetic_df.to_csv(args.output, index=False, sep=';')
+            print(f"Results saved to {args.output}", file=sys.stderr)
+        else:
+            print(synthetic_df.to_csv(index=False, sep=';'))
+            
         # --- Optional abm ---
         if args.abm: 
             out_dir = os.path.dirname(args.output) if args.output else os.getcwd() 
@@ -617,14 +625,6 @@ Examples:
             with open(abm_path, "w", encoding="utf-8") as f: 
                 f.write(generate_abm_script()) 
                 print(f"ABM script saved to {abm_path}", file=sys.stderr)
-
-
-        # Output results
-        if args.output:
-            synthetic_df.to_csv(args.output, index=False, sep=';')
-            print(f"Results saved to {args.output}", file=sys.stderr)
-        else:
-            print(synthetic_df.to_csv(index=False, sep=';'))
 
     except FileNotFoundError:
         print(f"Error: Input file '{args.input}' not found.", file=sys.stderr)
@@ -640,4 +640,5 @@ Examples:
 
 if __name__ == "__main__":
     main()
+
 
