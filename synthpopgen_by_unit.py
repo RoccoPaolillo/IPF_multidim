@@ -1,0 +1,753 @@
+import os
+import sys
+import argparse
+from itertools import product
+from collections import defaultdict
+
+import pandas as pd
+import numpy as np
+
+
+def syntheticextraction(df_tuples, target_components, display_mode='split', synth_total=None, exclude_cols=None):
+    """
+    Perform synthetic population extraction using IPF-style probability construction.
+
+    Args:
+        df_tuples: DataFrame with columns for each dimension (e.g., gender, age, hpt, hf) and 'value'
+        target_components: ["all"] OR list/tuple with length = #dimensions, using None for "any"
+        display_mode: 'split' (default) shows all combinations, 'aggregate' sums unspecified dimensions
+        synth_total: optional int target population size (only applied meaningfully for -f all).
+                     If provided, counts are allocated to sum EXACTLY to synth_total using
+                     the Hamilton / largest remainder method.
+        exclude_cols: optional columns to ignore as dimensions, e.g. ['unit'].
+    """
+
+    # Get dimension columns (all except 'value' and optional grouping columns such as 'unit')
+    exclude_cols = set(exclude_cols or [])
+    dimension_cols = [col for col in df_tuples.columns if col != 'value' and col not in exclude_cols]
+
+    # Compute total population from first dimension's marginal only
+    # Find rows with exactly one non-NA dimension
+    marginal_mask = df_tuples[dimension_cols].notna().sum(axis=1) == 1
+    
+    totals = []
+    totals_by_dim = {}
+    
+    for dim in dimension_cols:
+        dim_marginals = df_tuples[marginal_mask & df_tuples[dim].notna()]
+        if len(dim_marginals) > 0:
+            dim_total = float(dim_marginals["value"].sum())
+        if dim_total > 0:
+            totals.append(dim_total)
+            totals_by_dim[dim] = dim_total
+    
+    if len(totals) == 0:
+        raise ValueError("Could not infer a valid total population from marginals (no positive marginal totals).")
+        
+    avg_total = float(np.mean(totals))
+    total_population = int(round(avg_total))
+    
+    if total_population <= 0:
+        raise ValueError("Could not infer a valid total population from marginals (average total <= 0).")
+    
+    
+
+    # Separate marginal and joint distributions
+    df_tuples = df_tuples.copy()
+    df_tuples['n_active_dims'] = df_tuples[dimension_cols].notna().sum(axis=1)
+    marginals = df_tuples[df_tuples['n_active_dims'] == 1].copy()
+    joints = df_tuples[df_tuples['n_active_dims'] >= 2].copy()
+
+    # Build marginal lookup: {(dimension, category): value}
+    marginal_lookup = {}
+    marginal_groups = defaultdict(list)
+
+    for _, row in marginals.iterrows():
+        for dim in dimension_cols:
+            val = row[dim]
+            if pd.notna(val) and str(val).strip() != '':
+                category = str(val).strip()
+                marginal_lookup[(dim, category)] = float(row['value'])
+                if category not in marginal_groups[dim]:
+                    marginal_groups[dim].append(category)
+
+    # Determine which dimensions we're working with
+    variables = [dim for dim in dimension_cols if dim in marginal_groups]
+
+    if len(variables) == 0:
+        raise ValueError("No marginal groups found. Check that your input has valid marginals.")
+
+    # Build all possible combinations (full joint grid)
+    all_combinations = list(product(*[marginal_groups[v] for v in variables]))
+
+    # Build joint distributions: {(dim1, dim2, ...): {(cat1, cat2, ...): value}}
+    joint_distributions = {}
+
+    for _, row in joints.iterrows():
+        active_dims = []
+        active_cats = []
+        for dim in dimension_cols:
+            val = row[dim]
+            if pd.notna(val) and str(val).strip() != '':
+                active_dims.append(dim)
+                active_cats.append(str(val).strip())
+
+        if len(active_dims) >= 2:
+            dims_tuple = tuple(active_dims)
+            cats_tuple = tuple(active_cats)
+            joint_distributions.setdefault(dims_tuple, {})[cats_tuple] = float(row['value'])
+
+    # Group joints by base (first dimension)
+    joint_groups_by_base = defaultdict(list)
+    for joint_dims in joint_distributions:
+        if len(joint_dims) >= 2:
+            base = joint_dims[0]
+            joint_groups_by_base[base].append(joint_dims)
+
+    # Determine filter mode for target_components
+    if isinstance(target_components, (list, tuple)) and len(target_components) == len(variables):
+        filter_mode = "tuple"
+    elif target_components == ["all"]:
+        filter_mode = "all"
+    else:
+        raise ValueError(
+            f"target_components must be either ['all'] or a tuple matching dimensions: [{', '.join(variables)}].\n"
+            f"Got: {target_components}\n"
+            f"Use None for dimensions you don't want to constrain.\n"
+            f"Example: [None, '30', 'no', 'no'] for age=30, hpt=no, hf=no, any gender"
+        )
+
+    # --------------------------
+    # Main probability construction
+    # --------------------------
+    rows = []
+    for combo in all_combinations:
+        combo_dict = dict(zip(variables, combo))
+        estimate = 1.0
+        used_vars = set()
+        used_joints = []
+
+        # Apply joint distributions using conditional probabilities
+        for base_var, joint_list in joint_groups_by_base.items():
+            base_val = combo_dict.get(base_var)
+            base_count = marginal_lookup.get((base_var, base_val), None)
+
+            if base_val is not None and base_count and base_count > 0:
+                conditional_product = 1.0
+                joint_conditional_used = False
+
+                for joint_dims in joint_list:
+                    joint_cats = tuple(combo_dict.get(dim) for dim in joint_dims)
+                    joint_val = joint_distributions[joint_dims].get(joint_cats, None)
+
+                    if joint_val is not None:
+                        # Conditional probability: P(joint) / P(base)
+                        conditional_product *= joint_val / base_count
+                        used_vars.update(joint_dims)
+                        used_joints.append('_'.join(joint_dims))
+                        joint_conditional_used = True
+
+                if joint_conditional_used:
+                    # Multiply by base probability and conditional product
+                    estimate *= (base_count / total_population) * conditional_product
+
+        # Apply remaining marginal probabilities for unused variables
+        for var in variables:
+            if var not in used_vars:
+                val = marginal_lookup.get((var, combo_dict[var]), 0.0)
+                estimate *= (val / total_population) if total_population > 0 else 0.0
+
+        rows.append({
+            'combination': '_'.join(combo),
+            'variables': '_'.join(variables),
+            'raw_estimate': float(estimate),
+            'weights_joints': ', '.join(sorted(set(used_joints))) if used_joints else 'none'
+        })
+
+    results_df = pd.DataFrame(rows)
+
+    # --------------------------
+    # Allocate integer counts
+    # - default: sum to inferred total_population
+    # - if synth_total is set: sum EXACTLY to synth_total (Hamilton / largest remainder)
+    # --------------------------
+    target_total = int(synth_total) if synth_total is not None else int(total_population)
+    if target_total < 0:
+        raise ValueError("--synth-total must be >= 0")
+
+    w = results_df["raw_estimate"].to_numpy(dtype=float)
+    w_sum = float(w.sum())
+    if w_sum <= 0:
+        raise ValueError("All estimated weights are zero; cannot allocate counts.")
+
+    scaled = (w / w_sum) * target_total
+    floors = np.floor(scaled).astype(int)
+    remainder = target_total - int(floors.sum())
+
+    frac = scaled - floors
+    order_desc = np.argsort(-frac)  # descending
+
+    if remainder > 0:
+        floors[order_desc[:remainder]] += 1
+    elif remainder < 0:
+        # rare: remove from smallest fractional parts
+        order_asc = np.argsort(frac)
+        floors[order_asc[:(-remainder)]] -= 1
+        floors = np.maximum(floors, 0)
+
+    results_df["estimated_count"] = floors
+    results_df = results_df.drop(columns=["raw_estimate"])
+
+    # --------------------------
+    # Filtering / output conversion to tuple-format
+    # --------------------------
+    if filter_mode == "tuple":
+        def match_tuple(combo_str: str) -> bool:
+            parts = combo_str.split('_')
+            if len(parts) != len(target_components):
+                return False
+            for target, actual in zip(target_components, parts):
+                if target is not None and str(target) != actual:
+                    return False
+            return True
+
+        matching_rows = results_df[results_df['combination'].apply(match_tuple)]
+        total_est = int(matching_rows['estimated_count'].sum())
+
+        # Convert to tuple format matching input structure
+        output_rows = []
+        for _, row in matching_rows.iterrows():
+            parts = row['combination'].split('_')
+            tuple_row = {dim: val for dim, val in zip(dimension_cols, parts)}
+            tuple_row['value'] = int(row['estimated_count'])
+            output_rows.append(tuple_row)
+
+        results_df = pd.DataFrame(output_rows)
+
+        if display_mode == 'aggregate':
+            agg_row = {}
+            for dim, target in zip(dimension_cols, target_components):
+                agg_row[dim] = target if target is not None else ''
+            agg_row['value'] = int(total_est)
+            results_df = pd.DataFrame([agg_row])
+
+    else:
+        # "all" mode, return full joint in tuple format
+        output_rows = []
+        for _, row in results_df.iterrows():
+            parts = row['combination'].split('_')
+            tuple_row = {dim: val for dim, val in zip(dimension_cols, parts)}
+            tuple_row['value'] = int(row['estimated_count'])
+            output_rows.append(tuple_row)
+
+        results_df = pd.DataFrame(output_rows)
+
+    return results_df
+
+
+def parse_filter(filter_str, df_tuples, exclude_cols=None):
+    """
+    Parse filter string into target_components format.
+
+    Examples:
+        "all" -> ["all"]
+        "gender:male,age:30" -> ["male", "30", None, None] (assuming 4 dims in file order)
+        "age:30,hpt:no,hf:no" -> [None, "30", "no", "no"]
+    """
+    if filter_str.lower() == "all":
+        return ["all"]
+
+    exclude_cols = set(exclude_cols or [])
+    dimension_cols = [col for col in df_tuples.columns if col != 'value' and col not in exclude_cols]
+
+    filter_dict = {}
+    filter_parts = [part.strip() for part in filter_str.split(',') if part.strip()]
+
+    for part in filter_parts:
+        if ':' not in part:
+            raise ValueError(f"Invalid filter format: '{part}'. Expected 'dimension:value'")
+
+        dim, val = part.split(':', 1)
+        dim = dim.strip()
+        val = val.strip()
+
+        if dim not in dimension_cols:
+            raise ValueError(f"Unknown dimension: '{dim}'. Available dimensions: {', '.join(dimension_cols)}")
+
+        filter_dict[dim] = val
+
+    target_components = [filter_dict.get(dim, None) for dim in dimension_cols]
+    return target_components
+
+
+def compute_rmse(df_tuples, synthetic_df):
+    """
+    RMSE between observed constraints in df_tuples (value)
+    and synthetic_df (value), where synthetic_df is full-joint and
+    is aggregated to match each constraint row.
+    """
+    dimension_cols = [c for c in df_tuples.columns if c not in ("value", "n_active_dims")]
+
+    squared_errors = []
+
+    for _, obs_row in df_tuples.iterrows():
+        active_dims = {
+            dim: str(obs_row[dim]).strip()
+            for dim in dimension_cols
+            if pd.notna(obs_row[dim]) and str(obs_row[dim]).strip() != ''
+        }
+
+        mask = pd.Series(True, index=synthetic_df.index)
+        for dim, val in active_dims.items():
+            mask &= synthetic_df[dim].astype(str) == val
+
+        predicted_sum = synthetic_df.loc[mask, "value"].sum()
+        observed_value = obs_row["value"]
+        squared_errors.append((predicted_sum - observed_value) ** 2)
+
+    return float(np.sqrt(np.mean(squared_errors)))
+
+
+def _constraint_key_from_row(row, dimension_cols):
+    parts = []
+    for dim in dimension_cols:
+        v = row[dim]
+        if pd.notna(v) and str(v).strip() != '':
+            parts.append(f"{dim}={str(v).strip()}")
+    return ",".join(parts)
+
+
+def compute_ape(df_tuples, synthetic_df, eps=1e-12):
+    """
+    APE only for constraints that exist in df_tuples (empirical observables),
+    aggregated by unique constraint definition (e.g., gender=male, age=30,hpt=yes).
+    """
+    dimension_cols = [c for c in df_tuples.columns if c not in ("value", "n_active_dims")]
+
+    if "n_active_dims" not in df_tuples.columns:
+        df_tuples = df_tuples.copy()
+        df_tuples["n_active_dims"] = df_tuples[dimension_cols].notna().sum(axis=1)
+
+    rows = []
+    for _, obs_row in df_tuples.iterrows():
+        active_dims = {
+            dim: str(obs_row[dim]).strip()
+            for dim in dimension_cols
+            if pd.notna(obs_row[dim]) and str(obs_row[dim]).strip() != ''
+        }
+
+        mask = pd.Series(True, index=synthetic_df.index)
+        for dim, val in active_dims.items():
+            mask &= synthetic_df[dim].astype(str) == val
+
+        predicted = float(synthetic_df.loc[mask, "value"].sum())
+        observed = float(obs_row["value"])
+
+        rows.append({
+            "constraint": _constraint_key_from_row(obs_row, dimension_cols),
+            "observed": observed,
+            "predicted": predicted
+        })
+
+    ape_df = (
+        pd.DataFrame(rows)
+        .groupby(["constraint"], as_index=False)
+        .agg(observed=("observed", "sum"), predicted=("predicted", "sum"))
+    )
+
+    ape_df["avg_percentage_err"] = np.where(
+        np.abs(ape_df["observed"]) > eps,
+        np.abs(ape_df["predicted"] - ape_df["observed"]) / ape_df["observed"] * 100.0,
+        np.nan
+    )
+    ape_df["avg_percentage_err"] = ape_df["avg_percentage_err"].round(8)
+
+    return ape_df
+
+
+def syntheticextraction_by_unit(
+    df_tuples,
+    target_components,
+    unit_col='unit',
+    display_mode='split',
+    synth_total=None
+):
+    """
+    Run syntheticextraction independently for each level of unit_col.
+
+    The unit column is used only to split the input. It is not used as a
+    synthetic-population dimension. The returned DataFrame contains unit_col
+    as the first column.
+    """
+    if unit_col not in df_tuples.columns:
+        raise ValueError(f"Unit column '{unit_col}' not found in input file.")
+
+    if synth_total is not None:
+        raise ValueError(
+            "--synth-total is not supported together with --by-unit because "
+            "the total should usually be inferred separately for each unit."
+        )
+
+    out = []
+    for unit_value, df_unit in df_tuples.groupby(unit_col, dropna=False, sort=False):
+        df_unit = df_unit.drop(columns=[unit_col]).copy()
+
+        synthetic_unit = syntheticextraction(
+            df_unit,
+            target_components,
+            display_mode=display_mode,
+            synth_total=None
+        )
+
+        synthetic_unit.insert(0, unit_col, unit_value)
+        out.append(synthetic_unit)
+
+    if not out:
+        raise ValueError("No unit groups found.")
+
+    return pd.concat(out, ignore_index=True)
+
+
+def compute_validation_by_unit(df_tuples, synthetic_df, unit_col='unit'):
+    """
+    Compute RMSE and APE separately for each level of unit_col.
+    """
+    rmse_rows = []
+    ape_rows = []
+
+    for unit_value, df_unit in df_tuples.groupby(unit_col, dropna=False, sort=False):
+        df_unit = df_unit.drop(columns=[unit_col]).copy()
+        synth_unit = synthetic_df[synthetic_df[unit_col].astype(str) == str(unit_value)].drop(columns=[unit_col]).copy()
+
+        rmse_rows.append({
+            unit_col: unit_value,
+            "metric": "RMSE",
+            "value": compute_rmse(df_unit, synth_unit),
+            "n_constraints": len(df_unit)
+        })
+
+        ape_unit = compute_ape(df_unit, synth_unit)
+        ape_unit.insert(0, unit_col, unit_value)
+        ape_rows.append(ape_unit)
+
+    rmse_df = pd.DataFrame(rmse_rows)
+    ape_df = pd.concat(ape_rows, ignore_index=True) if ape_rows else pd.DataFrame()
+
+    return rmse_df, ape_df
+
+
+def generate_abm_script():
+    return """\
+import mesa
+import pandas as pd
+
+# class agents initialization
+# **attrs dictionary from df_agents key, value
+class PersonAgent(mesa.Agent):
+    def __init__(self, model, **attrs):
+        super().__init__(model)
+        for k, v in attrs.items():
+            setattr(self, k, v)
+
+# for future schedule activation (not activated)
+    def step(self):
+        pass
+
+# model initialization
+class PopulationModel(mesa.Model):
+    def __init__(self, output_csv: str, sep=";"):
+        super().__init__()
+
+# read pdf and consider all variables as string except "value" integer
+        df = pd.read_csv(output_csv, sep=sep, dtype=str)
+        df["value"] = df["value"].astype(int)
+
+# to expand the output csv. repeat the index of each row for how many "values", 
+# to expand to the number of agents to be initiated for each crossed category by row
+        df_agents = (
+            df.loc[df.index.repeat(df["value"])]
+              .drop(columns=["value"])
+              .reset_index(drop=True)
+        )
+        
+
+        # Keep the list of characteristics (all columns become agent attrs)
+        self.char_cols = list(df_agents.columns)
+
+        # initialization of each agent with characteristics from df_agents
+        PersonAgent.from_dataframe(self, df_agents)
+
+        # ---- Reporter: counts for each joint combination of all characteristics ----
+        def cross_counts(model):
+            # Convert agents -> rows 
+            rows = [
+                {c: getattr(a, c) for c in model.char_cols}
+                for a in model.agents
+            ]
+            g = (
+                pd.DataFrame(rows)
+                  .groupby(model.char_cols, dropna=False)
+                  .size()
+            )
+
+            # Return as dict with readable keys
+            # key like "age=3060|hpt=yes|hf=no|gender=male"
+            out = {
+                "|".join(f"{col}={val}" for col, val in zip(model.char_cols, idx)): int(cnt)
+                for idx, cnt in g.items()
+            }
+            return out
+
+        self.datacollector = mesa.DataCollector(
+            model_reporters={
+                "N": lambda m: len(m.agents),
+                "cross_counts": cross_counts
+            }
+        )
+
+        # collect at t=0
+        self.datacollector.collect(self)
+
+    def step(self):
+        # actual scheduler of agents' actions (inactive)
+        self.agents.shuffle_do("step")
+        # to collect output from the model
+        self.datacollector.collect(self)
+
+
+### To run the actual model
+# model initialized with output.csv (df_agents in the code)    
+# NOTE! The script is already set to use "output.csv" as external file generated from the SPG service
+# You can set to another file
+model = PopulationModel("output.csv", sep=";")
+# model.run_for(2) # to execute 3 runs (0,1,2)  
+# to collect report     
+model_vars = model.datacollector.get_model_vars_dataframe()
+
+# to extract a tidy table for visualization
+rows = []
+for step, d in model_vars["cross_counts"].items():
+    for profile, count in d.items():
+        rows.append({"step": step, "profile": profile, "count": count})
+
+cross_df = pd.DataFrame(rows)
+"""
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Synthetic population extraction using IPF algorithm',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python synthpopgen.py -i input_file_tuples.csv -f all -o output.csv
+  python synthpopgen.py -i input_file_tuples.csv -f "age:30,hpt:no,hf:no" -d split
+  python synthpopgen.py -i input_file_tuples.csv -f "gender:male,age:30,hf:yes" -d aggregate
+
+  # Validation (default basename "validation"):
+  python synthpopgen.py -i input_file_tuples.csv -f all --validate
+
+  # Validation with custom basename:
+  python synthpopgen.py -i input_file_tuples.csv -f all --validate myrun
+
+  # Exact synthetic population size (full joint only):
+  python synthpopgen.py -i input_file_tuples.csv -f all --synth-total 50000 -o output.csv
+
+  # Run separately for each spatial unit:
+  python synthpopgen.py -i input_tuples_multiple.csv -f all --by-unit --unit-col unit -o output_by_unit.csv
+        """
+    )
+
+    parser.add_argument(
+        '-i', '--input',
+        required=True,
+        help='Input CSV file in tuple format (mandatory)'
+    )
+
+    parser.add_argument(
+        '-o', '--output',
+        required=False,
+        default=None,
+        help='Output CSV file (optional, prints to stdout if not specified)'
+    )
+
+    parser.add_argument(
+        '-f', '--filter',
+        required=False,
+        default='all',
+        help='Filter specification (optional, defaults to "all"). '
+             'Use "all" for full population, or comma-separated dimension:value pairs. '
+             'Omitted dimensions default to "any". '
+             'Example: "gender:male,age:30,hpt:no" or "age:60100"'
+    )
+
+    parser.add_argument(
+        '-d', '--display',
+        required=False,
+        default='split',
+        choices=['split', 'aggregate'],
+        help='Display mode (optional, defaults to "split"). '
+             '"split": show all combinations of unspecified dimensions (multiple rows). '
+             '"aggregate": sum up unspecified dimensions into a single row with empty values for those dimensions.'
+    )
+
+    # Validation can be:
+    # - omitted => None
+    # - --validate => "validation"
+    # - --validate BASENAME => "BASENAME"
+    parser.add_argument(
+        '-v', '--validate',
+        nargs='?',
+        const='validation',
+        default=None,
+        metavar='BASENAME',
+        help='Run validation (RMSE + APE). If no basename is provided, uses "validation". '
+             'Validation is allowed only when -f "all".'
+    )
+
+    parser.add_argument(
+        '--synth-total',
+        type=int,
+        default=None,
+        help='Target size of the synthetic population. If set, output counts sum EXACTLY to this value. '
+             'Supported only with -f "all".'
+    )
+    
+    parser.add_argument(
+    '--abm',
+    action='store_true',
+    help='Generate ABM-ready Mesa script as additional output file'
+    )
+
+    parser.add_argument(
+        '--by-unit',
+        action='store_true',
+        help='Run the algorithm separately for each level of the unit column.'
+    )
+
+    parser.add_argument(
+        '--unit-col',
+        default='unit',
+        help='Name of the spatial-unit column used with --by-unit (default: unit).'
+    )
+
+    args = parser.parse_args()
+
+    try:
+        df_tuples = pd.read_csv(args.input, delimiter=';', dtype=str)
+        if 'value' not in df_tuples.columns:
+            raise ValueError("Input file must contain a 'value' column.")
+
+        df_tuples['value'] = pd.to_numeric(df_tuples['value'])
+
+
+        # Guards
+        if args.validate is not None and args.filter.lower() != "all":
+            print('Error: --validate can only be used together with -f "all".', file=sys.stderr)
+            sys.exit(1)
+
+        if args.synth_total is not None and args.filter.lower() != "all":
+            print('Error: --synth-total is only supported with -f "all".', file=sys.stderr)
+            sys.exit(1)
+
+        # Validation compares to original constraints, so disallow scaling totals for now
+        if args.validate is not None and args.synth_total is not None:
+            print('Error: --validate cannot be used with --synth-total (constraints are for the original population).', file=sys.stderr)
+            sys.exit(1)
+
+        # If --by-unit is active, the unit column is a grouping key and must
+        # not be parsed as a synthetic-population dimension.
+        exclude_cols = [args.unit_col] if args.by_unit else []
+
+        if args.by_unit and args.unit_col not in df_tuples.columns:
+            print(f"Error: --unit-col '{args.unit_col}' not found in input file.", file=sys.stderr)
+            sys.exit(1)
+
+        if args.by_unit and args.synth_total is not None:
+            print("Error: --synth-total is not supported with --by-unit.", file=sys.stderr)
+            sys.exit(1)
+
+        target_components = parse_filter(args.filter, df_tuples, exclude_cols=exclude_cols)
+
+        if args.by_unit:
+            synthetic_df = syntheticextraction_by_unit(
+                df_tuples,
+                target_components,
+                unit_col=args.unit_col,
+                display_mode=args.display,
+                synth_total=args.synth_total
+            )
+        else:
+            synthetic_df = syntheticextraction(
+                df_tuples,
+                target_components,
+                display_mode=args.display,
+                synth_total=args.synth_total
+            )
+        
+        
+        # --- Optional validation ---
+        if args.validate is not None:
+            if args.by_unit:
+                rmse_df, ape_df = compute_validation_by_unit(
+                    df_tuples,
+                    synthetic_df,
+                    unit_col=args.unit_col
+                )
+            else:
+                rmse = compute_rmse(df_tuples, synthetic_df)
+                rmse_df = pd.DataFrame([{
+                    "metric": "RMSE",
+                    "value": rmse,
+                    "n_constraints": len(df_tuples)
+                }])
+
+                ape_df = compute_ape(df_tuples, synthetic_df)
+
+            # Write validation files next to output if possible (VRE-friendly)
+            base = str(args.validate).strip() if str(args.validate).strip() else "validation"
+            base = base.rsplit(".", 1)[0]  # if user passes ".csv", strip it
+
+            out_dir = os.path.dirname(args.output) if args.output else os.getcwd()
+            rmse_path = os.path.join(out_dir, f"{base}_RMSE.csv")
+            ape_path = os.path.join(out_dir, f"{base}_APE.csv")
+
+            rmse_df.to_csv(rmse_path, index=False, sep=';')
+            ape_df["observed"] = ape_df["observed"].round().astype("Int64")
+            ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
+            ape_df.to_csv(ape_path, index=False, sep=';')
+
+            print(f"Validation saved to {rmse_path} and {ape_path}", file=sys.stderr)
+            
+        
+        # Output results
+        if args.output:
+            synthetic_df.to_csv(args.output, index=False, sep=';')
+            print(f"Results saved to {args.output}", file=sys.stderr)
+        else:
+            print(synthetic_df.to_csv(index=False, sep=';'))
+            
+        # --- Optional abm ---
+        if args.abm: 
+            out_dir = os.path.dirname(args.output) if args.output else os.getcwd() 
+            abm_path = os.path.join(out_dir, "abm_synthpopgen.py") 
+            with open(abm_path, "w", encoding="utf-8") as f: 
+                f.write(generate_abm_script()) 
+                print(f"ABM script saved to {abm_path}", file=sys.stderr)
+
+    except FileNotFoundError:
+        print(f"Error: Input file '{args.input}' not found.", file=sys.stderr)
+        sys.exit(1)
+    except Exception as e:
+        print(f"Error: {str(e)}", file=sys.stderr)
+        sys.exit(1)
+        
+#        abm_path = os.path.join(out_dir, "abm_synthpopgen.py") 
+#        with open(abm_path, "w", encoding="utf-8") as f: 
+#            f.write(generate_abm_script())
+
+
+if __name__ == "__main__":
+    main()
+
+
+
