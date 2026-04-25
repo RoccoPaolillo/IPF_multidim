@@ -16,9 +16,12 @@ import matplotlib.pyplot as plt
 # Import functions from synthpopgen.py (CLI parity)
 from synthpopgen import (
     syntheticextraction,
+    syntheticextraction_by_unit,
     parse_filter,
     compute_rmse,
     compute_ape,
+    compute_validation_by_unit,
+    aggregate_after_dropping_unit,
 )
 
 
@@ -122,47 +125,69 @@ class SynthPopGUI(tk.Tk):
         )
         self.synth_total_entry.bind("<KeyRelease>", lambda _e: self._sync_options_state())
 
-        # --- Output file (optional) ---
-        tk.Label(self, text="6 Optional) Output file (name.extension, e.g. output.csv)").grid(
+        # --- By-unit option ---
+        tk.Label(self, text="6 Optional) Run separately by spatial unit:").grid(
             row=6, column=0, sticky="w", padx=5, pady=5
         )
+        self.by_unit_var = tk.BooleanVar(value=False)
+        self.by_unit_check = tk.Checkbutton(
+            self, text="Enable by-unit iteration", variable=self.by_unit_var, command=self._sync_options_state
+        )
+        self.by_unit_check.grid(row=6, column=1, sticky="w")
+
+        tk.Label(self, text="Unit column:").grid(row=6, column=1, sticky="w", padx=(220, 0))
+        self.unit_col_entry = tk.Entry(self, width=18)
+        self.unit_col_entry.insert(0, "unit")
+        self.unit_col_entry.grid(row=6, column=1, sticky="w", padx=(310, 0))
+
+        # --- Output file (optional) ---
+        tk.Label(self, text="7 Optional) Output file (name.extension, e.g. output.csv)").grid(
+            row=7, column=0, sticky="w", padx=5, pady=5
+        )
         self.output_entry = tk.Entry(self, width=70)
-        self.output_entry.grid(row=6, column=1, padx=5, pady=5, sticky="we")
+        self.output_entry.grid(row=7, column=1, padx=5, pady=5, sticky="we")
         tk.Button(self, text="Browse...", command=self.browse_output).grid(
-            row=6, column=2, padx=5, pady=5
+            row=7, column=2, padx=5, pady=5
         )
 
         # --- Run button ---
         tk.Button(
             self,
-            text="7) Run synthetic extraction",
+            text="8) Run synthetic extraction",
             command=self.run_synthetic,
-        ).grid(row=7, column=0, columnspan=3, pady=10)
+        ).grid(row=8, column=0, columnspan=3, pady=10)
+        
+        self.barplot_button = tk.Button(
+            self,
+            text='9 Optional) Generate barplot (% synthetic selected)\n[disabled for multiple units reiteration]',
+            command=self.generate_and_save_barplot_percent,
+            ) 
+        self.barplot_button.grid(row=13, column=0, columnspan=3, pady=(10, 5))
 
         # --- Variables / inspection area ---
         tk.Label(self, text="Detected variables, categories, and joint structures:").grid(
-            row=8, column=0, sticky="w", padx=5, pady=(10, 0)
+            row=9, column=0, sticky="w", padx=5, pady=(10, 0)
         )
         self.vars_text = scrolledtext.ScrolledText(self, wrap=tk.WORD, height=10)
-        self.vars_text.grid(row=9, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
+        self.vars_text.grid(row=10, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
 
         # --- Output preview area ---
         tk.Label(self, text="Output preview:").grid(
-            row=10, column=0, sticky="w", padx=5, pady=(10, 0)
+            row=11, column=0, sticky="w", padx=5, pady=(10, 0)
         )
         self.output_text = scrolledtext.ScrolledText(self, wrap=tk.NONE, height=12)
-        self.output_text.grid(row=11, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
+        self.output_text.grid(row=12, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
 
         # --- Barplot button (percent share of value) ---
-        tk.Button(
-            self,
-            text='8 Optional) Generate barplot (% synthetic selected)',
-            command=self.generate_and_save_barplot_percent,
-        ).grid(row=12, column=0, columnspan=3, pady=(10, 5))
+        #tk.Button(
+        #    self,
+        #    text='9 Optional) Generate barplot (% synthetic selected)',
+        #    command=self.generate_and_save_barplot_percent,
+        #).grid(row=13, column=0, columnspan=3, pady=(10, 5))
 
         # Expand layout: give space to the scrolled text widgets
-        self.grid_rowconfigure(9, weight=1)
-        self.grid_rowconfigure(11, weight=1)
+        self.grid_rowconfigure(10, weight=1)
+        self.grid_rowconfigure(12, weight=1)
         self.grid_columnconfigure(1, weight=1)
 
         self._sync_options_state()
@@ -184,6 +209,12 @@ class SynthPopGUI(tk.Tk):
         self.validate_base_entry.configure(state=("normal" if (is_all and self.validate_var.get()) else "disabled"))
 
         self.synth_total_entry.configure(state=("normal" if is_all else "disabled"))
+        self.unit_col_entry.configure(state=("normal" if self.by_unit_var.get() else "disabled"))
+
+        # Per-unit estimation infers each unit total separately.
+        if self.by_unit_var.get():
+            self.synth_total_entry.delete(0, tk.END)
+            self.synth_total_entry.configure(state="disabled")
 
         if not is_all:
             self.validate_var.set(False)
@@ -201,6 +232,12 @@ class SynthPopGUI(tk.Tk):
         else:
             if is_all:
                 self.validate_check.configure(state="normal")
+                
+        # to deactivate plots with multiple iterations
+        if self.by_unit_var.get():
+            self.barplot_button.configure(state="disabled")
+        else:
+            self.barplot_button.configure(state="normal")
 
     # ------------------------
     # File selection handlers
@@ -237,7 +274,8 @@ class SynthPopGUI(tk.Tk):
         self.vars_text.delete("1.0", tk.END)
 
         try:
-            df = pd.read_csv(input_path, delimiter=";", dtype=str)
+            df = pd.read_csv(input_path, delimiter=";", dtype=str, encoding="utf-8-sig")
+            df.columns = df.columns.str.strip()
         except Exception as e:
             self.vars_text.insert(tk.END, f"Error reading file:\n{e}")
             return
@@ -342,20 +380,51 @@ class SynthPopGUI(tk.Tk):
                 return
 
         try:
-            df_tuples = pd.read_csv(input_path, delimiter=";", dtype=str)
+            df_tuples = pd.read_csv(input_path, delimiter=";", dtype=str, encoding="utf-8-sig")
+            df_tuples.columns = df_tuples.columns.str.strip()
 
             if "value" not in df_tuples.columns:
                 raise ValueError("Input CSV must contain a 'value' column with counts.")
             df_tuples["value"] = pd.to_numeric(df_tuples["value"])
 
-            target_components = parse_filter(filter_str, df_tuples)
+            by_unit_enabled = bool(self.by_unit_var.get())
+            unit_col = (self.unit_col_entry.get().strip() or "unit")
 
-            synthetic_df = syntheticextraction(
-                df_tuples,
-                target_components,
-                display_mode=display_mode,
-                synth_total=synth_total,
-            )
+            if by_unit_enabled and unit_col not in df_tuples.columns:
+                raise ValueError(
+                    f"By-unit estimation requested, but column '{unit_col}' was not found.\n"
+                    f"Available columns: {list(df_tuples.columns)}"
+                )
+
+            if by_unit_enabled and synth_total is not None:
+                raise ValueError(
+                    "Synthetic total is not supported with by-unit estimation; "
+                    "each unit total is inferred separately."
+                )
+
+            if by_unit_enabled:
+                df_for_filter = df_tuples.drop(columns=[unit_col]).copy()
+                target_components = parse_filter(filter_str, df_for_filter)
+                synthetic_df = syntheticextraction_by_unit(
+                    df_tuples,
+                    target_components,
+                    unit_col=unit_col,
+                    display_mode=display_mode,
+                    synth_total=None,
+                )
+            else:
+                # If a unit column exists but by-unit is not active, ignore it structurally
+                # and aggregate duplicated constraints across units before estimation.
+                if unit_col in df_tuples.columns:
+                    df_tuples = aggregate_after_dropping_unit(df_tuples, unit_col)
+
+                target_components = parse_filter(filter_str, df_tuples)
+                synthetic_df = syntheticextraction(
+                    df_tuples,
+                    target_components,
+                    display_mode=display_mode,
+                    synth_total=synth_total,
+                )
 
             # Store for barplot generation
             self.synthetic_df = synthetic_df.copy()
@@ -363,9 +432,6 @@ class SynthPopGUI(tk.Tk):
 
             validation_summary_lines = []
             if validate_enabled:
-                rmse = compute_rmse(df_tuples, synthetic_df)
-                ape_df = compute_ape(df_tuples, synthetic_df)
-
                 base = validate_base.strip() if validate_base.strip() else "validation"
                 base = base.rsplit(".", 1)[0]
 
@@ -373,18 +439,32 @@ class SynthPopGUI(tk.Tk):
                 rmse_path = os.path.join(out_dir, f"{base}_RMSE.csv")
                 ape_path = os.path.join(out_dir, f"{base}_APE.csv")
 
-                rmse_df = pd.DataFrame([{
-                    "metric": "RMSE",
-                    "value": rmse,
-                    "n_constraints": len(df_tuples)
-                }])
-                rmse_df.to_csv(rmse_path, index=False, sep=";")
-                ape_df.to_csv(ape_path, index=False, sep=";")
+                if by_unit_enabled:
+                    rmse_df, ape_df = compute_validation_by_unit(
+                        df_tuples,
+                        synthetic_df,
+                        unit_col=unit_col,
+                    )
+                    rmse_label = "see per-unit RMSE file"
+                else:
+                    rmse = compute_rmse(df_tuples, synthetic_df)
+                    ape_df = compute_ape(df_tuples, synthetic_df)
+                    rmse_df = pd.DataFrame([{
+                        "metric": "RMSE",
+                        "value": rmse,
+                        "n_constraints": len(df_tuples)
+                    }])
+                    rmse_label = str(rmse)
+
+                rmse_df.to_csv(rmse_path, index=False, sep=";", decimal=",", float_format="%.10f")
+                ape_df["observed"] = ape_df["observed"].round().astype("Int64")
+                ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
+                ape_df.to_csv(ape_path, index=False, sep=";", decimal=",", float_format="%.10f")
 
                 validation_summary_lines.append("Validation saved:")
                 validation_summary_lines.append(f"  - RMSE: {rmse_path}")
                 validation_summary_lines.append(f"  - APE : {ape_path}")
-                validation_summary_lines.append(f"RMSE value: {rmse}")
+                validation_summary_lines.append(f"RMSE value: {rmse_label}")
 
             if output_path:
                 synthetic_df.to_csv(output_path, index=False, sep=";")
@@ -392,6 +472,10 @@ class SynthPopGUI(tk.Tk):
             # Output preview
             self.output_text.delete("1.0", tk.END)
             self.output_text.insert(tk.END, f"Rows generated: {len(synthetic_df)}\n")
+            if by_unit_enabled:
+                self.output_text.insert(tk.END, f"By-unit mode: ON; unit column: {unit_col}\n")
+            else:
+                self.output_text.insert(tk.END, "By-unit mode: OFF\n")
             if output_path:
                 self.output_text.insert(tk.END, f"Output saved to: {output_path}\n")
             if synth_total is not None:
