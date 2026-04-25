@@ -54,6 +54,7 @@ Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-base
 
 **Structure:**
 
+* **Unit** of aggregation (optional)
 * **Dimension columns** (gender, age, hpt, hf): Each column represents a dimension/variable
 * **Empty cells**: Indicate that dimension is not constrained in that row
 * **Single non-empty cell**: Represents a marginal distribution (e.g., `male;;;;3073047` = 3,073,047 males)
@@ -129,6 +130,10 @@ python synthpopgen.py -i input_file_tuples.csv -f "gender:male"
   * `"aggregate"`: Sums values across unspecified dimensions into a single aggregated row
   * Only affects filtered output; ignored when `-f all` is used
 * `--validate` (optional) to print validation measure in a separate csv for RMSE (Root Mean Squared Error) and a separate csv for APE (Average Percentage Error). It works only if -f all option is used
+* `--synth-total` (optional) to rescale the synthetic population
+* `--abm` (optional) to produce a ready-to-use script for agent-based modeling in python::mesa. The script is setup to use the output.csv produced by the service
+* `--by-unit` (optional) to run the algorithm separately for each clustering unit. The units of clustering should be provided in the column `unit`
+* `--unit-col` (optional) when `--by-unit` is used, to identify a different column name for the unit of extraction, set by default to `unit`. It is recommended to leave it as `unit`.
    
 #### Filter Examples
 
