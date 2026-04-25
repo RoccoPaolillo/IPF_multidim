@@ -435,6 +435,19 @@ def compute_validation_by_unit(df_tuples, synthetic_df, unit_col='unit'):
 
     return rmse_df, ape_df
 
+def aggregate_after_dropping_unit(df_tuples, unit_col):
+    df_model = df_tuples.drop(columns=[unit_col])
+
+    dimension_cols = [c for c in df_model.columns if c != "value"]
+
+    df_model = (
+        df_model
+        .groupby(dimension_cols, dropna=False, as_index=False)["value"]
+        .sum()
+    )
+
+    return df_model
+
 
 def generate_abm_script():
     return """\
@@ -633,14 +646,16 @@ Examples:
     args = parser.parse_args()
 
     try:
-        df_tuples = pd.read_csv(args.input, delimiter=';', dtype=str)
+        df_tuples = pd.read_csv(args.input, delimiter=';', dtype=str, encoding='utf-8-sig')
         if 'value' not in df_tuples.columns:
             raise ValueError("Input file must contain a 'value' column.")
 
         df_tuples['value'] = pd.to_numeric(df_tuples['value'])
-
-
+        
+        
+        # --------------------------
         # Guards
+        # --------------------------
         if args.validate is not None and args.filter.lower() != "all":
             print('Error: --validate can only be used together with -f "all".', file=sys.stderr)
             sys.exit(1)
@@ -649,40 +664,92 @@ Examples:
             print('Error: --synth-total is only supported with -f "all".', file=sys.stderr)
             sys.exit(1)
 
-        # Validation compares to original constraints, so disallow scaling totals for now
         if args.validate is not None and args.synth_total is not None:
-            print('Error: --validate cannot be used with --synth-total (constraints are for the original population).', file=sys.stderr)
+            print('Error: --validate cannot be used with --synth-total.', file=sys.stderr)
             sys.exit(1)
 
-        # If --by-unit is active, the unit column is a grouping key and must
-        # not be parsed as a synthetic-population dimension.
-        exclude_cols = [args.unit_col] if args.by_unit else []
 
-        if args.by_unit and args.unit_col not in df_tuples.columns:
-            print(f"Error: --unit-col '{args.unit_col}' not found in input file.", file=sys.stderr)
-            sys.exit(1)
-
-        if args.by_unit and args.synth_total is not None:
-            print("Error: --synth-total is not supported with --by-unit.", file=sys.stderr)
-            sys.exit(1)
-
-        target_components = parse_filter(args.filter, df_tuples, exclude_cols=exclude_cols)
-
+        # --------------------------
+        # Case 1: run separately by unit
+        # --------------------------
         if args.by_unit:
-            synthetic_df = syntheticextraction_by_unit(
-                df_tuples,
+
+            if args.unit_col not in df_tuples.columns:
+                raise ValueError(
+                    f"--by-unit was requested, but column '{args.unit_col}' was not found."
+                    )
+
+        all_results = []
+        all_rmse = []
+        all_ape = []
+
+        for unit_value, df_unit in df_tuples.groupby(args.unit_col, dropna=False):
+
+            df_unit_model = df_unit.drop(columns=[args.unit_col])
+
+            target_components = parse_filter(args.filter, df_unit_model)
+
+            synthetic_unit = syntheticextraction(
+                df_unit_model,
                 target_components,
-                unit_col=args.unit_col,
                 display_mode=args.display,
                 synth_total=args.synth_total
-            )
+                )
+
+            synthetic_unit.insert(0, args.unit_col, unit_value)
+            all_results.append(synthetic_unit)
+
+            if args.validate is not None:
+                rmse = compute_rmse(df_unit_model, synthetic_unit.drop(columns=[args.unit_col]))
+
+                all_rmse.append({
+                    args.unit_col: unit_value,
+                    "metric": "RMSE",
+                    "value": rmse,
+                    "n_constraints": len(df_unit_model)
+                })
+
+                ape_unit = compute_ape(
+                    df_unit_model,
+                    synthetic_unit.drop(columns=[args.unit_col])
+                    )
+                ape_unit.insert(0, args.unit_col, unit_value)
+                all_ape.append(ape_unit)
+
+            synthetic_df = pd.concat(all_results, ignore_index=True)
+
+
+        # --------------------------
+        # Case 2: normal global run
+        # --------------------------
         else:
+
+            if args.unit_col in df_tuples.columns:
+                df_tuples = aggregate_after_dropping_unit(df_tuples, args.unit_col)
+
+            target_components = parse_filter(args.filter, df_tuples)
+
             synthetic_df = syntheticextraction(
                 df_tuples,
                 target_components,
                 display_mode=args.display,
                 synth_total=args.synth_total
             )
+
+            if args.validate is not None:
+                rmse = compute_rmse(df_tuples, synthetic_df)
+
+                all_rmse = [{
+                    "metric": "RMSE",
+                    "value": rmse,
+                    "n_constraints": len(df_tuples)
+                }]
+
+                all_ape = [compute_ape(df_tuples, synthetic_df)]
+        
+
+
+        
         
         
         # --- Optional validation ---
@@ -711,10 +778,10 @@ Examples:
             rmse_path = os.path.join(out_dir, f"{base}_RMSE.csv")
             ape_path = os.path.join(out_dir, f"{base}_APE.csv")
 
-            rmse_df.to_csv(rmse_path, index=False, sep=';')
+            rmse_df.to_csv(rmse_path, index=False, sep=';', decimal=",")
             ape_df["observed"] = ape_df["observed"].round().astype("Int64")
             ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
-            ape_df.to_csv(ape_path, index=False, sep=';')
+            ape_df.to_csv(ape_path, index=False, sep=';', decimal=",")
 
             print(f"Validation saved to {rmse_path} and {ape_path}", file=sys.stderr)
             
