@@ -133,9 +133,36 @@ df_range <- df %>% group_by(DENOMINAZI,eta_range) %>% summarize(man_r = sum(man)
                                                                 male_nohf_r =  sum(male_nohf),
                                                                 hf_fem_r =  sum(hf_fem),
                                                                 fem_nohf_r =  sum(fem_nohf),
+                                                                hptyes_r = sum(hpt_man_r,hpt_fem_r),
+                                                                hptno_r = sum(male_nohpt_r,fem_nohpt_r),
+                                                                hfyes_r = sum(hf_male_r,hf_fem_r),
+                                                                hfno_r = sum(male_nohf_r,fem_nohf_r),
                                                                 mar_ageASL_r = sum(mar_ageASL)
   
 ) 
+
+munic <- list()
+for (i in unique(df_range$DENOMINAZI)) {
+  
+  tmp  <- df_range %>% filter(DENOMINAZI == i)
+  
+  tmp$mar_male_pop <- sum(tmp$man_r, na.rm = TRUE)
+  tmp$mar_fem_pop <- sum(tmp$fem_r, na.rm = TRUE)
+  tmp$mar_hpt_pop <- sum(tmp$hpt_fem_r, na.rm = TRUE) + sum(tmp$hpt_man_r, na.rm = TRUE)
+  tmp$mar_nohpt_pop <- sum(tmp$fem_nohpt_r, na.rm = TRUE) + sum(tmp$male_nohpt_r, na.rm = TRUE)
+  tmp$mar_hf_pop <- sum(tmp$hf_fem_r, na.rm = TRUE) + sum(tmp$hf_male_r, na.rm = TRUE)
+  tmp$mar_nohf_pop <-  sum(tmp$fem_nohf_r, na.rm = TRUE) + sum(tmp$male_nohf_r, na.rm = TRUE)
+  tmp$mar_00_29 <- tmp$mar_ageASL_r[tmp$eta_range == "00_29"][1]
+  tmp$mar_30_59 <- tmp$mar_ageASL_r[tmp$eta_range == "30_59"][1]
+  tmp$mar_60_100 <- tmp$mar_ageASL_r[tmp$eta_range == "60_100"][1]
+  
+  munic[[i]] <- tmp
+  
+}
+
+df_rangemunit <- bind_rows(munic)
+
+write.csv(df_rangemunit,file= "C:/Users/LENOVO/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_rangemunit.csv",row.names = F)
 
 
 mar_male_pop <- sum(df_range$man_r)
@@ -147,6 +174,7 @@ mar_nohf_pop <-  sum(df_range$fem_nohf_r) + sum(df_range$male_nohf_r)
 mar_00_29 <- df_range[df_range$eta_range == "00_29",]$mar_ageASL_r
 mar_30_59 <- df_range[df_range$eta_range == "30_59",]$mar_ageASL_r
 mar_60_100 <- df_range[df_range$eta_range == "60_100",]$mar_ageASL_r
+
 
 write.csv(df_range,file= "C:/Users/rocpa/OneDrive/Documenti/GitHub/IPF_multidim/GIS/data/lazio_ASL_istat/df_range.csv",row.names = F)
 
