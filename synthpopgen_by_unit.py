@@ -679,28 +679,28 @@ Examples:
                     f"--by-unit was requested, but column '{args.unit_col}' was not found."
                     )
 
-        all_results = []
-        all_rmse = []
-        all_ape = []
+            all_results = []
+            all_rmse = []
+            all_ape = []
 
-        for unit_value, df_unit in df_tuples.groupby(args.unit_col, dropna=False):
+            for unit_value, df_unit in df_tuples.groupby(args.unit_col, dropna=False):
 
-            df_unit_model = df_unit.drop(columns=[args.unit_col])
+                df_unit_model = df_unit.drop(columns=[args.unit_col])
 
-            target_components = parse_filter(args.filter, df_unit_model)
+                target_components = parse_filter(args.filter, df_unit_model)
 
-            synthetic_unit = syntheticextraction(
+                synthetic_unit = syntheticextraction(
                 df_unit_model,
                 target_components,
                 display_mode=args.display,
                 synth_total=args.synth_total
                 )
 
-            synthetic_unit.insert(0, args.unit_col, unit_value)
-            all_results.append(synthetic_unit)
+                synthetic_unit.insert(0, args.unit_col, unit_value)
+                all_results.append(synthetic_unit)
 
-            if args.validate is not None:
-                rmse = compute_rmse(df_unit_model, synthetic_unit.drop(columns=[args.unit_col]))
+                if args.validate is not None:
+                    rmse = compute_rmse(df_unit_model, synthetic_unit.drop(columns=[args.unit_col]))
 
                 all_rmse.append({
                     args.unit_col: unit_value,
@@ -717,6 +717,10 @@ Examples:
                 all_ape.append(ape_unit)
 
             synthetic_df = pd.concat(all_results, ignore_index=True)
+            
+            if args.validate is not None:
+                rmse_df = pd.DataFrame(all_rmse)
+                ape_df = pd.concat(all_ape, ignore_index = True)
 
 
         # --------------------------
@@ -778,20 +782,20 @@ Examples:
             rmse_path = os.path.join(out_dir, f"{base}_RMSE.csv")
             ape_path = os.path.join(out_dir, f"{base}_APE.csv")
 
-            rmse_df.to_csv(rmse_path, index=False, sep=';', decimal=",")
+            rmse_df.to_csv(rmse_path, index=False, sep=';', decimal=",",float_format="%.10f")
             ape_df["observed"] = ape_df["observed"].round().astype("Int64")
             ape_df["predicted"] = ape_df["predicted"].round().astype("Int64")
-            ape_df.to_csv(ape_path, index=False, sep=';', decimal=",")
+            ape_df.to_csv(ape_path, index=False, sep=';', decimal=",",float_format="%.10f")
 
             print(f"Validation saved to {rmse_path} and {ape_path}", file=sys.stderr)
             
         
         # Output results
         if args.output:
-            synthetic_df.to_csv(args.output, index=False, sep=';')
+            synthetic_df.to_csv(args.output, index=False, sep=';', decimal=",",float_format="%.10f")
             print(f"Results saved to {args.output}", file=sys.stderr)
         else:
-            print(synthetic_df.to_csv(index=False, sep=';'))
+            print(synthetic_df.to_csv(index=False, sep=';',decimal=",",float_format="%.10f"))
             
         # --- Optional abm ---
         if args.abm: 
