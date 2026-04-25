@@ -36,19 +36,20 @@ Data to be integrated are in `input_file_tuples.csv`. The file uses a tuple-base
 # How it works
 
 ```csv
-gender;age;hpt;hf;value
-male;;;;3073047
-female;;;;3259977
-;30;;;1745215
-;3060;;;2832088
-;60100;;;1755721
-;;yes;;1193445
-;;no;;5139579
-;;;yes;93926
-;;;no;6239098
-;30;yes;;3547
-;3060;yes;;252543
-;60100;yes;;937355
+;unit;gender;age;hpt;hf;value
+;space1;male;;;;3073047
+;space1;female;;;;3259977
+;space1;;30;;;1745215
+;space1;;3060;;;2832088
+;space1;60100;;;1755721
+;space1;;yes;;1193445
+;space1;;no;;5139579
+;space1;;;yes;93926
+;space1;;;no;6239098
+;space1;30;yes;;3547
+;space1;3060;yes;;252543
+;space1;60100;yes;;937355
+;spacen;...;...;...;...
 ```
 
 **Structure:**
