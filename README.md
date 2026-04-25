@@ -223,4 +223,4 @@ It will report one csv with output, one *_RMSE.csv with RMSE global mease, *_APE
 It works only on -f all option and printed .csv results
 
 #### Extra delivery
-* Local demo [synthpopgen_gui.exe](https://github.com/RoccoPaolillo/IPF_multidim/blob/fd9514711d3e0f3f23a342756c3d8b54437a9be6/synthpopgen_gui.exe) generated with [synthpopgen_gui.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/39082366ef952fe4d7f8aaa02e98f9dea766fa48/extra/synthpopgen_gui.py) code in the `extra` folder
+* Local demo [synthpopgen_gui.exe](https://github.com/RoccoPaolillo/IPF_multidim/blob/fd9514711d3e0f3f23a342756c3d8b54437a9be6/synthpopgen_gui.exe) generated with [synthpopgen_gui.py](https://github.com/RoccoPaolillo/IPF_multidim/blob/7e9dfd6753bff084598d638afffa55d6cfd112f9/extra/synthpopgen_gui.py) code in the `extra` folder
