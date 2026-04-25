@@ -702,19 +702,19 @@ Examples:
                 if args.validate is not None:
                     rmse = compute_rmse(df_unit_model, synthetic_unit.drop(columns=[args.unit_col]))
 
-                all_rmse.append({
-                    args.unit_col: unit_value,
-                    "metric": "RMSE",
-                    "value": rmse,
-                    "n_constraints": len(df_unit_model)
-                })
+                    all_rmse.append({
+                        args.unit_col: unit_value,
+                        "metric": "RMSE",
+                        "value": rmse,
+                        "n_constraints": len(df_unit_model)
+                    })
 
-                ape_unit = compute_ape(
-                    df_unit_model,
-                    synthetic_unit.drop(columns=[args.unit_col])
+                    ape_unit = compute_ape(
+                        df_unit_model,
+                        synthetic_unit.drop(columns=[args.unit_col])
                     )
-                ape_unit.insert(0, args.unit_col, unit_value)
-                all_ape.append(ape_unit)
+                    ape_unit.insert(0, args.unit_col, unit_value)
+                    all_ape.append(ape_unit)
 
             synthetic_df = pd.concat(all_results, ignore_index=True)
             
