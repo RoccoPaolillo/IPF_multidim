@@ -55,7 +55,7 @@ class SynthPopGUI(tk.Tk):
 
         # --- LOGO HEADER ---
         # Put the logo image in the same folder as this script, OR change this to an absolute path.
-        logo_path = "images/FOSSR handbook-SPG_RP.jpeg"
+        logo_path = "FOSSR handbook-SPG_RP.jpeg"
         try:
             img = Image.open(logo_path)
             img = img.resize((300, 150))
@@ -132,7 +132,7 @@ class SynthPopGUI(tk.Tk):
         self.unit_col_entry.grid(row=6, column=1, sticky="w", padx=(310, 0))
 
         # --- Output file (optional) ---
-        tk.Label(self, text="7 Optional) Output file (name.extension, e.g. output.csv)").grid(
+        tk.Label(self, text="8 Optional) Output file (name.extension, e.g. output.csv)").grid(
             row=7, column=0, sticky="w", padx=5, pady=5
         )
         self.output_entry = tk.Entry(self, width=70)
@@ -144,18 +144,18 @@ class SynthPopGUI(tk.Tk):
         # --- Run button ---
         tk.Button(
             self,
-            text="8) Run synthetic extraction",
+            text="9) Run synthetic extraction",
             command=self.run_synthetic,
         ).grid(row=8, column=0, columnspan=3, pady=10)
         
         self.barplot_button = tk.Button(
             self,
-            text='9 Optional) Generate barplot (% synthetic selected)\n[disabled for multiple units reiteration]',
+            text='10 Optional) Generate barplot (% synthetic selected)\n[disabled for multiple units reiteration]',
             command=self.generate_and_save_barplot_percent,
             ) 
         self.barplot_button.grid(row=13, column=0, columnspan=3, pady=(15, 5))
         
-        tk.Label(self, text="  10 Optional) Generate ABM script").grid(
+        tk.Label(self, text="  7 Optional) Generate ABM script").grid(
             row=6, column=2, sticky="w", padx=20, pady=5
             )
 
