@@ -22,6 +22,7 @@ from synthpopgen import (
     compute_ape,
     compute_validation_by_unit,
     aggregate_after_dropping_unit,
+    generate_abm_script
 )
 
 
@@ -63,20 +64,10 @@ class SynthPopGUI(tk.Tk):
         except Exception as e:
             print("Logo could not be loaded:", e)
 
-        # --- Input file ---
-#        tk.Label(self, text="1) Input CSV file (; separated):").grid(
-#            row=1, column=0, sticky="w", padx=5, pady=5
-#        )
-#        self.input_entry = tk.Entry(self, width=70)
-#        self.input_entry.grid(row=1, column=1, padx=5, pady=5, sticky="we")
-#        tk.Button(self, text="Browse...", command=self.browse_input).grid(
-#            row=1, column=2, padx=5, pady=5
-#        )
         tk.Button(self, text="1) Input CSV file (; separated)", command=self.browse_input).grid(
             row=1, column=0, columnspan=3, pady=10
         )
         self.input_entry = tk.Entry(self, width=70)
-#        self.input_entry.grid(row=1, column=1, padx=5, pady=5, sticky="we")
         
         # --- Filter string ---
         tk.Label(self, text="2) Filter (e.g. all or gender:male,age:30,hf:no)").grid(
@@ -162,7 +153,20 @@ class SynthPopGUI(tk.Tk):
             text='9 Optional) Generate barplot (% synthetic selected)\n[disabled for multiple units reiteration]',
             command=self.generate_and_save_barplot_percent,
             ) 
-        self.barplot_button.grid(row=13, column=0, columnspan=3, pady=(10, 5))
+        self.barplot_button.grid(row=13, column=0, columnspan=3, pady=(15, 5))
+        
+        tk.Label(self, text="  10 Optional) Generate ABM script").grid(
+            row=6, column=2, sticky="w", padx=20, pady=5
+            )
+
+        self.abm_var = tk.BooleanVar(value=False)
+
+        self.abm_check = tk.Checkbutton(
+             self,
+             variable=self.abm_var
+             ) 
+        self.abm_check.grid(row=6, column=2, sticky="w")
+
 
         # --- Variables / inspection area ---
         tk.Label(self, text="Detected variables, categories, and joint structures:").grid(
@@ -177,13 +181,6 @@ class SynthPopGUI(tk.Tk):
         )
         self.output_text = scrolledtext.ScrolledText(self, wrap=tk.NONE, height=12)
         self.output_text.grid(row=12, column=0, columnspan=3, padx=5, pady=5, sticky="nsew")
-
-        # --- Barplot button (percent share of value) ---
-        #tk.Button(
-        #    self,
-        #    text='9 Optional) Generate barplot (% synthetic selected)',
-        #    command=self.generate_and_save_barplot_percent,
-        #).grid(row=13, column=0, columnspan=3, pady=(10, 5))
 
         # Expand layout: give space to the scrolled text widgets
         self.grid_rowconfigure(10, weight=1)
@@ -487,8 +484,20 @@ class SynthPopGUI(tk.Tk):
             if validation_summary_lines:
                 self.output_text.insert(tk.END, "\n\n--- Validation ---\n")
                 self.output_text.insert(tk.END, "\n".join(validation_summary_lines) + "\n")
+                
+            # --- ABM generation ---
+            if self.abm_var.get():
+                out_dir = os.path.dirname(output_path) if output_path else os.getcwd()
+                abm_path = os.path.join(out_dir, "abm_synthpopgen.py")
 
-#            messagebox.showinfo("Success", f"Completed. Generated {len(synthetic_df)} rows.")
+                try:
+                    with open(abm_path, "w", encoding="utf-8") as f:
+                        f.write(generate_abm_script())
+
+                    self.output_text.insert(tk.END, f"\nABM script saved to: {abm_path}\n")
+
+                except Exception as e:
+                    messagebox.showerror("Error", f"Failed to save ABM script:\n{e}")
 
         except FileNotFoundError:
             messagebox.showerror("Error", f"Input file '{input_path}' not found.")
@@ -585,7 +594,27 @@ class SynthPopGUI(tk.Tk):
             return
 
         plt.close(fig)
-#        messagebox.showinfo("Saved", f"Barplot saved successfully:\n\n{png_path}")
+
+
+    def generate_and_save_abm_script(self):
+        """
+        Save the Mesa ABM script generated from synthpopgen.py.
+        """
+        if self.last_output_path:
+            out_dir = os.path.dirname(self.last_output_path) or os.getcwd()
+        else: 
+            out_dir = os.getcwd()
+
+        abm_path = os.path.join(out_dir, "abm_synthpopgen.py")
+
+        try:
+            with open(abm_path, "w", encoding="utf-8") as f:
+                f.write(generate_abm_script())
+
+            self.output_text.insert(tk.END, f"\nABM script saved to: {abm_path}\n")
+
+        except Exception as e:
+            messagebox.showerror("Error", f"Failed to save ABM script:\n{e}")
 
 
 if __name__ == "__main__":
