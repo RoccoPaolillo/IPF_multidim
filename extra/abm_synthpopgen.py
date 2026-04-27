@@ -8,6 +8,9 @@ class PersonAgent(mesa.Agent):
         super().__init__(model)
         for k, v in attrs.items():
             setattr(self, k, v)
+            
+        if hasattr(self,"unit"):
+            self.unit = str(self.unit)
 
 # for future schedule activation (not activated)
     def step(self):
@@ -44,16 +47,17 @@ class PopulationModel(mesa.Model):
                 {c: getattr(a, c) for c in model.char_cols}
                 for a in model.agents
             ]
-            g = (
-                pd.DataFrame(rows)
-                  .groupby(model.char_cols, dropna=False)
-                  .size()
-            )
-
+            
+            df = pd.DataFrame(rows)
+            
+            group_cols = model.char_cols
+            
+            g = df.groupby(group_cols, dropna=False).size()
+            
             # Return as dict with readable keys
             # key like "age=3060|hpt=yes|hf=no|gender=male"
             out = {
-                "|".join(f"{col}={val}" for col, val in zip(model.char_cols, idx)): int(cnt)
+                "|".join(f"{col}={val}" for col, val in zip(group_cols, idx)): int(cnt)
                 for idx, cnt in g.items()
             }
             return out
@@ -79,7 +83,7 @@ class PopulationModel(mesa.Model):
 # model initialized with output.csv (df_agents in the code)    
 # NOTE! The script is already set to use "output.csv" as external file generated from the SPG service
 # You can set to another file
-model = PopulationModel("output.csv", sep=";")
+model = PopulationModel("outputallmult.csv", sep=";")
 # model.run_for(2) # to execute 3 runs (0,1,2)  
 # to collect report     
 model_vars = model.datacollector.get_model_vars_dataframe()
@@ -91,4 +95,3 @@ for step, d in model_vars["cross_counts"].items():
         rows.append({"step": step, "profile": profile, "count": count})
 
 cross_df = pd.DataFrame(rows)
-
